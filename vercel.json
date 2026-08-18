@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/sori-gate.js",
+      "destination": "https://geupsik-soriham.vercel.app/sori-gate.js"
+    }
+  ]
+}
