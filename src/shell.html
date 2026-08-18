@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>무.물.위 — 무엇이든 물어보세요, 위생지침서</title>
+<meta name="description" content="학교급식 위생관리 지침서(제6차 개정) 기반 Q&A 검색 도구 — 급식소리함">
+<style>
+:root{
+  --g900:#14532d; --g700:#15803d; --g600:#16a34a; --g100:#dcfce7; --g50:#f0fdf4;
+  --ink:#1f2937; --sub:#6b7280; --line:#e5e7eb; --bg:#f6faf7; --card:#ffffff;
+  --amber:#b45309; --amber-bg:#fffbeb; --blue:#1d4ed8; --blue-bg:#eff6ff; --red:#b91c1c;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:'Pretendard','Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif;background:var(--bg);color:var(--ink);line-height:1.75;font-size:16px}
+body.big{zoom:1.18}
+.wrap{max-width:860px;margin:0 auto;padding:0 14px 90px}
+header{background:linear-gradient(160deg,#166534,#15803d 55%,#16a34a);color:#fff;padding:26px 14px 20px;border-radius:0 0 22px 22px}
+.hwrap{max-width:860px;margin:0 auto}
+.htop{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+h1{font-size:25px;letter-spacing:-.5px}
+h1 .badge{font-size:11.5px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);padding:2px 9px;border-radius:99px;vertical-align:4px;margin-left:8px;font-weight:600}
+.hsub{opacity:.92;font-size:13.5px;margin-top:5px}
+.hsub b{font-weight:700}
+.searchbox{margin-top:16px;position:relative}
+.searchbox input{width:100%;padding:15px 48px 15px 18px;border-radius:16px;border:0;font-size:16.5px;box-shadow:0 6px 18px rgba(0,0,0,.18);outline:none;color:var(--ink)}
+.searchbox .go{position:absolute;right:8px;top:50%;transform:translateY(-50%);background:var(--g700);color:#fff;border:0;border-radius:12px;width:38px;height:38px;font-size:17px;cursor:pointer}
+.hotchips{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}
+.hotchips button{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:99px;padding:5px 12px;font-size:12.5px;cursor:pointer;transition:.15s}
+.hotchips button:hover{background:rgba(255,255,255,.28)}
+nav.tabs{display:flex;gap:6px;overflow-x:auto;padding:14px 0 4px;position:sticky;top:0;background:var(--bg);z-index:20;scrollbar-width:none}
+nav.tabs::-webkit-scrollbar{display:none}
+nav.tabs button{flex:0 0 auto;border:1.5px solid var(--line);background:#fff;color:var(--sub);border-radius:99px;padding:8px 15px;font-size:13.5px;font-weight:700;cursor:pointer;transition:.15s}
+nav.tabs button.on{background:var(--g700);border-color:var(--g700);color:#fff}
+.panel{display:none;padding-top:12px}
+.panel.on{display:block}
+.count{font-size:12.5px;color:var(--sub);margin:6px 2px 10px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;margin-bottom:10px;overflow:hidden;transition:box-shadow .15s}
+.card:hover{box-shadow:0 3px 12px rgba(0,0,0,.06)}
+.qrow{display:flex;gap:10px;align-items:flex-start;padding:15px 17px;cursor:pointer;user-select:none}
+.qrow .qmark{flex:0 0 auto;width:26px;height:26px;border-radius:9px;background:var(--g100);color:var(--g700);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;margin-top:1px}
+.qrow .qtxt{flex:1;font-weight:700;font-size:16.3px;letter-spacing:-.2px;line-height:1.55}
+.qrow .cat{flex:0 0 auto;font-size:11px;color:var(--g700);background:var(--g50);border:1px solid var(--g100);padding:2px 8px;border-radius:99px;margin-top:2px;white-space:nowrap}
+.qrow .arrow{flex:0 0 auto;color:#c7cdd4;font-size:12px;margin-top:4px;transition:.2s}
+.card.open .arrow{transform:rotate(90deg)}
+.abox{display:none;padding:2px 18px 16px 52px;font-size:15.6px;color:#2f3a46;line-height:1.9}
+.abox .li{margin:7px 0 0;padding-left:1.35em;text-indent:-1.35em}
+.abox .nt{margin:7px 0 0;padding:7px 11px;background:#f8fafc;border-radius:9px;font-size:14.3px;color:#556070;text-indent:0}
+@media(max-width:640px){.abox{padding-left:17px}}
+.card.open .abox{display:block}
+.abox b{color:var(--g900);background:linear-gradient(transparent 62%, #d3f3de 62%)}
+.ref{margin-top:10px;font-size:12px;color:var(--sub);background:var(--g50);border-left:3px solid var(--g600);padding:6px 10px;border-radius:0 8px 8px 0}
+mark{background:#fde68a;border-radius:3px;padding:0 1px}
+.noresult{background:#fff;border:1.5px dashed var(--line);border-radius:16px;padding:26px 20px;text-align:center;color:var(--sub)}
+.noresult b{color:var(--ink)}
+.noresult .syn{margin-top:8px;font-size:13px}
+.catchips{display:flex;gap:7px;flex-wrap:wrap;margin:4px 0 14px}
+.catchips button{border:1.5px solid var(--line);background:#fff;border-radius:99px;padding:6px 13px;font-size:13px;font-weight:600;color:var(--sub);cursor:pointer}
+.catchips button.on{background:var(--g50);border-color:var(--g600);color:var(--g700)}
+/* 분류별 보기 */
+.grp{margin:4px 0 18px}
+.grp .gh{display:flex;align-items:baseline;gap:8px;margin:0 2px 9px}
+.grp .gh h3{font-size:15.5px;font-weight:800;color:var(--g900);letter-spacing:-.3px}
+.grp .gh .gd{font-size:12px;color:var(--sub)}
+.grp.danger .gh h3{color:var(--red)}
+.catgrid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+@media(min-width:720px){.catgrid{grid-template-columns:repeat(3,1fr)}}
+.catcard{background:#fff;border:1.5px solid var(--line);border-radius:15px;padding:13px 14px;cursor:pointer;transition:.15s;text-align:left}
+.catcard:hover{border-color:var(--g600);box-shadow:0 3px 12px rgba(22,163,74,.10);transform:translateY(-1px)}
+.grp.danger .catcard:hover{border-color:var(--red)}
+.catcard .ci{font-size:22px;line-height:1}
+.catcard .cn{font-size:14.6px;font-weight:800;margin-top:7px;letter-spacing:-.3px}
+.catcard .cn .cc{font-size:11.5px;color:#fff;background:var(--g600);border-radius:99px;padding:1px 7px;margin-left:5px;vertical-align:2px;font-weight:700}
+.grp.danger .catcard .cn .cc{background:var(--red)}
+.catcard .cd{font-size:12px;color:var(--sub);margin-top:3px;line-height:1.5}
+.bback{display:flex;align-items:center;gap:10px;margin:2px 0 10px}
+.bback button{border:1.5px solid var(--line);background:#fff;border-radius:99px;padding:7px 14px;font-size:13px;font-weight:700;color:var(--sub);cursor:pointer}
+.bback button:hover{border-color:var(--g600);color:var(--g700)}
+.bback span{font-size:16px;font-weight:800;color:var(--g900)}
+.bnav{display:flex;gap:8px;margin-top:14px}
+.bnav button{flex:1;border:1.5px solid var(--line);background:#fff;border-radius:12px;padding:11px;font-size:13px;font-weight:700;color:var(--sub);cursor:pointer;text-align:center}
+.bnav button:hover{border-color:var(--g600);color:var(--g700)}
+/* 챗봇 */
+#chat-list{padding:6px 0 8px;min-height:280px}
+.msg{display:flex;margin:10px 0;gap:8px}
+.msg.user{justify-content:flex-end}
+.msg .bb{max-width:88%;border-radius:16px;padding:11px 15px;font-size:15.4px;line-height:1.85}
+.msg.user .bb{background:var(--g700);color:#fff;border-bottom-right-radius:5px}
+.msg.bot .bb{background:#fff;border:1.5px solid var(--line);border-bottom-left-radius:5px;color:#2f3a46}
+.msg.bot.ai .bb{border-color:#c7d2fe}
+.msg .avatar{flex:0 0 auto;width:32px;height:32px;border-radius:11px;background:var(--g100);display:flex;align-items:center;justify-content:center;font-size:17px;margin-top:2px}
+.msg.bot.ai .avatar{background:#e0e7ff}
+.bb .li{margin:6px 0 0;padding-left:1.3em;text-indent:-1.3em}
+.bb .nt{margin:6px 0 0;padding:6px 10px;background:#f8fafc;border-radius:8px;font-size:13.8px;color:#556070;text-indent:0}
+.bb b{color:var(--g900);background:linear-gradient(transparent 62%, #d3f3de 62%)}
+.msg.user .bb b{color:#fff;background:none;text-decoration:underline}
+.bb .aref{margin-top:9px;font-size:12.3px;color:#4338ca;background:#eef2ff;border-left:3px solid #6366f1;padding:6px 10px;border-radius:0 8px 8px 0}
+.bb .offbadge{display:inline-block;font-size:11px;font-weight:800;color:var(--g700);background:var(--g50);border:1px solid var(--g100);border-radius:99px;padding:2px 9px;margin-bottom:7px}
+.bb .aibadge{display:inline-block;font-size:11px;font-weight:800;color:#4338ca;background:#eef2ff;border:1px solid #c7d2fe;border-radius:99px;padding:2px 9px;margin-bottom:7px}
+.bb .disc{margin-top:8px;font-size:11.3px;color:#98a1b0;border-top:1px dashed #e5e7eb;padding-top:6px}
+.relchips{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}
+.relchips button{border:1px solid var(--g100);background:var(--g50);color:var(--g700);border-radius:99px;padding:4px 11px;font-size:12px;font-weight:600;cursor:pointer}
+.chatbar{position:sticky;bottom:0;background:var(--bg);padding:10px 0 14px;display:flex;gap:8px;z-index:18}
+.chatbar input{flex:1;padding:14px 16px;border-radius:14px;border:1.5px solid var(--line);font-size:16px;outline:none;background:#fff}
+.chatbar input:focus{border-color:var(--g600)}
+.chatbar button{background:var(--g700);color:#fff;border:0;border-radius:14px;padding:0 20px;font-size:15px;font-weight:800;cursor:pointer}
+.chatbar button:disabled{opacity:.55;cursor:wait}
+.searchbox.in-panel{margin:2px 0 10px}
+.searchbox.in-panel input{border:1.5px solid var(--line);box-shadow:none}
+.searchbox.in-panel input:focus{border-color:var(--g600)}
+/* AI 답변 */
+.aibar{display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,#eef2ff,#f5f3ff);border:1.5px solid #c7d2fe;border-radius:14px;padding:11px 14px;margin:0 0 12px;flex-wrap:wrap}
+.aibar .t{font-size:13.5px;color:#4338ca;flex:1;min-width:150px}
+.aibar button{background:#4f46e5;color:#fff;border:0;border-radius:10px;padding:9px 16px;font-size:13.5px;font-weight:800;cursor:pointer}
+.aibar button:disabled{opacity:.55;cursor:wait}
+.aicard{background:#fff;border:1.5px solid #c7d2fe;border-radius:16px;margin:0 0 12px;overflow:hidden}
+.aicard .ahead{display:flex;align-items:center;gap:8px;background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff;padding:10px 15px;font-size:13.5px;font-weight:800}
+.aicard .ahead .m{margin-left:auto;font-size:10.5px;opacity:.8;font-weight:600}
+.aicard .abody{padding:13px 16px;font-size:15.2px;line-height:1.85;color:#2f3a46}
+.aicard .abody .aref{margin-top:10px;font-size:12.5px;color:#4338ca;background:#eef2ff;border-left:3px solid #6366f1;padding:6px 10px;border-radius:0 8px 8px 0}
+.aicard .adisc{padding:8px 16px 12px;font-size:11.5px;color:#8b93a2;border-top:1px dashed #e5e7eb}
+.aispin{display:inline-block;width:15px;height:15px;border:2.5px solid #c7d2fe;border-top-color:#4f46e5;border-radius:50%;animation:sp 1s linear infinite;vertical-align:-3px;margin-right:6px}
+@keyframes sp{to{transform:rotate(360deg)}}
+/* 숫자 빠른참조 */
+.numgrid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+@media(max-width:640px){.numgrid{grid-template-columns:1fr}}
+.numcard{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.numcard .k{font-size:12.5px;color:var(--sub);font-weight:700}
+.numcard .v{font-size:14.5px;font-weight:800;color:var(--g900);margin-top:3px;letter-spacing:-.2px}
+/* 개정 변경점 */
+.chg{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:9px}
+.chg .area{display:inline-block;font-size:11px;font-weight:800;color:var(--blue);background:var(--blue-bg);border-radius:99px;padding:2px 9px;margin-bottom:8px}
+.chg .b5,.chg .a6{font-size:13.8px;padding:7px 11px;border-radius:9px;margin-top:5px}
+.chg .b5{background:#f9fafb;color:var(--sub);text-decoration-color:#d1d5db}
+.chg .a6{background:var(--g50);color:var(--ink)}
+.chg .lbl{font-size:10.5px;font-weight:800;margin-right:6px;border-radius:5px;padding:1px 6px;vertical-align:1px}
+.chg .b5 .lbl{background:#e5e7eb;color:#6b7280}
+.chg .a6 .lbl{background:var(--g600);color:#fff}
+.chg .why{font-size:12px;color:var(--amber);margin-top:7px}
+/* 체크리스트 */
+.scorebar{position:sticky;top:46px;z-index:15;background:#fff;border:1.5px solid var(--g600);border-radius:14px;padding:10px 16px;display:flex;align-items:center;gap:14px;margin-bottom:12px;flex-wrap:wrap;box-shadow:0 4px 14px rgba(0,0,0,.06)}
+.scorebar .sc{font-size:21px;font-weight:900;color:var(--g900)}
+.scorebar .gr{font-size:15px;font-weight:800;padding:3px 12px;border-radius:99px;background:var(--g100);color:var(--g700)}
+.scorebar .dt{font-size:12px;color:var(--sub);flex:1;min-width:120px}
+.scorebar button{border:1px solid var(--line);background:#fff;border-radius:9px;padding:6px 11px;font-size:12px;cursor:pointer;color:var(--sub)}
+.cksec{font-size:14px;font-weight:800;color:var(--g900);margin:18px 2px 8px}
+.ck{background:#fff;border:1px solid var(--line);border-radius:14px;padding:13px 15px;margin-bottom:8px}
+.ck .top{display:flex;gap:9px;align-items:flex-start}
+.ck .no{flex:0 0 auto;width:25px;height:25px;border-radius:8px;background:#f3f4f6;color:var(--sub);font-size:12.5px;font-weight:800;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.ck .tt{flex:1;font-size:14.3px;font-weight:700;letter-spacing:-.2px}
+.ck .ar{font-size:10.5px;color:var(--sub);background:#f3f4f6;border-radius:99px;padding:2px 8px;white-space:nowrap;margin-top:2px}
+.ck .btns{display:flex;gap:6px;margin-top:9px;margin-left:34px;flex-wrap:wrap}
+.ck .btns button{border:1.5px solid var(--line);background:#fff;border-radius:9px;padding:5px 13px;font-size:12.5px;font-weight:700;color:var(--sub);cursor:pointer}
+.ck .btns button.ok.sel{background:var(--g600);border-color:var(--g600);color:#fff}
+.ck .btns button.mid.sel{background:#f59e0b;border-color:#f59e0b;color:#fff}
+.ck .btns button.bad.sel{background:#ef4444;border-color:#ef4444;color:#fff}
+.ck .tipbtn{margin-left:auto;border:0;background:none;color:var(--blue);font-size:12px;cursor:pointer;font-weight:600}
+.ck .tip{display:none;margin:9px 0 0 34px;font-size:12.8px;color:#4b5563;background:var(--blue-bg);border-radius:9px;padding:8px 12px}
+.ck.tipopen .tip{display:block}
+.ck .fail{margin:7px 0 0 34px;font-size:12px;color:var(--red)}
+.dnote{background:var(--amber-bg);border:1px solid #fde68a;border-radius:12px;padding:11px 14px;font-size:12.8px;color:var(--amber);margin:12px 0}
+footer{margin-top:34px;padding:18px 4px;border-top:1px solid var(--line);font-size:12px;color:var(--sub);text-align:center;line-height:1.9}
+footer a{color:var(--g700)}
+.lockscreen{position:fixed;inset:0;background:var(--bg);z-index:999;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px}
+.lockscreen .in{max-width:380px}
+.lockscreen .emoji{font-size:44px}
+.lockscreen h2{margin:12px 0 8px;font-size:20px}
+.lockscreen p{color:var(--sub);font-size:14px}
+@media print{
+  header,.tabs,.searchbox,.hotchips,.scorebar button,footer{display:none!important}
+  .panel{display:none}.panel.print-target{display:block}
+  body{background:#fff}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hwrap">
+    <div class="htop">
+      <h1>🌱 무.물.위<span class="badge">6차 개정 반영</span></h1>
+      <button id="bigbtn" style="margin-left:auto;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.4);color:#fff;border-radius:99px;padding:5px 13px;font-size:12.5px;cursor:pointer;font-weight:700" onclick="toggleBig()">가⁺ 글자 크게</button>
+    </div>
+    <div class="hsub"><b>무</b>엇이든 <b>물</b>어보세요, <b>위</b>생지침서 — 학교급식 위생관리 지침서(교육부, 2026.3 제6차 개정) 기반</div>
+    <div class="hotchips" id="hotchips"></div>
+  </div>
+</header>
+
+<div class="wrap">
+  <nav class="tabs" id="tabs">
+    <button data-t="chat" class="on">💬 챗봇</button>
+    <button data-t="search">🔎 지침서 검색</button>
+    <button data-t="browse">📚 분류별 보기</button>
+    <button data-t="num">🌡️ 숫자 빠른참조</button>
+    <button data-t="chg">🆕 6차 개정 변경점</button>
+    <button data-t="check">✅ 위생점검 자가진단</button>
+  </nav>
+
+  <section class="panel on" id="panel-chat">
+    <div id="chat-list"></div>
+    <div class="chatbar">
+      <input id="chat-in" type="text" placeholder="무엇이든 물어보세요 — 예) 도토리묵무침, 묵도 가열해?" autocomplete="off" enterkeyhint="send">
+      <button id="chat-send" onclick="sendChat()">보내기</button>
+    </div>
+  </section>
+
+  <section class="panel" id="panel-search">
+    <div class="searchbox in-panel">
+      <input id="q" type="search" placeholder="예) 보건증 주기 · 락스 희석 · 냉장고 고장 · 해동 온도 …" autocomplete="off" enterkeyhint="search">
+      <button class="go" onclick="doSearch()" aria-label="검색">🔍</button>
+    </div>
+    <div class="count" id="s-count">지침서를 정리한 실무 Q&A를 바로 찾아봅니다. 답변은 모두 지침서 근거(장·쪽)와 함께 나옵니다.</div>
+    <div id="ai-area"></div>
+    <div id="s-results"></div>
+  </section>
+
+  <section class="panel" id="panel-browse">
+    <div id="b-home"></div>
+    <div id="b-detail" style="display:none">
+      <div class="bback"><button onclick="browseHome()">← 분류 전체 보기</button><span id="b-title"></span></div>
+      <div class="count" id="b-count"></div>
+      <div id="b-results"></div>
+      <div class="bnav" id="b-nav"></div>
+    </div>
+  </section>
+
+  <section class="panel" id="panel-num">
+    <div class="count">현장에서 가장 자주 찾는 숫자 기준만 모았어요. 카드를 누르면 관련 Q&A를 검색합니다.</div>
+    <div class="numgrid" id="numgrid"></div>
+  </section>
+
+  <section class="panel" id="panel-chg">
+    <div class="count">제5차(2021) → 제6차(2026.3) 주요 변경 사항 · 근거: 지침서 부록 8 「주요 개정사항」 + 2026 하반기 직무연수 자료</div>
+    <div id="chglist"></div>
+  </section>
+
+  <section class="panel" id="panel-check">
+    <div class="scorebar">
+      <span class="sc" id="ck-score">–</span>
+      <span class="gr" id="ck-grade">체크 전</span>
+      <span class="dt" id="ck-detail">준수사항 16항목(48점) + 지도·권장 18항목(52점) = 100점</span>
+      <button onclick="ckReset()">초기화</button>
+      <button onclick="ckPrint()">인쇄</button>
+    </div>
+    <div class="dnote">교육청 위생점검(연 2회, 학기별 1회) 대비 자가진단용입니다. 등급: A 90점↑ · B 80~89 · C 70~79 · D 60~69 · E 60점 미만.
+    직전 지적 미이행(-10/-5), 행정처분(-10), 식중독 발생(-10)은 별도 감점됩니다. 실제 평가는 점검자 판단에 따릅니다.</div>
+    <div class="cksec">📋 학교급식 위생관리기준 준수사항 (16항목 · 적합 3점 / 부적합 0점)</div>
+    <div id="ck-mand"></div>
+    <div class="cksec">📝 학교급식 지도 및 권장사항 (18항목 · 우수 / 보통 / 미흡)</div>
+    <div id="ck-guide"></div>
+  </section>
+
+  <footer>
+    ⓒ 급식"소리"함 · 무.물.위 (무엇이든 물어보세요, 위생지침서)<br>
+    내용 출처: 「학교급식 위생관리 지침서」 제6차 개정판(교육부·한국교육환경보호원, 2026.3) — 본 도구는 이해를 돕기 위한 참고용이며, 실제 업무는 반드시 지침서 원문과 교육(지원)청 안내를 따르세요.<br>
+    <a href="https://geupsik-soriham.vercel.app/" target="_blank">← 급식소리함 포털로</a>
+  </footer>
+</div>
+
+<script>
+/* ══════════ 검색 엔진 ══════════ */
+const SYN = { // 동의어·현장용어 → 데이터 용어
+  '보건증':'건강진단','건강진단서':'건강진단','건강진단결과서':'건강진단',
+  '락스':'차아염소산나트륨 희석 소독','희석':'희석 계산','살균제':'살균소독제',
+  '소독약':'소독제','뜨거운물':'온수','일지':'기록지','서류':'기록지 기록',
+  '온도체크':'온도 확인','언제까지':'시간','냉장':'냉장고','냉동':'냉동고',
+  '세척기':'식기세척기','서모라벨':'thermolabel','썰기':'절단','자르기':'절단',
+  '데치기':'데침','샐러드':'샐러드 채소 소독','과일소독':'과일 소독',
+  '유통기한':'소비기한','알바':'배식도우미','도우미':'배식도우미',
+  '위생모':'위생모 복장','설사':'설사 배제','상처':'상처 밴드',
+  '노로':'노로바이러스','식판':'식판 71','수저':'수저 자외선',
+  '점검':'위생점검','평가':'위생점검 배점','등급':'등급 배점',
+  '학운위':'학교운영위원회','급식소위원회':'급식소위원회',
+  '레시피':'조리','메뉴':'식단','반찬':'음식','국':'국 온도계',
+  '온도계':'온도계 검교정 측정','교정':'검교정','uv':'자외선','유브이':'자외선',
+  '앞치마':'앞치마 구분','장갑':'고무장갑','비닐장갑':'비닐 위생장갑',
+  '해썹':'HACCP','haccp':'HACCP','씨씨피':'CCP','ccp':'CCP','cp':'CP',
+  '납품':'납품업체 검수','업체':'납품업체','발주':'발주 식단검토',
+  '몇도':'온도','며칠':'기간 일','언제':'시기 시간','몇번':'횟수','몇 회':'횟수',
+  '얼마나':'기준','쓰레기':'폐기물 쓰레기','잔반':'잔반','청소':'청소',
+  '물':'조리용수 물','정수기':'급수 물','우물':'지하수',
+};
+const norm = s => (s||'').toLowerCase().replace(/[\s·ㆍ,.\-()\[\]?!'"~]/g,'');
+function expand(qs){
+  let out = qs;
+  for(const k in SYN){ if(qs.includes(k)) out += ' ' + SYN[k]; }
+  return out;
+}
+function tokenize(s){
+  return s.toLowerCase().split(/[\s·ㆍ,.\-()\[\]?!'"~/]+/).filter(t=>t.length>=1 && !['은','는','이','가','을','를','좀','요','에','의','와','과','로','으로','에서','하나요','인가요','있나요','해야','어떻게','뭔가요','무엇','어떤'].includes(t));
+}
+function score(item, tokens, rawNorm){
+  const qn = norm(item.q), an = norm(item.a.replace(/<[^>]+>/g,'')), tg = norm((item.tags||[]).join(' ')), cn = norm(item.cat);
+  let sc = 0, hits = 0;
+  for(const t of tokens){
+    const tn = norm(t); if(!tn) continue;
+    let h = 0;
+    if(qn.includes(tn)) h += 30;
+    if(tg.includes(tn)) h += 22;
+    if(cn.includes(tn)) h += 12;
+    if(an.includes(tn)) h += 8;
+    if(h>0) hits++;
+    sc += h;
+  }
+  if(tokens.length && hits === 0) return 0;
+  if(rawNorm.length >= 4 && qn.includes(rawNorm)) sc += 40; // 질문 전체 구문 일치
+  sc += hits * 12; // 여러 토큰 매칭 가중
+  if(item.hot) sc += 3;
+  return sc;
+}
+function search(qs){
+  const tokens = tokenize(expand(qs));
+  const rawNorm = norm(qs);
+  if(!tokens.length && rawNorm.length<1) return [];
+  return MMW_QA.map(it=>({it, s:score(it, tokens, rawNorm)}))
+    .filter(x=>x.s>0).sort((a,b)=>b.s-a.s).map(x=>x.it);
+}
+
+/* ══════════ 렌더링 ══════════ */
+const $ = id => document.getElementById(id);
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;')}
+function hi(text, qs){ // 질문 텍스트 하이라이트(플레인 텍스트만)
+  if(!qs) return esc(text);
+  let out = esc(text);
+  const toks=[...new Set(tokenize(qs))].filter(t=>t.length>=2).sort((a,b)=>b.length-a.length);
+  for(const t of toks){
+    try{ out = out.replace(new RegExp('('+t.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','gi'),'<mark>$1</mark>'); }catch(e){}
+  }
+  return out;
+}
+function fmtA(html){ // 항목 기호를 줄 단위로 분리해 가독성 확보
+  var M = '\u0007';
+  var s = M + 'P' + html;
+  s = s.replace(/\s*([\u2460-\u2473])\s*/g, M + 'L$1 ');
+  s = s.replace(/\s*\u203B\s*/g, M + 'N\u203B ');
+  return s.split(M).filter(Boolean).map(function(seg){
+    var kind = seg[0], body = seg.slice(1).trim();
+    if(!body) return '';
+    if(kind==='L') return '<div class="li">'+body+'</div>';
+    if(kind==='N') return '<div class="nt">'+body+'</div>';
+    return '<div>'+body+'</div>';
+  }).join('');
+}
+function cardHTML(item, qs, open, hideCat){
+  return `<div class="card${open?' open':''}">
+    <div class="qrow" onclick="this.parentNode.classList.toggle('open')">
+      <span class="qmark">Q</span>
+      <span class="qtxt">${hi(item.q, qs)}</span>
+      ${hideCat?'':`<span class="cat">${item.cat}</span>`}
+      <span class="arrow">▶</span>
+    </div>
+    <div class="abox">${fmtA(item.a)}<div class="ref">📖 ${esc(item.ref)}</div></div>
+  </div>`;
+}
+function doSearch(fromInput){
+  const qs = $('q').value.trim();
+  switchTab('search');
+  $('ai-area').innerHTML = '';
+  const res = search(qs);
+  if(!qs){ $('s-count').textContent = '궁금한 것을 검색해 보세요.'; $('s-results').innerHTML=''; return; }
+  if(!res.length){
+    $('s-count').textContent = `"${qs}" 검색 결과가 없어요.`;
+    $('s-results').innerHTML = `<div class="noresult">🧐 <b>지침서에서 바로 찾지 못했어요.</b><br>
+      단어를 짧게 줄여 보세요. 예) "냉동식품이 녹았을 때" → <b>녹은</b>, "채소 소독약 농도" → <b>소독 농도</b>
+      <div class="syn">자주 찾는 검색어: <a href="#" onclick="quick('보건증');return false">보건증</a> ·
+      <a href="#" onclick="quick('락스 희석');return false">락스 희석</a> ·
+      <a href="#" onclick="quick('중심온도');return false">중심온도</a> ·
+      <a href="#" onclick="quick('보존식');return false">보존식</a> ·
+      <a href="#" onclick="quick('2시간');return false">2시간</a></div></div>`;
+    return;
+  }
+  const top = res.slice(0, 12);
+  $('s-count').textContent = `"${qs}" 관련 답변 ${res.length}건 중 상위 ${top.length}건`;
+  $('s-results').innerHTML = top.map((it,i)=>cardHTML(it, qs, i===0)).join('');
+}
+function quick(t){ $('q').value = t; doSearch(); }
+
+/* 탭 */
+function switchTab(t){
+  document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.toggle('on', b.dataset.t===t));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('on', p.id==='panel-'+t));
+}
+$('tabs').addEventListener('click', e=>{ if(e.target.dataset.t) switchTab(e.target.dataset.t); });
+$('q').addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); doSearch(); }});
+let deb; $('q').addEventListener('input', ()=>{ clearTimeout(deb); deb=setTimeout(()=>{ if($('q').value.trim().length>=2) doSearch(); }, 250); });
+
+/* 인기 질문 칩 */
+(function(){
+  const hots = MMW_QA.filter(x=>x.hot).slice(0,6);
+  $('hotchips').innerHTML = hots.map(h=>`<button onclick="chatAsk('${h.q.replace(/'/g,"\\'")}')">${h.q.length>22?h.q.slice(0,22)+'…':h.q}</button>`).join('');
+})();
+function showOne(q){
+  const it = MMW_QA.find(x=>x.q===q); if(!it) return;
+  switchTab('search');
+  $('q').value='';
+  $('s-count').textContent = '자주 묻는 질문';
+  $('s-results').innerHTML = cardHTML(it, '', true);
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+/* 분류별 보기 — 업무 흐름 그룹 */
+const CATMETA = {
+ '식단검토':      {i:'📅', d:'제공 금지 식단 · 소독/가열 체크 · 조리공정 분류'},
+ '식재료·검수':   {i:'🥬', d:'검수 온도(10℃/5℃) · 품질기준 · 보관 · 온도계 검교정'},
+ '전처리·해동':   {i:'🔪', d:'세척 · 해동(21℃) · 60cm · 칼도마 구분'},
+ '소독·살균소독제':{i:'🧴', d:'80~130ppm · 희석 계산 · 열탕/UV · 세척제'},
+ 'CCP1 식품취급·조리':{i:'🍳', d:'중심온도 75℃(패류 85℃) · 소독 · 기록지 작성'},
+ 'CCP2 조리완료·배식':{i:'🍚', d:'57℃ 또는 2시간 · 배식 위생 · 교실/공동조리'},
+ 'CP1 냉장·냉동': {i:'❄️', d:'5℃/-18℃ · 하루 2~3회 확인 · 고장 대응'},
+ 'CP2 식품접촉표면':{i:'🍽️', d:'식판 71℃ · Thermo label · 잔류세제 월 1회'},
+ '보존식·검식':   {i:'🥡', d:'-18℃ 144시간 · 150g · 검식은 NEIS 기록'},
+ '개인위생·건강진단':{i:'🧤', d:'건강진단 6개월 · 손씻기 · 복장 · 배식도우미'},
+ '시설·설비':     {i:'🏗️', d:'작업구역 구분 · 조도 · 후드 · 청소계획 · 방충방서'},
+ 'HACCP 운영·기록':{i:'📋', d:'팀 구성 · 9절차 · 양식2 · 기록 보관기간'},
+ '위생교육':      {i:'🎓', d:'종사자 월1회 · 대상별 횟수 · 연간 계획'},
+ '위생점검':      {i:'✅', d:'연 2회 · 34항목 배점 · 등급 · 과태료'},
+ '미생물 검사':   {i:'🔬', d:'권장규격 · 자체 간이검사 방법'},
+ '식중독 대응':   {i:'🚨', d:'2인 이상 즉시 신고 · 보존식 보존 · 대책반 · 급식 재개'},
+};
+const CATGROUPS = [
+ {g:'🛒 급식 준비', d:'식단 짜고 · 장 보고 · 다듬기까지', cats:['식단검토','식재료·검수','전처리·해동']},
+ {g:'🔥 조리와 배식 — CCP', d:'소독하고 · 익히고 · 제때 배식', cats:['소독·살균소독제','CCP1 식품취급·조리','CCP2 조리완료·배식']},
+ {g:'🌡️ 매일 온도·세척 기록 — CP', d:'냉장냉동 · 식판 소독 · 보존식', cats:['CP1 냉장·냉동','CP2 식품접촉표면','보존식·검식']},
+ {g:'🧑‍🍳 사람과 시설', d:'종사자 위생 · 급식실 환경', cats:['개인위생·건강진단','시설·설비']},
+ {g:'🗂️ 운영·교육·점검', d:'HACCP 서류 · 교육 · 교육청 점검 대비', cats:['HACCP 운영·기록','위생교육','위생점검','미생물 검사']},
+ {g:'🚨 식중독 비상 대응', d:'의심환자 발생 시 이 순서대로', cats:['식중독 대응'], danger:true},
+];
+function browseHome(){
+  $('b-home').style.display='';
+  $('b-detail').style.display='none';
+  if($('b-home').innerHTML) return;
+  $('b-home').innerHTML = CATGROUPS.map(grp=>`
+   <div class="grp${grp.danger?' danger':''}">
+     <div class="gh"><h3>${grp.g}</h3><span class="gd">${grp.d}</span></div>
+     <div class="catgrid">${grp.cats.map(c=>{
+        const m = CATMETA[c]||{i:'📁',d:''};
+        const n = MMW_QA.filter(x=>x.cat===c).length;
+        return `<div class="catcard" onclick="openCat('${c.replace(/'/g,"\\'")}')">
+          <div class="ci">${m.i}</div>
+          <div class="cn">${c}<span class="cc">${n}</span></div>
+          <div class="cd">${m.d}</div></div>`;
+     }).join('')}</div>
+   </div>`).join('');
+}
+const CATORDER = CATGROUPS.flatMap(g=>g.cats);
+function openCat(c){
+  $('b-home').style.display='none';
+  $('b-detail').style.display='';
+  const list = MMW_QA.filter(x=>x.cat===c);
+  const m = CATMETA[c]||{i:'📁'};
+  $('b-title').textContent = m.i+' '+c;
+  $('b-count').textContent = `${list.length}개 질문 — 카드를 누르면 답이 펼쳐집니다`;
+  $('b-results').innerHTML = list.map(it=>cardHTML(it,'',false,true)).join('');
+  const idx = CATORDER.indexOf(c);
+  const prev = idx>0 ? CATORDER[idx-1] : null;
+  const next = idx<CATORDER.length-1 ? CATORDER[idx+1] : null;
+  $('b-nav').innerHTML =
+    (prev?`<button onclick="openCat('${prev.replace(/'/g,"\\'")}');window.scrollTo(0,0)">← ${(CATMETA[prev]||{}).i||''} ${prev}</button>`:'') +
+    (next?`<button onclick="openCat('${next.replace(/'/g,"\\'")}');window.scrollTo(0,0)">${(CATMETA[next]||{}).i||''} ${next} →</button>`:'');
+  window.scrollTo({top:0});
+}
+browseHome();
+
+/* 숫자 빠른참조 */
+$('numgrid').innerHTML = MMW_NUMBERS.map(n=>
+  `<div class="numcard" style="cursor:pointer" onclick="quick('${n.k.replace(/'/g,"\\'")}')"><div class="k">${n.k}</div><div class="v">${n.v}</div></div>`).join('');
+
+/* 개정 변경점 */
+$('chglist').innerHTML = MMW_CHANGES.map(c=>
+  `<div class="chg"><span class="area">${c.area}</span>
+   <div class="b5"><span class="lbl">5차</span>${c.b5}</div>
+   <div class="a6"><span class="lbl">6차</span>${c.a6}</div>
+   <div class="why">💡 ${c.why}</div></div>`).join('');
+
+/* ══════════ 체크리스트 ══════════ */
+const CK_KEY = 'mmw_check_v1';
+let ckState = {};
+try{ ckState = JSON.parse(localStorage.getItem(CK_KEY)||'{}'); }catch(e){ ckState={}; }
+function ckSave(){ try{ localStorage.setItem(CK_KEEP_KEY(), JSON.stringify(ckState)); }catch(e){} }
+function CK_KEEP_KEY(){ return CK_KEY; }
+function ckItemHTML(it, kind){
+  const key = kind+it.no, v = ckState[key];
+  const btns = kind==='m'
+    ? `<button class="ok${v==='ok'?' sel':''}" onclick="ckSet('${key}','ok')">적합 +3</button>
+       <button class="bad${v==='bad'?' sel':''}" onclick="ckSet('${key}','bad')">부적합 0</button>`
+    : `<button class="ok${v==='ok'?' sel':''}" onclick="ckSet('${key}','ok')">우수</button>
+       ${[29,30,34].includes(it.no)?'':`<button class="mid${v==='mid'?' sel':''}" onclick="ckSet('${key}','mid')">보통</button>`}
+       <button class="bad${v==='bad'?' sel':''}" onclick="ckSet('${key}','bad')">미흡</button>`;
+  return `<div class="ck" id="ck-${key}">
+    <div class="top"><span class="no">${it.no}</span><span class="tt">${it.t}</span><span class="ar">${it.area}</span></div>
+    ${kind==='m'&&it.fail?`<div class="fail">✗ 부적합 기준: ${it.fail}</div>`:''}
+    <div class="btns">${btns}<button class="tipbtn" onclick="this.closest('.ck').classList.toggle('tipopen')">점검기준 보기</button></div>
+    <div class="tip">${fmtA(it.tip)}${kind==='g'?`<div style="margin-top:5px"><b>배점:</b> ${it.pts}</div>`:''}</div>
+  </div>`;
+}
+function ckRender(){
+  $('ck-mand').innerHTML = MMW_CHECK.mandatory.map(it=>ckItemHTML(it,'m')).join('');
+  $('ck-guide').innerHTML = MMW_CHECK.guide.map(it=>ckItemHTML(it,'g')).join('');
+  ckScore();
+}
+function ckSet(key, v){
+  ckState[key] = (ckState[key]===v) ? undefined : v;
+  ckSave(); ckRender();
+}
+function guidePts(no, v){
+  // 항목 19·23은 우수2/보통1, 29·30·34는 우수/미흡 2단계(우수3)
+  const two = {19:[2,1],23:[2,1]};
+  const max = two[no] ? two[no][0] : 3;
+  const mid = two[no] ? two[no][1] : 1.5;
+  if(v==='ok') return max;
+  if(v==='mid') return mid;
+  return 0;
+}
+function ckScore(){
+  let got=0, answered=0, total=0;
+  MMW_CHECK.mandatory.forEach(it=>{ total+=3; const v=ckState['m'+it.no]; if(v){answered++; if(v==='ok')got+=3;} });
+  MMW_CHECK.guide.forEach(it=>{ const two={19:2,23:2}; total+= two[it.no]||3; const v=ckState['g'+it.no]; if(v){answered++; got+=guidePts(it.no,v);} });
+  const all = MMW_CHECK.mandatory.length + MMW_CHECK.guide.length;
+  if(answered===0){ $('ck-score').textContent='–'; $('ck-grade').textContent='체크 전'; $('ck-detail').textContent=`준수사항 16항목(48점) + 지도·권장 18항목(52점) = ${total}점 만점`; return; }
+  const pct = Math.round(got*10)/10;
+  $('ck-score').textContent = `${pct}점`;
+  let g='E'; if(pct>=90)g='A'; else if(pct>=80)g='B'; else if(pct>=70)g='C'; else if(pct>=60)g='D';
+  $('ck-grade').textContent = answered<all ? `${g}등급(진행중)` : `${g}등급`;
+  $('ck-detail').textContent = `${answered}/${all}개 항목 체크 · 만점 ${total}점 기준 (감점 항목 별도)`;
+}
+function ckReset(){ if(confirm('체크 내용을 모두 지울까요?')){ ckState={}; ckSave(); ckRender(); } }
+function ckPrint(){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('print-target'));
+  $('panel-check').classList.add('print-target');
+  window.print();
+}
+ckRender();
+
+/* ══════════ 챗봇 (지침서 기반 · Gemini) ══════════ */
+let CHAT = [], chatBusy = false;
+function aiFmt(t){
+  let x = esc(t);
+  x = x.replace(/\*\*([^*\n]+)\*\*/g,'<b>$1</b>');
+  const lines = x.split(/\n/); let out=[], refs=[];
+  for(const ln of lines){
+    if(/^\s*(근거|출처)\s*[:：]/.test(ln)) refs.push(ln.trim());
+    else out.push(ln);
+  }
+  let html = out.join('\n').replace(/\n{2,}/g,'\n').split('\n').map(l=>{
+    const b=l.trim(); if(!b) return '';
+    if(/^[•\-\*]/.test(b)) return '<div class="li">• '+b.replace(/^[•\-\*]\s*/,'')+'</div>';
+    return '<div>'+b+'</div>';
+  }).join('');
+  html = fmtLike(html);
+  if(refs.length) html += '<div class="aref">📖 '+refs.map(esc0=>esc0).join('<br>')+'</div>';
+  return html;
+}
+function fmtLike(html){ // ①②③·※ 줄 분리 (fmtA와 동일 규칙, 이미 div 구조인 경우 대비)
+  return html.replace(/([\u2460-\u2473])\s*/g,'<br>$1 ').replace(/(<div[^>]*>)<br>/g,'$1');
+}
+function chatPush(m){ CHAT.push(m); renderChat(); }
+function renderChat(typing){
+  const el = $('chat-list');
+  el.innerHTML = CHAT.map(m=>{
+    if(m.role==='user') return `<div class="msg user"><div class="bb">${esc(m.text)}</div></div>`;
+    const cls = m.ai ? 'msg bot ai' : 'msg bot';
+    let inner = '';
+    if(m.ai) inner += '<span class="aibadge">🤖 AI · 지침서 기반</span><br>';
+    if(m.off) inner += '<span class="offbadge">📖 지침서 검색 답변</span><br>';
+    inner += m.html !== undefined ? m.html : aiFmt(m.text);
+    if(m.rel && m.rel.length) inner += '<div class="relchips">'+m.rel.map(q=>`<button onclick="chatAsk('${q.replace(/'/g,"\\'")}')">${q.length>26?q.slice(0,26)+'…':q}</button>`).join('')+'</div>';
+    if(m.ai) inner += '<div class="disc">⚠️ AI 답변 — 수치·기준은 「지침서 검색」 탭 원문 요약과 교차 확인하고, 판단이 필요한 사안은 교육(지원)청에 확인하세요.</div>';
+    return `<div class="${cls}"><div class="avatar">${m.ai?'🤖':'🌱'}</div><div class="bb">${inner}</div></div>`;
+  }).join('') + (typing ? `<div class="msg bot ai"><div class="avatar">🤖</div><div class="bb"><span class="aispin"></span>지침서를 뒤져 답을 정리하고 있어요…</div></div>` : '');
+  el.lastElementChild && el.lastElementChild.scrollIntoView({block:'end', behavior:'smooth'});
+}
+function chatAsk(q){
+  switchTab('chat');
+  $('chat-in').value = q;
+  sendChat();
+}
+function histForServer(){
+  return CHAT.filter(m=>!m.greet).slice(-8).map(m=>({
+    role: m.role,
+    text: m.role==='user' ? m.text : (m.html!==undefined ? m.html.replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim() : m.text)
+  }));
+}
+async function sendChat(){
+  if(chatBusy) return;
+  const t = $('chat-in').value.trim();
+  if(!t) return;
+  $('chat-in').value = '';
+  chatPush({role:'user', text:t});
+  chatBusy = true; $('chat-send').disabled = true;
+  renderChat(true);
+  const top = search(t).slice(0,4);
+  try{
+    const r = await fetch('/api/ask', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ messages: histForServer() })
+    });
+    let j=null; try{ j = await r.json(); }catch(e){}
+    if(!r.ok || !j || !j.answer) throw new Error((j&&j.error) || 'AI 서버에 연결하지 못했어요.');
+    chatPush({role:'model', text:j.answer, ai:true, rel: top.slice(0,2).map(x=>x.q)});
+  }catch(e){
+    if(top.length){
+      const it = top[0];
+      chatPush({role:'model', off:true,
+        html:'<b>'+esc(it.q)+'</b><br>'+fmtA(it.a)+'<div class="aref">📖 '+esc(it.ref)+'</div>',
+        rel: top.slice(1,4).map(x=>x.q)});
+    }else{
+      chatPush({role:'model', off:true,
+        html:'음… 지침서에서 바로 찾지 못했어요. 🥲 단어를 짧게 바꿔 다시 물어봐 주세요. (예: "묵 가열", "소독 농도")<div class="nt">'+esc(e.message||'')+' — 배포 후에는 AI가 이런 질문도 지침서 기반으로 답해드려요.</div>'});
+    }
+  }finally{
+    chatBusy = false; $('chat-send').disabled = false;
+    renderChat();
+  }
+}
+$('chat-in').addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); sendChat(); }});
+chatPush({role:'model', greet:true,
+  html:'안녕하세요! <b>무.물.위</b>예요 🌱 「학교급식 위생관리 지침서」 <b>제6차 개정판을 기반으로만</b> 답해드려요.<div class="li">• "도토리묵무침에서 묵도 가열해야 해?"</div><div class="li">• "락스 100ppm은 어떻게 희석해?"</div><div class="li">• "냉장고가 고장 났는데 식재료 어떡해?"</div>처럼 편하게 물어보세요. 답변 끝에는 항상 <b>지침서 근거(장·쪽)</b>가 붙어요.'});
+
+/* 글자 크게 모드 */
+function toggleBig(){
+  document.body.classList.toggle('big');
+  var on = document.body.classList.contains('big');
+  document.getElementById('bigbtn').textContent = on ? '가⁻ 글자 작게' : '가⁺ 글자 크게';
+  try{ localStorage.setItem('mmw_big', on?'1':''); }catch(e){}
+}
+try{ if(localStorage.getItem('mmw_big')){ document.body.classList.add('big'); document.getElementById('bigbtn').textContent='가⁻ 글자 작게'; } }catch(e){}
+
+/* ══════════ 급식소리함 로그인 게이트 + 관리자 잠금(tier 3) ══════════ */
+const MMW_ADMIN = ['thfl4811@gmail.com']; // 공개 전까지 관리자 전용
+window.addEventListener('sori-ready', function(){
+  try{
+    const email = ((window.SORI && window.SORI.user && window.SORI.user.email) || '').toLowerCase();
+    if(!MMW_ADMIN.includes(email)){
+      document.body.innerHTML = '<div class="lockscreen"><div class="in"><div class="emoji">🌱</div>'+
+        '<h2>무.물.위는 아직 준비 중이에요</h2>'+
+        '<p>한창 만드는 중이에요. 개발이 끝나는 대로 급식소리함에서 바로 열립니다!</p>'+
+        '<p style="margin-top:14px"><a href="https://geupsik-soriham.vercel.app/" style="color:#15803d;font-weight:700">← 급식소리함으로 돌아가기</a></p></div></div>';
+    }
+  }catch(e){}
+});
+(function loadGate(){
+  var s=document.createElement('script'); s.src='sori-gate.js';
+  s.onerror=function(){ var s2=document.createElement('script'); s2.src='https://geupsik-soriham.vercel.app/sori-gate.js'; document.head.appendChild(s2); };
+  document.head.appendChild(s);
+})();
+</script>
+</body>
+</html>
