@@ -33,7 +33,7 @@ async function callOpenAI(key, messages) {
         ...messages.map(m => ({ role: m.role === 'model' ? 'assistant' : 'user', content: m.text }))
       ],
       temperature: 0.2,
-      max_tokens: 1500
+      max_tokens: 2500
     })
   });
   const j = await r.json().catch(() => null);
@@ -58,7 +58,11 @@ async function callGemini(key, messages) {
       body: JSON.stringify({
         system_instruction: { parts: [{ text: SYSTEM }] },
         contents,
-        generationConfig: { temperature: 0.2, maxOutputTokens: 1500 }
+        generationConfig: {
+          temperature: 0.2,
+          maxOutputTokens: 4096,
+          ...(/2\.5/.test(model) ? { thinkingConfig: { thinkingBudget: 0 } } : {})
+        }
       })
     }
   );
@@ -70,7 +74,10 @@ async function callGemini(key, messages) {
       : msg;
     return { error: friendly };
   }
-  return { answer: (j?.candidates?.[0]?.content?.parts?.map(p => p.text || '').join('') || '').trim(), model };
+  const cand = j?.candidates?.[0];
+  let answer = (cand?.content?.parts?.map(p => p.text || '').join('') || '').trim();
+  if (cand?.finishReason === 'MAX_TOKENS' && answer) answer += '\n\n…(답변이 길어 일부 잘렸어요. "이어서 답해줘"라고 보내면 계속 이어갑니다.)';
+  return { answer, model };
 }
 
 export default async function handler(req, res) {
