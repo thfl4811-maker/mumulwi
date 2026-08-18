@@ -1,0 +1,1277 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>무.물.위 — 무엇이든 물어보세요, 위생지침서</title>
+<meta name="description" content="학교급식 위생관리 지침서(제6차 개정) 기반 Q&A 검색 도구 — 급식소리함">
+<style>
+:root{
+  --g900:#14532d; --g700:#15803d; --g600:#16a34a; --g100:#dcfce7; --g50:#f0fdf4;
+  --ink:#1f2937; --sub:#6b7280; --line:#e5e7eb; --bg:#f6faf7; --card:#ffffff;
+  --amber:#b45309; --amber-bg:#fffbeb; --blue:#1d4ed8; --blue-bg:#eff6ff; --red:#b91c1c;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:'Pretendard','Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif;background:var(--bg);color:var(--ink);line-height:1.75;font-size:16px}
+body.big{zoom:1.18}
+.wrap{max-width:860px;margin:0 auto;padding:0 14px 90px}
+header{background:linear-gradient(160deg,#166534,#15803d 55%,#16a34a);color:#fff;padding:26px 14px 20px;border-radius:0 0 22px 22px}
+.hwrap{max-width:860px;margin:0 auto}
+.htop{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+h1{font-size:25px;letter-spacing:-.5px}
+h1 .badge{font-size:11.5px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);padding:2px 9px;border-radius:99px;vertical-align:4px;margin-left:8px;font-weight:600}
+.hsub{opacity:.92;font-size:13.5px;margin-top:5px}
+.hsub b{font-weight:700}
+.searchbox{margin-top:16px;position:relative}
+.searchbox input{width:100%;padding:15px 48px 15px 18px;border-radius:16px;border:0;font-size:16.5px;box-shadow:0 6px 18px rgba(0,0,0,.18);outline:none;color:var(--ink)}
+.searchbox .go{position:absolute;right:8px;top:50%;transform:translateY(-50%);background:var(--g700);color:#fff;border:0;border-radius:12px;width:38px;height:38px;font-size:17px;cursor:pointer}
+.hotchips{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}
+.hotchips button{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:99px;padding:5px 12px;font-size:12.5px;cursor:pointer;transition:.15s}
+.hotchips button:hover{background:rgba(255,255,255,.28)}
+nav.tabs{display:flex;gap:6px;overflow-x:auto;padding:14px 0 4px;position:sticky;top:0;background:var(--bg);z-index:20;scrollbar-width:none}
+nav.tabs::-webkit-scrollbar{display:none}
+nav.tabs button{flex:0 0 auto;border:1.5px solid var(--line);background:#fff;color:var(--sub);border-radius:99px;padding:8px 15px;font-size:13.5px;font-weight:700;cursor:pointer;transition:.15s}
+nav.tabs button.on{background:var(--g700);border-color:var(--g700);color:#fff}
+.panel{display:none;padding-top:12px}
+.panel.on{display:block}
+.count{font-size:12.5px;color:var(--sub);margin:6px 2px 10px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;margin-bottom:10px;overflow:hidden;transition:box-shadow .15s}
+.card:hover{box-shadow:0 3px 12px rgba(0,0,0,.06)}
+.qrow{display:flex;gap:10px;align-items:flex-start;padding:15px 17px;cursor:pointer;user-select:none}
+.qrow .qmark{flex:0 0 auto;width:26px;height:26px;border-radius:9px;background:var(--g100);color:var(--g700);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;margin-top:1px}
+.qrow .qtxt{flex:1;font-weight:700;font-size:16.3px;letter-spacing:-.2px;line-height:1.55}
+.qrow .cat{flex:0 0 auto;font-size:11px;color:var(--g700);background:var(--g50);border:1px solid var(--g100);padding:2px 8px;border-radius:99px;margin-top:2px;white-space:nowrap}
+.qrow .arrow{flex:0 0 auto;color:#c7cdd4;font-size:12px;margin-top:4px;transition:.2s}
+.card.open .arrow{transform:rotate(90deg)}
+.abox{display:none;padding:2px 18px 16px 52px;font-size:15.6px;color:#2f3a46;line-height:1.9}
+.abox .li{margin:7px 0 0;padding-left:1.35em;text-indent:-1.35em}
+.abox .nt{margin:7px 0 0;padding:7px 11px;background:#f8fafc;border-radius:9px;font-size:14.3px;color:#556070;text-indent:0}
+@media(max-width:640px){.abox{padding-left:17px}}
+.card.open .abox{display:block}
+.abox b{color:var(--g900);background:linear-gradient(transparent 62%, #d3f3de 62%)}
+.ref{margin-top:10px;font-size:12px;color:var(--sub);background:var(--g50);border-left:3px solid var(--g600);padding:6px 10px;border-radius:0 8px 8px 0}
+mark{background:#fde68a;border-radius:3px;padding:0 1px}
+.noresult{background:#fff;border:1.5px dashed var(--line);border-radius:16px;padding:26px 20px;text-align:center;color:var(--sub)}
+.noresult b{color:var(--ink)}
+.noresult .syn{margin-top:8px;font-size:13px}
+.catchips{display:flex;gap:7px;flex-wrap:wrap;margin:4px 0 14px}
+.catchips button{border:1.5px solid var(--line);background:#fff;border-radius:99px;padding:6px 13px;font-size:13px;font-weight:600;color:var(--sub);cursor:pointer}
+.catchips button.on{background:var(--g50);border-color:var(--g600);color:var(--g700)}
+/* 분류별 보기 */
+.grp{margin:4px 0 18px}
+.grp .gh{display:flex;align-items:baseline;gap:8px;margin:0 2px 9px}
+.grp .gh h3{font-size:15.5px;font-weight:800;color:var(--g900);letter-spacing:-.3px}
+.grp .gh .gd{font-size:12px;color:var(--sub)}
+.grp.danger .gh h3{color:var(--red)}
+.catgrid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+@media(min-width:720px){.catgrid{grid-template-columns:repeat(3,1fr)}}
+.catcard{background:#fff;border:1.5px solid var(--line);border-radius:15px;padding:13px 14px;cursor:pointer;transition:.15s;text-align:left}
+.catcard:hover{border-color:var(--g600);box-shadow:0 3px 12px rgba(22,163,74,.10);transform:translateY(-1px)}
+.grp.danger .catcard:hover{border-color:var(--red)}
+.catcard .ci{font-size:22px;line-height:1}
+.catcard .cn{font-size:14.6px;font-weight:800;margin-top:7px;letter-spacing:-.3px}
+.catcard .cn .cc{font-size:11.5px;color:#fff;background:var(--g600);border-radius:99px;padding:1px 7px;margin-left:5px;vertical-align:2px;font-weight:700}
+.grp.danger .catcard .cn .cc{background:var(--red)}
+.catcard .cd{font-size:12px;color:var(--sub);margin-top:3px;line-height:1.5}
+.bback{display:flex;align-items:center;gap:10px;margin:2px 0 10px}
+.bback button{border:1.5px solid var(--line);background:#fff;border-radius:99px;padding:7px 14px;font-size:13px;font-weight:700;color:var(--sub);cursor:pointer}
+.bback button:hover{border-color:var(--g600);color:var(--g700)}
+.bback span{font-size:16px;font-weight:800;color:var(--g900)}
+.bnav{display:flex;gap:8px;margin-top:14px}
+.bnav button{flex:1;border:1.5px solid var(--line);background:#fff;border-radius:12px;padding:11px;font-size:13px;font-weight:700;color:var(--sub);cursor:pointer;text-align:center}
+.bnav button:hover{border-color:var(--g600);color:var(--g700)}
+/* 챗봇 */
+#chat-list{padding:6px 0 8px;min-height:280px}
+.msg{display:flex;margin:10px 0;gap:8px}
+.msg.user{justify-content:flex-end}
+.msg .bb{max-width:88%;border-radius:16px;padding:11px 15px;font-size:15.4px;line-height:1.85}
+.msg.user .bb{background:var(--g700);color:#fff;border-bottom-right-radius:5px}
+.msg.bot .bb{background:#fff;border:1.5px solid var(--line);border-bottom-left-radius:5px;color:#2f3a46}
+.msg.bot.ai .bb{border-color:#c7d2fe}
+.msg .avatar{flex:0 0 auto;width:32px;height:32px;border-radius:11px;background:var(--g100);display:flex;align-items:center;justify-content:center;font-size:17px;margin-top:2px}
+.msg.bot.ai .avatar{background:#e0e7ff}
+.bb .li{margin:6px 0 0;padding-left:1.3em;text-indent:-1.3em}
+.bb .nt{margin:6px 0 0;padding:6px 10px;background:#f8fafc;border-radius:8px;font-size:13.8px;color:#556070;text-indent:0}
+.bb b{color:var(--g900);background:linear-gradient(transparent 62%, #d3f3de 62%)}
+.msg.user .bb b{color:#fff;background:none;text-decoration:underline}
+.bb .aref{margin-top:9px;font-size:12.3px;color:#4338ca;background:#eef2ff;border-left:3px solid #6366f1;padding:6px 10px;border-radius:0 8px 8px 0}
+.bb .offbadge{display:inline-block;font-size:11px;font-weight:800;color:var(--g700);background:var(--g50);border:1px solid var(--g100);border-radius:99px;padding:2px 9px;margin-bottom:7px}
+.bb .aibadge{display:inline-block;font-size:11px;font-weight:800;color:#4338ca;background:#eef2ff;border:1px solid #c7d2fe;border-radius:99px;padding:2px 9px;margin-bottom:7px}
+.bb .disc{margin-top:8px;font-size:11.3px;color:#98a1b0;border-top:1px dashed #e5e7eb;padding-top:6px}
+.relchips{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}
+.relchips button{border:1px solid var(--g100);background:var(--g50);color:var(--g700);border-radius:99px;padding:4px 11px;font-size:12px;font-weight:600;cursor:pointer}
+.chatbar{position:sticky;bottom:0;background:var(--bg);padding:10px 0 14px;display:flex;gap:8px;z-index:18}
+.chatbar input{flex:1;padding:14px 16px;border-radius:14px;border:1.5px solid var(--line);font-size:16px;outline:none;background:#fff}
+.chatbar input:focus{border-color:var(--g600)}
+.chatbar button{background:var(--g700);color:#fff;border:0;border-radius:14px;padding:0 20px;font-size:15px;font-weight:800;cursor:pointer}
+.chatbar button:disabled{opacity:.55;cursor:wait}
+.searchbox.in-panel{margin:2px 0 10px}
+.searchbox.in-panel input{border:1.5px solid var(--line);box-shadow:none}
+.searchbox.in-panel input:focus{border-color:var(--g600)}
+/* AI 답변 */
+.aibar{display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,#eef2ff,#f5f3ff);border:1.5px solid #c7d2fe;border-radius:14px;padding:11px 14px;margin:0 0 12px;flex-wrap:wrap}
+.aibar .t{font-size:13.5px;color:#4338ca;flex:1;min-width:150px}
+.aibar button{background:#4f46e5;color:#fff;border:0;border-radius:10px;padding:9px 16px;font-size:13.5px;font-weight:800;cursor:pointer}
+.aibar button:disabled{opacity:.55;cursor:wait}
+.aicard{background:#fff;border:1.5px solid #c7d2fe;border-radius:16px;margin:0 0 12px;overflow:hidden}
+.aicard .ahead{display:flex;align-items:center;gap:8px;background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff;padding:10px 15px;font-size:13.5px;font-weight:800}
+.aicard .ahead .m{margin-left:auto;font-size:10.5px;opacity:.8;font-weight:600}
+.aicard .abody{padding:13px 16px;font-size:15.2px;line-height:1.85;color:#2f3a46}
+.aicard .abody .aref{margin-top:10px;font-size:12.5px;color:#4338ca;background:#eef2ff;border-left:3px solid #6366f1;padding:6px 10px;border-radius:0 8px 8px 0}
+.aicard .adisc{padding:8px 16px 12px;font-size:11.5px;color:#8b93a2;border-top:1px dashed #e5e7eb}
+.aispin{display:inline-block;width:15px;height:15px;border:2.5px solid #c7d2fe;border-top-color:#4f46e5;border-radius:50%;animation:sp 1s linear infinite;vertical-align:-3px;margin-right:6px}
+@keyframes sp{to{transform:rotate(360deg)}}
+/* 숫자 빠른참조 */
+.numgrid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+@media(max-width:640px){.numgrid{grid-template-columns:1fr}}
+.numcard{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.numcard .k{font-size:12.5px;color:var(--sub);font-weight:700}
+.numcard .v{font-size:14.5px;font-weight:800;color:var(--g900);margin-top:3px;letter-spacing:-.2px}
+/* 개정 변경점 */
+.chg{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:9px}
+.chg .area{display:inline-block;font-size:11px;font-weight:800;color:var(--blue);background:var(--blue-bg);border-radius:99px;padding:2px 9px;margin-bottom:8px}
+.chg .b5,.chg .a6{font-size:13.8px;padding:7px 11px;border-radius:9px;margin-top:5px}
+.chg .b5{background:#f9fafb;color:var(--sub);text-decoration-color:#d1d5db}
+.chg .a6{background:var(--g50);color:var(--ink)}
+.chg .lbl{font-size:10.5px;font-weight:800;margin-right:6px;border-radius:5px;padding:1px 6px;vertical-align:1px}
+.chg .b5 .lbl{background:#e5e7eb;color:#6b7280}
+.chg .a6 .lbl{background:var(--g600);color:#fff}
+.chg .why{font-size:12px;color:var(--amber);margin-top:7px}
+/* 체크리스트 */
+.scorebar{position:sticky;top:46px;z-index:15;background:#fff;border:1.5px solid var(--g600);border-radius:14px;padding:10px 16px;display:flex;align-items:center;gap:14px;margin-bottom:12px;flex-wrap:wrap;box-shadow:0 4px 14px rgba(0,0,0,.06)}
+.scorebar .sc{font-size:21px;font-weight:900;color:var(--g900)}
+.scorebar .gr{font-size:15px;font-weight:800;padding:3px 12px;border-radius:99px;background:var(--g100);color:var(--g700)}
+.scorebar .dt{font-size:12px;color:var(--sub);flex:1;min-width:120px}
+.scorebar button{border:1px solid var(--line);background:#fff;border-radius:9px;padding:6px 11px;font-size:12px;cursor:pointer;color:var(--sub)}
+.cksec{font-size:14px;font-weight:800;color:var(--g900);margin:18px 2px 8px}
+.ck{background:#fff;border:1px solid var(--line);border-radius:14px;padding:13px 15px;margin-bottom:8px}
+.ck .top{display:flex;gap:9px;align-items:flex-start}
+.ck .no{flex:0 0 auto;width:25px;height:25px;border-radius:8px;background:#f3f4f6;color:var(--sub);font-size:12.5px;font-weight:800;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.ck .tt{flex:1;font-size:14.3px;font-weight:700;letter-spacing:-.2px}
+.ck .ar{font-size:10.5px;color:var(--sub);background:#f3f4f6;border-radius:99px;padding:2px 8px;white-space:nowrap;margin-top:2px}
+.ck .btns{display:flex;gap:6px;margin-top:9px;margin-left:34px;flex-wrap:wrap}
+.ck .btns button{border:1.5px solid var(--line);background:#fff;border-radius:9px;padding:5px 13px;font-size:12.5px;font-weight:700;color:var(--sub);cursor:pointer}
+.ck .btns button.ok.sel{background:var(--g600);border-color:var(--g600);color:#fff}
+.ck .btns button.mid.sel{background:#f59e0b;border-color:#f59e0b;color:#fff}
+.ck .btns button.bad.sel{background:#ef4444;border-color:#ef4444;color:#fff}
+.ck .tipbtn{margin-left:auto;border:0;background:none;color:var(--blue);font-size:12px;cursor:pointer;font-weight:600}
+.ck .tip{display:none;margin:9px 0 0 34px;font-size:12.8px;color:#4b5563;background:var(--blue-bg);border-radius:9px;padding:8px 12px}
+.ck.tipopen .tip{display:block}
+.ck .fail{margin:7px 0 0 34px;font-size:12px;color:var(--red)}
+.dnote{background:var(--amber-bg);border:1px solid #fde68a;border-radius:12px;padding:11px 14px;font-size:12.8px;color:var(--amber);margin:12px 0}
+footer{margin-top:34px;padding:18px 4px;border-top:1px solid var(--line);font-size:12px;color:var(--sub);text-align:center;line-height:1.9}
+footer a{color:var(--g700)}
+.lockscreen{position:fixed;inset:0;background:var(--bg);z-index:999;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px}
+.lockscreen .in{max-width:380px}
+.lockscreen .emoji{font-size:44px}
+.lockscreen h2{margin:12px 0 8px;font-size:20px}
+.lockscreen p{color:var(--sub);font-size:14px}
+@media print{
+  header,.tabs,.searchbox,.hotchips,.scorebar button,footer{display:none!important}
+  .panel{display:none}.panel.print-target{display:block}
+  body{background:#fff}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hwrap">
+    <div class="htop">
+      <h1>🌱 무.물.위<span class="badge">6차 개정 반영</span></h1>
+      <button id="bigbtn" style="margin-left:auto;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.4);color:#fff;border-radius:99px;padding:5px 13px;font-size:12.5px;cursor:pointer;font-weight:700" onclick="toggleBig()">가⁺ 글자 크게</button>
+    </div>
+    <div class="hsub"><b>무</b>엇이든 <b>물</b>어보세요, <b>위</b>생지침서 — 학교급식 위생관리 지침서(교육부, 2026.3 제6차 개정) 기반</div>
+    <div class="hotchips" id="hotchips"></div>
+  </div>
+</header>
+
+<div class="wrap">
+  <nav class="tabs" id="tabs">
+    <button data-t="chat" class="on">💬 챗봇</button>
+    <button data-t="search">🔎 지침서 검색</button>
+    <button data-t="browse">📚 분류별 보기</button>
+    <button data-t="num">🌡️ 숫자 빠른참조</button>
+    <button data-t="chg">🆕 6차 개정 변경점</button>
+    <button data-t="check">✅ 위생점검 자가진단</button>
+  </nav>
+
+  <section class="panel on" id="panel-chat">
+    <div id="chat-list"></div>
+    <div class="chatbar">
+      <input id="chat-in" type="text" placeholder="무엇이든 물어보세요 — 예) 도토리묵무침, 묵도 가열해?" autocomplete="off" enterkeyhint="send">
+      <button id="chat-send" onclick="sendChat()">보내기</button>
+    </div>
+  </section>
+
+  <section class="panel" id="panel-search">
+    <div class="searchbox in-panel">
+      <input id="q" type="search" placeholder="예) 보건증 주기 · 락스 희석 · 냉장고 고장 · 해동 온도 …" autocomplete="off" enterkeyhint="search">
+      <button class="go" onclick="doSearch()" aria-label="검색">🔍</button>
+    </div>
+    <div class="count" id="s-count">지침서를 정리한 실무 Q&A를 바로 찾아봅니다. 답변은 모두 지침서 근거(장·쪽)와 함께 나옵니다.</div>
+    <div id="ai-area"></div>
+    <div id="s-results"></div>
+  </section>
+
+  <section class="panel" id="panel-browse">
+    <div id="b-home"></div>
+    <div id="b-detail" style="display:none">
+      <div class="bback"><button onclick="browseHome()">← 분류 전체 보기</button><span id="b-title"></span></div>
+      <div class="count" id="b-count"></div>
+      <div id="b-results"></div>
+      <div class="bnav" id="b-nav"></div>
+    </div>
+  </section>
+
+  <section class="panel" id="panel-num">
+    <div class="count">현장에서 가장 자주 찾는 숫자 기준만 모았어요. 카드를 누르면 관련 Q&A를 검색합니다.</div>
+    <div class="numgrid" id="numgrid"></div>
+  </section>
+
+  <section class="panel" id="panel-chg">
+    <div class="count">제5차(2021) → 제6차(2026.3) 주요 변경 사항 · 근거: 지침서 부록 8 「주요 개정사항」 + 2026 하반기 직무연수 자료</div>
+    <div id="chglist"></div>
+  </section>
+
+  <section class="panel" id="panel-check">
+    <div class="scorebar">
+      <span class="sc" id="ck-score">–</span>
+      <span class="gr" id="ck-grade">체크 전</span>
+      <span class="dt" id="ck-detail">준수사항 16항목(48점) + 지도·권장 18항목(52점) = 100점</span>
+      <button onclick="ckReset()">초기화</button>
+      <button onclick="ckPrint()">인쇄</button>
+    </div>
+    <div class="dnote">교육청 위생점검(연 2회, 학기별 1회) 대비 자가진단용입니다. 등급: A 90점↑ · B 80~89 · C 70~79 · D 60~69 · E 60점 미만.
+    직전 지적 미이행(-10/-5), 행정처분(-10), 식중독 발생(-10)은 별도 감점됩니다. 실제 평가는 점검자 판단에 따릅니다.</div>
+    <div class="cksec">📋 학교급식 위생관리기준 준수사항 (16항목 · 적합 3점 / 부적합 0점)</div>
+    <div id="ck-mand"></div>
+    <div class="cksec">📝 학교급식 지도 및 권장사항 (18항목 · 우수 / 보통 / 미흡)</div>
+    <div id="ck-guide"></div>
+  </section>
+
+  <footer>
+    ⓒ 급식"소리"함 · 무.물.위 (무엇이든 물어보세요, 위생지침서)<br>
+    내용 출처: 「학교급식 위생관리 지침서」 제6차 개정판(교육부·한국교육환경보호원, 2026.3) — 본 도구는 이해를 돕기 위한 참고용이며, 실제 업무는 반드시 지침서 원문과 교육(지원)청 안내를 따르세요.<br>
+    <a href="https://geupsik-soriham.vercel.app/" target="_blank">← 급식소리함 포털로</a>
+  </footer>
+</div>
+
+<script>
+// 무.물.위 데이터 1부 — 식중독 대응 / 시설·설비 / 개인위생
+// ref: 학교급식 위생관리 지침서 제6차 개정판(교육부, 2026.3) 기준 쪽번호
+window.MMW_QA = (window.MMW_QA || []).concat([
+
+// ───────── 식중독 대응 ─────────
+{cat:'식중독 대응', q:'식중독 의심환자가 생기면 언제, 어디에 신고하나요?', hot:true,
+ a:'동일한 원인으로 추정되는 설사 등 식중독 유사증세 환자가 <b>2인 이상 동시에 발생</b>하면, 학교장은 인지 <b>즉시</b> ①교육(지원)청과 ②시·군·구(보건소)에 신속히 보고(신고)해야 합니다. 시·군·구 위생·감염부서는 식약처와 시·도에 지체없이 발생보고합니다. 또한 식중독 사고 발생 시 <b>지체 없이 학교안전공제회에 통지</b>해야 하며, 위반 시 과태료가 부과됩니다.',
+ ref:'제1장 3. 식중독 관리 (p.10~11)', tags:['신고','보고','2인','2명','학교안전공제회','발생','의심환자','유증상자']},
+
+{cat:'식중독 대응', q:'식중독 발생이 의심될 때 보존식과 급식실은 어떻게 해야 하나요?', hot:true,
+ a:'역학조사를 위해 <b>보존식을 훼손·폐기하지 않아야</b> 하며, <b>먹는 물에 대한 소독도 실시하지 않아야</b> 합니다. 정확한 원인 규명을 위해 현장을 보존하고, 보건소의 역학조사 가검물(보존식·음용수 등) 수거 <b>이후에</b> 폐기 및 소독을 실시합니다. 보존식을 임의로 폐기하거나 대체해 역학조사에 지장을 주면 담당자·관리자가 문책될 수 있고, 식중독 발생 시 보존식·식재료를 폐기·훼손하면 과태료 500만원(1회)~1,000만원(3회)이 부과됩니다.',
+ ref:'제1장 3. 식중독 관리 (p.11~12)', tags:['보존식','폐기','소독','역학조사','현장보존','가검물']},
+
+{cat:'식중독 대응', q:'식중독 대책반은 어떻게 구성하나요?',
+ a:'평소 학교 단위의 <b>식중독 대책반</b>을 구성·훈련해 두어야 합니다. 구성(예시)은 ①<b>총괄대책반</b>(지휘·감독, 학교운영위원회 소집, 언론 대응, 치료·보상, 급식 재개 결정) ②<b>환자파악반</b>(추가 발생 현황 파악) ③<b>환자이송반</b>(후송, 입원 학생 관리) ④<b>역학조사협력반</b>(역학조사·검체 채취·소독 협조) ⑤<b>학사대책반</b>(가정통신문, 수업결손 대책) ⑥<b>행·재정지원반</b>(행정·예산 지원)입니다. 식중독 모의훈련 실시가 권장됩니다.',
+ ref:'제1장 3. 식중독 관리, 표1 (p.10~11)', tags:['대책반','비상대책반','조직','구성','훈련','모의훈련']},
+
+{cat:'식중독 대응', q:'식중독 발생 시 단계별로 무엇을 해야 하나요?',
+ a:'<b>평상시</b> 교직원 사전교육·의심환자 모니터링·모의훈련 → <b>1단계(발생인지)</b> 보건실 관찰, 의심 학생은 역학조사반 도착 시까지 귀가 보류, 담임교사 통한 유증상자 파악(손들기·문자 등 부적절한 방법 금지), 학교장 주재 대책회의 → <b>2단계(발생보고)</b> 시·군·구와 교육청에 유선 보고, 식중독 조기경보시스템 현행화 → <b>3단계(대책반 가동)</b> 급식 잠정 중단 협의(방역당국과 협의해 학교장 결정), 대체급식 방안 → <b>4단계(원인·역학조사)</b> 보존식·환경검체 수거 준비, 직접면접 설문조사 협조 → <b>5단계</b> 급식실 대청소·소독 → <b>6단계</b> 유증상자 모니터링, 예방교육, 급식 재개 협의.',
+ ref:'제1장 3. 식중독 관리, 표2 (p.13~14)', tags:['단계별','수행업무','대응','절차','조기경보시스템','급식중단']},
+
+{cat:'식중독 대응', q:'식중독 후 급식은 언제 재개할 수 있나요?',
+ a:'<b>단순 식중독</b>은 발생원인이 제거되어 재발요인이 없다고 판단되면, 급식실·설비 청소와 소독, 조리기기 작동점검, 학교급식종사자 교육을 실시한 후 재개합니다. <b>세균성이질 등 수인성·식품매개 감염병</b>으로 확인된 경우에는 유행이 없고 위생적 환경이 조성되며 종사자 보균 검사결과가 안전하다고 판단되면 <b>마지막 확진 환자 발생 후 1주일 이후</b>에 재개할 수 있습니다(최종 시점은 보건당국 역학조사 결과에 따라 조정).',
+ ref:'제1장 3. 식중독 관리 (p.12)', tags:['재개','급식재개','1주일','수인성','감염병','세균성이질']},
+
+{cat:'식중독 대응', q:'식중독을 일으킨 납품업체는 어떻게 조치하나요?',
+ a:'업체가 공급한 식재료·급식품으로 식중독 등 위생사고가 발생했을 경우 <b>계약이 해지됨을 계약서에 반드시 명시</b>해야 하며, 학교장은 해당 업체와의 계약 해지 및 민·형사상 책임을 촉구합니다. 역학조사 결과에 따라 원인 제공자·관리자에 대한 조치도 취해야 합니다.',
+ ref:'제1장 3. 식중독 관리 (p.13)', tags:['납품업체','계약해지','제재','원인제공자','책임']},
+
+{cat:'식중독 대응', q:'교내 식중독 감시체계는 어떻게 운영하나요?',
+ a:'식중독은 통상 원인 식품 섭취 후 30분~40시간 이내 설사·구토 등 위장증상이 집단으로 나타납니다. ①<b>담임교사</b>는 매일 결석·조퇴·지각 학생 수와 이유를 파악해 평소와 다른 양상을 모니터링 ②<b>보건(담당)교사</b>는 보건실 이용자 수·주요 증상을 평소와 비교 ③<b>학교장</b>은 유사증세 환자 2인 이상 동시 발생 시 즉시 보고합니다.',
+ ref:'제1장 3. 식중독 관리 (p.10)', tags:['감시체계','모니터링','담임','보건교사','잠복기']},
+
+{cat:'식중독 대응', q:'주요 식중독균의 잠복기와 증상이 궁금해요.',
+ a:'<b>황색포도상구균</b> 1~6시간(심한 구토)·<b>바실러스세레우스(구토형)</b> 1~6시간·<b>장염비브리오</b> 4~30시간·<b>클로스트리디움 퍼프린젠스</b> 8~24시간·<b>살모넬라</b> 12~36시간(설사·발열·복통)·<b>노로바이러스</b> 24~48시간(2차감염 O)·<b>병원성대장균(ETEC)</b> 6~48시간·<b>EHEC</b> 2~6일(혈변)·<b>캠필로박터</b> 2~7일·<b>리스테리아</b> 1~6주(임산부 유산 위험). 세균성은 대부분 2차감염이 없지만 살모넬라와 바이러스성(노로 등)은 2차감염이 가능합니다.',
+ ref:'부록 1. 식중독 발생원인 및 예방원리 (p.172~173)', tags:['잠복기','증상','노로바이러스','살모넬라','캠필로박터','포도상구균','병원체','2차감염']},
+
+{cat:'식중독 대응', q:'식중독 예방 3대 원칙이 뭔가요?',
+ a:'①<b>청결과 소독의 원칙</b> — 청결한 재료·장소·기구·취급자 등 광범위한 청결과 소독 ②<b>신속의 원칙</b> — 무균상태는 불가능하므로 세균이 증식하지 못하게 신속히 처리 ③<b>냉각 또는 가열의 원칙</b> — 식중독균은 <b>5~57℃</b>의 위험온도대에서 증식하므로 이 범위를 벗어난 온도로 보관(0~5℃ 거의 발육 못함, 10~37℃ 활발히 증식, 57~64℃ 증식 불가, 65℃ 이상 대부분 사멸).',
+ ref:'부록 1. 식중독 발생원인 및 예방원리 (p.174~175)', tags:['3대원칙','예방','위험온도','5도','57도','청결','신속','냉각','가열']},
+
+{cat:'식중독 대응', q:'최근 학교급식 식중독은 얼마나, 무엇 때문에 발생했나요?',
+ a:'2020~2024년 교육부 보고 기준 총 <b>109건, 환자 4,703명</b>이 발생했습니다. 원인균은 <b>병원성대장균(34건)</b> > <b>노로바이러스(27건)</b> > 캠필로박터 제주니(7)·살모넬라(7)·황색포도상구균(6) 순이며, 불명도 21건입니다. 과거 역학조사에서는 <b>김치류(총각김치·배추겉절이 등)와 생채소</b>가 추정 감염원인 사례가 많아, 김치 납품업체(제조업체) 보존식 보관 권장, 생채소 소독 철저가 강조됩니다.',
+ ref:'부록 1. 식중독 사례 (p.177~178)', tags:['통계','발생현황','원인균','김치','사례','병원성대장균','노로']},
+
+{cat:'식중독 대응', q:'식중독과 수인성·식품매개감염병은 뭐가 다른가요?',
+ a:'식중독은 식품 섭취로 인해 유해 미생물·유독물질에 의해 발생한 감염성·독소형 질환입니다(식품위생법 제2조). 근래에는 식중독과 경구감염병을 명확히 구분하지 않고 병원성 세균·바이러스·원충에 오염된 물/식품 섭취로 장관증상이 발생하는 질환을 총칭해 <b>수인성 및 식품매개감염병</b>으로 분류합니다(질병관리청). 2급 감염병: 콜레라·장티푸스·파라티푸스·세균성이질·장출혈성대장균감염증·A형간염. 노로바이러스 같은 바이러스성은 <b>2차 감염</b>이 가능해 방역조치가 필요합니다.',
+ ref:'제1장 3. / 부록 1 (p.10, 173~174)', tags:['수인성','식품매개감염병','2급감염병','정의','분류']},
+
+// ───────── 시설·설비 ─────────
+{cat:'시설·설비', q:'일반작업구역과 청결작업구역은 어떻게 나누나요?', hot:true,
+ a:'<b>일반작업구역</b>: 검수, 전처리(가열 전·소독 전 식품절단), 식재료 저장, 세척, 소독. <b>청결작업구역</b>: 조리(가열·비가열/가열 후·소독 후 식품절단), 배선, 식기 보관. 조리장은 벽이나 문으로 분리·구획하는 것이 원칙이고, 부득이한 경우 낮은 벽·표지판 등으로 구분해 교차오염을 방지합니다. 위생점검에서는 각 실별 벽·문으로 차단되거나, 바닥에서 <b>약 1m 이상</b> 높이로 구역이 구분되고 구분이 명확하면 "우수"로 평가합니다.',
+ ref:'제2장 1. 시설·설비 위생관리, 표3 (p.18) / 제6장 점검항목 17', tags:['작업구역','일반','청결','구분','구획','교차오염','1m']},
+
+{cat:'시설·설비', q:'조리장 조도(밝기) 기준은 얼마인가요?',
+ a:'<b>검수대 540럭스(lx) 이상</b>, <b>전처리실·조리실 작업대 220럭스(lx) 이상</b>입니다. 식재료 창고와 워크인냉장(동)고도 220lx 이상을 지켜야 하며, 위생점검 시 조도계로 허리 높이에서 측정합니다(날씨와 무관). 전등은 함몰형·방수형으로 하고 유리 파손 시 식품 오염을 막는 보호 장치를 갖춥니다.',
+ ref:'제2장 1. 시설·설비 (p.19~20) / 제6장 점검항목 19', tags:['조도','럭스','540','220','조명','검수대','밝기']},
+
+{cat:'시설·설비', q:'조리장 적정 온도·습도는 얼마인가요?',
+ a:'조리장 내 적정 실내온도는 <b>18℃ 이하</b>가 이상적이나 현실적으로 어려우므로 에어컨 등을 설치해 가능한 낮은 온도를 유지합니다. 적정 실내습도는 <b>50~70%</b>입니다. 냉·난방기 바람이 식품이나 조리된 음식에 직접 닿지 않게 하고, 필터를 주기적으로 세척·소독합니다. 조리장·식품창고에 온·습도계를 비치합니다.',
+ ref:'제2장 1. 시설·설비 (p.20) / 제6장 점검항목 21', tags:['온도','습도','18도','50','70','냉난방','에어컨']},
+
+{cat:'시설·설비', q:'세정대는 몇 조로 설치해야 하나요?',
+ a:'<b>채소 세정대는 3조</b>, <b>어·육류 세정대는 2조</b>를 설치해야 하며, 배수구는 적정 크기로 배수관과 직선으로 연결되는 구조여야 합니다. 식기세척실에는 기물 세척·헹굼·소독이 가능한 <b>3조 세정대</b>를 설치합니다. 세정대는 어·육류용과 채소류용으로 구분 사용하고 사용 전후 세척·소독합니다.',
+ ref:'제2장 1. 시설·설비, 표4 (p.22~23)', tags:['세정대','3조','2조','싱크대','채소','어육류']},
+
+{cat:'시설·설비', q:'급식설비·기구 선정 시 무엇을 확인하나요?',
+ a:'①<b>처리능력</b>(급식 인원 고려, 시간 내 작업 완료) ②<b>내구성·관리 용이성</b>(세척·소독 가능, 녹이 잘 슬지 않는 스테인리스 스틸 STS 304 등) ③<b>경제성</b>(효용가치·사용빈도, 인력·시간 절감) ④<b>안전성</b>(녹·환경호르몬 검출 없는 재질, 압력·가스용기는 허가 제품). <b>플라스틱 소쿠리는 조리용도 사용금지</b>(불가피한 경우 전처리용으로 제한적 사용)이며, 기구는 「기구 및 용기·포장의 기준 및 규격」에 적합한 제품을 사용합니다. 6차 개정에서 전처리실 설비에 <b>살균소독고</b>가 추가되었습니다.',
+ ref:'제2장 1. 시설·설비, 표4~5 (p.22~24)', tags:['설비','기구','선정','스테인리스','플라스틱','소쿠리','살균소독고']},
+
+{cat:'시설·설비', q:'지하수를 조리용수로 쓸 때 주의사항은?',
+ a:'조리용수는 <b>상수도(수돗물) 사용이 원칙</b>입니다. 지하수 사용 시 ①염소 자동주입기 등 <b>소독·살균 장치를 반드시 설치</b> ②「먹는물 수질기준」에 따라 정기 수질검사(결과 3년 보존) ③보온·단열 저수조 설치 ④오존 살균 시 브롬산염 0.01mg/L 이하 관리. 수질검사 미실시 시 과태료 50~150만원, 부적합 지하수 사용 시 400~800만원입니다.',
+ ref:'제2장 1. 급·배수시설 (p.25) / 제6장 점검항목 3', tags:['지하수','조리용수','수질검사','살균장치','상수도','물']},
+
+{cat:'시설·설비', q:'저수조 설치·관리 기준은?',
+ a:'저수조 윗부분은 건축물 등으로부터 <b>100cm 이상</b>, 그 밖의 부분은 <b>60cm 이상</b> 간격을 두고 설치합니다. 건축물 외부 지하 설치 시 분뇨·쓰레기 등 오염원으로부터 <b>5m 이상</b> 떨어져야 하고, 재질은 FRP·스테인리스스틸·콘크리트 등 내부식성이어야 합니다. 잠금장치를 설치하고 정기적으로 청소·위생점검합니다(수도법 시행규칙).',
+ ref:'제2장 1. 급·배수시설 (p.25)', tags:['저수조','물탱크','100cm','60cm','5m']},
+
+{cat:'시설·설비', q:'후드와 덕트는 어떻게 설치·관리하나요?',
+ a:'후드 크기는 조리대보다 <b>사방 15cm 이상</b> 크게, 지면에서 약 <b>1.8m 이상</b> 높이(조리 상단면에서 최대 1.2m 이내)로 설치합니다. 응축수·기름이 조리기구로 떨어지지 않게 몸체 밑 테두리에 홈통을 만들고, 튀김기·부침기 상부에는 기름받이와 필터를 설치합니다. 덕트는 스테인리스 원통형이 바람직하며 가급적 천장 내부에 설치합니다. <b>덕트 청소는 연 2회 이상(방학 중), 전문업체 용역 권장</b>입니다. 위생점검에서 후드 응축수가 식품에 떨어지는 구조이거나 기름입자 제거용 필터 미설치 시 "미흡"입니다.',
+ ref:'제2장 1. 환기시설 (p.27) / 표9 / 제6장 점검항목 20', tags:['후드','덕트','환기','응축수','필터','1.8m','청소']},
+
+{cat:'시설·설비', q:'손 세정대에는 무엇을 갖춰야 하나요?',
+ a:'조리장 내 전용 손 세정대에는 ①냉·온수 공급(약 <b>40℃</b> 온수로 손을 씻을 수 있어야 함) ②비누, 손톱솔, 손소독제 ③종이타월(건조기) ④페달식 휴지통을 갖춥니다. 수도꼭지는 <b>페달식 또는 전자감응식</b>(손을 사용하지 않고 작동), 높이는 팔꿈치까지 세척이 가능하도록 하며, 주변에 손씻기 안내 표지판·포스터를 부착합니다.',
+ ref:'제2장 1. 손 세정대 (p.28)', tags:['손세정대','손씻기','페달식','40도','비누','종이타월']},
+
+{cat:'시설·설비', q:'식재료보관실·소모품보관실 기준은?',
+ a:'식재료 보관실과 소모품 보관실은 <b>분리 설치</b>가 원칙(부득이 함께 사용 시 혼입되지 않게 구분 보관)입니다. 조리실을 통하지 않고 반입 가능해야 하고 출입문은 내부에서만 개폐, 환기·방충·방서 시설을 갖추고, 보관 선반은 바닥에서 <b>15cm 이상</b> 띄웁니다. 직사광선을 피하거나 차광설비를 갖춥니다. 쌀 보관 시 바닥·벽에서 15cm 이상 이격, 나무 깔판 사용 금지입니다.',
+ ref:'제2장 1. 시설·설비 (p.20) / 제6장 점검항목 22', tags:['식품보관실','소모품','창고','15cm','선반','분리']},
+
+{cat:'시설·설비', q:'화장실·탈의실 기준은?',
+ a:'학교급식종사자 <b>전용 화장실</b>은 청결작업구역에 영향을 미치지 않는 장소에 설치하고, 출입문이 조리실에 바로 면하지 않아야 하며, 환풍기 또는 환기창을 설치합니다. 손세척 설비·손건조시설(종이타월)·비누·페달식 휴지통을 갖추고 화장실과 샤워실은 분리 설치가 바람직합니다. 탈의실·휴게실은 외부에서 조리장을 통하지 않고 출입할 수 있어야 하며 위생복과 외출복을 구분 보관하는 옷장을 둡니다.',
+ ref:'제2장 1. 시설·설비 (p.21) / 제6장 점검항목 23', tags:['화장실','탈의실','휴게실','전용','환풍기']},
+
+{cat:'시설·설비', q:'방충·방서 시설은 어떻게 갖추나요?',
+ a:'출입구는 자동문·스프링 도어 등으로 항상 닫힌 상태를 유지하고, <b>에어커튼은 출입문 외부에 설치</b>(바람은 바깥 방향 15°, 문 개방 시 자동 작동 권장)합니다. 환기시설에 방충망, 포충등은 빛이 외부로 새지 않는 위치에 설치합니다. 방서: 배수로에 <b>폭 0.8cm 이하 철망</b>, 출입구 외부에 쥐덫을 설치합니다. 해충 방제는 전문 방역업체 감독하에 시행하고 살충제 사용 기록을 유지합니다. 위생점검에서는 조리장·식품보관실·식생활교육관(식당) 등의 방충·방서설비와 관리상태를 확인합니다.',
+ ref:'제2장 6. 환경 위생관리 (p.53) / 제6장 점검항목 26', tags:['방충','방서','에어커튼','쥐','해충','포충등','철망']},
+
+{cat:'시설·설비', q:'청소는 주기별로 무엇을 해야 하나요?',
+ a:'일·주·월·연간 청소계획을 수립·시행하고 기록을 작성·비치합니다. <b>일별</b>: 전처리실·조리실·식생활교육관, 벽·바닥, 냉장냉동고 내외부(손잡이), 배수구·트렌치·거름망, 내부 그리스트랩, 식재료보관실·화장실. <b>주별</b>: 배기후드, 보일러·가스·기화실, 조명·환기설비. <b>월별</b>: 유리창·방충망, 식재료보관실 대청소(쌀 입고 전). <b>연간</b>: 개학·방학 대비 대청소(연1회 이상), <b>식판·기기 스케일 제거 연4회(2·7·8·12월)</b>, 덕트 청소 연2회 이상, 시설·설비 점검·보수 연2회, 외부 그리스트랩 연2회(방학 중).',
+ ref:'제2장 6. 환경 위생관리, 표9~10 (p.50~51)', tags:['청소','청소계획','주기','스케일','대청소','점검표']},
+
+{cat:'시설·설비', q:'그리스트랩은 왜 필요하고 어떻게 관리하나요?',
+ a:'그리스트랩은 하수에 섞인 기름을 분리하는 장치로, 기름이 하수관에 붙어 막혀 역류하는 것을 예방하고 환경오염을 방지합니다. 악취 우려가 있으므로 <b>조리장과 정화조 사이 외부에 설치하는 것이 바람직</b>하며, 조리장 내부에 설치한 경우 <b>매일 청소</b>해야 합니다. 내부 그리스트랩을 제거한 경우 배수로 끝에 찌꺼기 거름망을 설치합니다. 외부 그리스트랩은 연 2회(방학 중) 청소합니다.',
+ ref:'제2장 1. 급·배수시설 (p.26~27)', tags:['그리스트랩','기름','배수','하수','청소']},
+
+{cat:'시설·설비', q:'음식물 쓰레기·잔반은 어떻게 관리하나요?',
+ a:'1일 평균 총 급식인원 <b>100명 이상</b> 집단급식소는 음식물류 폐기물 배출자로서 감량·재활용하거나 적합한 업체에 위탁해야 합니다(지자체장에게 신고). 쓰레기통·잔반통·일반쓰레기통 분리 사용, 뚜껑 달린 <b>페달식</b> 사용, 수거통의 <b>2/3 이상 담지 않기</b>, 수거 후 세척·소독, 배식 시간에 잔반통이 학생에게 보이지 않게 하기, 쓰레기통을 조리작업 받침대로 사용 금지 등을 지켜야 합니다. 잔반은 매일 수거가 원칙입니다.',
+ ref:'제2장 6. 환경 위생관리 (p.52~53) / 제6장 점검항목 32', tags:['음식물쓰레기','잔반','폐기물','100명','페달식','수거']},
+
+// ───────── 개인위생·건강진단 ─────────
+{cat:'개인위생·건강진단', q:'건강진단(구 보건증)은 얼마나 자주, 언제 받아야 하나요?', hot:true,
+ a:'학교급식종사자는 「학교급식법 시행규칙」 제6조제1항 [별표4]에 따라 <b>6개월에 1회</b> 건강진단을 실시하고 기록을 <b>2년간 보관</b>합니다. 건강진단은 <b>유효기간 만료일 전후 각각 30일 이내</b>에 실시해야 하며, 천재지변·사고·질병 등 부득이한 사유 시 1회에 한해 1개월 이내 범위에서 연장할 수 있습니다. <b>폐결핵검사는 연 1회</b> 실시할 수 있습니다. 검사 항목은 장티푸스·파라티푸스·폐결핵입니다. 영양(교)사는 종사자별 검진일·판정일자·진단결과·유효기간을 상시 파악할 수 있게 기록·관리합니다.',
+ ref:'제2장 2. 개인 위생관리 (p.28~30)', tags:['건강진단','보건증','6개월','30일','폐결핵','유효기간','장티푸스','건강진단결과서']},
+
+{cat:'개인위생·건강진단', q:'배식도우미(교사·학생)도 건강진단을 받아야 하나요?', hot:true,
+ a:'<b>아니요.</b> 식약처 유권해석(식품안전정책과-7189, 2023.7.17)에 따라 집단급식소에서 음식물을 조리하는 등의 행위 없이 <b>조리된 식품을 도구를 사용해 단순히 배식만 지원하는 교사 등 배식도우미는 건강진단 대상자에 해당하지 않습니다.</b> 다만 배식도우미가 앞치마·위생모·위생장갑·마스크 착용 등 개인위생 조치를 하도록 관리할 것을 권고합니다.',
+ ref:'제7장 Q&A (p.153) / 제6장 점검항목 4', tags:['배식도우미','교사','건강진단','대상','유권해석','면제']},
+
+{cat:'개인위생·건강진단', q:'식재료 배송기사도 건강진단서를 내야 하나요?',
+ a:'네. 집단급식소 식품판매업소 등 식재료 공급업체 직원 중 <b>완전히 포장되지 않은 식재료를 학교에 운반하는 자(배송요원)</b>는 <b>6개월마다</b> 건강진단을 받아야 하고 건강진단서 사본을 납품 학교에 제출해야 합니다(입찰 시 제출이 의무화된 경우 별도 제출 생략 가능). 배송요원 외 인력은 식품위생법 시행규칙 제49조를 적용합니다. 납품업체 방문평가표에도 "정기건강진단 1년 1회, 학교 직접 배송자는 6개월 1회" 확인 항목이 있습니다.',
+ ref:'제2장 3. 식재료 위생관리 (p.36~37)', tags:['배송','운반','납품업체','기사','건강진단','6개월']},
+
+{cat:'개인위생·건강진단', q:'채용 시 건강진단과 종사 제한 질병은?',
+ a:'채용 시 일반 채용 신체검사서와 건강진단을 실시합니다. <b>영업에 종사하지 못하는 질병</b>(식품위생법 시행규칙 제50조): ①결핵(비감염성 제외) ②콜레라, 장티푸스, 파라티푸스, 세균성이질, 장출혈성대장균감염증, A형간염 ③피부병 또는 그 밖의 고름형성(화농성) 질환. 종사자에게 건강문진서와 건강 이상 시 보고 동의서(양식1)를 제출받아 상시 파악할 수 있습니다.',
+ ref:'제2장 2. 개인 위생관리 (p.28~29)', tags:['채용','신규','질병','결핵','A형간염','화농성','문진']},
+
+{cat:'개인위생·건강진단', q:'매일 작업 전 건강상태 확인은 어떻게 하나요?',
+ a:'매일 조리 작업 시작 전에 영양(교)사가 종사자의 건강상태를 확인합니다. <b>발열·복통·구토·황달·인후통</b> 증상자는 조리 작업에 참여시키지 말고 의사 진단을 받게 하며, 특히 <b>설사 증상자는 즉시 배제</b>합니다. 본인 또는 동거가족 중 법정감염병 보균자·노로바이러스 환자가 있으면 완쾌·해제 확인 시까지 조리장 출입을 금지합니다. 손 등 노출 부위의 상처·종기는 치료와 방수성 보호(밴드·장갑) 후에만 작업을 허용하고, 보호가 불가능하면 배제합니다.',
+ ref:'제2장 2. 개인 위생관리 (p.30)', tags:['일일','건강상태','설사','상처','밴드','배제','노로']},
+
+{cat:'개인위생·건강진단', q:'올바른 손씻기 방법은?', hot:true,
+ a:'①따뜻한 물(약 <b>40℃</b>)에 손을 적신다 ②비누 사용 ③손톱솔로 손톱 밑·주변, 손바닥, 손가락 사이를 꼼꼼히 문지른다 ④비누 거품을 충분히 내어 <b>20초간</b> 손과 팔목까지 씻는다(반팔 착용 시 팔꿈치까지) ⑤<b>10초간</b> 물로 충분히 헹군다 ⑥1회용 종이타월이나 건조기로 건조 ⑦손소독용 알코올 분무 ⑧자연건조. 손소독은 손씻기를 대체할 수 없으며, <b>완전히 건조한 후</b> 70% 에틸알코올 등을 사용합니다. 로션은 세균 번식을 도우므로 바르지 않습니다. 출근 직후, 작업 전, 코 풀거나 재채기 후, 전화 받은 후, 쓰레기 취급 후, 화장실 사용 후 씻습니다.',
+ ref:'제2장 2. 개인 위생관리 (p.31~32)', tags:['손씻기','손소독','40도','20초','알코올','비누','로션']},
+
+{cat:'개인위생·건강진단', q:'종사자 개인위생 수칙(두발·손톱·장신구)은?',
+ a:'①매일 샤워 ②머리카락은 위생모 안에 완전히 넣기(밖으로 노출 금지, 캡모자·주방장 모자 사용 금지) ③손톱은 주 1회 이상 짧게, <b>매니큐어(젤네일)·인조손톱 금지</b> ④시계·반지·목걸이·귀걸이·팔찌·발찌·피어싱 등 <b>장신구 착용 금지</b> ⑤과도한 화장, 강한 향수, 인조 속눈썹 금지.',
+ ref:'제2장 2. 개인 위생관리 (p.31)', tags:['개인위생','손톱','매니큐어','장신구','반지','머리카락','위생모']},
+
+{cat:'개인위생·건강진단', q:'하면 안 되는 개인행위(맨손 취급 등)는?',
+ a:'①땀을 옷으로 닦거나 고무장갑 낀 채 얼굴 만지기 ②<b>맨손으로 식품 취급</b>(소독된 도구, 고무장갑, 일회용 니트릴·천연고무 라텍스 위생장갑 사용) ③식기·배식기구의 식품 접촉면을 맨손으로 만지기 ④노출된 식품을 향해 기침·재채기 ⑤식기 세척·원재료 취급 후 손 씻지 않고 식품 취급(작업 전환 시 손 씻고 소독) ⑥손가락으로 맛보기, 하나의 수저로 여러 음식 맛보기(검식용 식기구는 음식별로 마련, 재사용 금지) ⑦조리실 내 취식 ⑧식품 세정대에서 손 씻기(전용 세정대 이용).',
+ ref:'제2장 2. 개인 위생관리 (p.32~33)', tags:['맨손','금지행위','기침','맛보기','취식']},
+
+{cat:'개인위생·건강진단', q:'위생복장(위생복·앞치마·마스크·위생화) 착용 기준은?',
+ a:'위생복은 오염 확인이 쉬운 흰색·밝은색으로 하고 <b>위생복을 입은 채 조리장 밖·화장실 출입 금지</b>. <b>앞치마는 전처리용·조리용·배식용·세척용으로 구분</b> 착용(팔토시도 구분 권장). 위생모는 머리카락이 노출되지 않게 완전히 착용. <b>마스크는 검수 시작 시점부터 착용</b>하며 배식 시에도 착용. 위생화는 방수·미끄럼 방지에 발을 완전히 가리는 형태로, 세척 후 전용 소독·건조기로 건조하고, 신고 외부·화장실 출입 금지입니다.',
+ ref:'제2장 2. 복장관리 (p.33)', tags:['위생복','앞치마','마스크','위생화','복장','구분','착용']},
+
+{cat:'개인위생·건강진단', q:'방문객(학부모·공무원 등)이 조리장에 들어올 때는?',
+ a:'조리장 입구에 방문객 전용 위생복·위생모·마스크·위생화를 비치하고, 식품 취급구역 출입 방문객은 이를 <b>반드시 착용</b>하고 신발 바닥을 소독해야 합니다. 위생복장 미착용 시 조리장 출입을 허용하면 안 됩니다. 출입·검사를 실시한 관계 공무원은 출입·검사 등 기록부에 결과를 기록합니다. 신발 소독조는 조리장 출입구·화장실 출입구·일반/청결작업구역 경계에 두고, "기구등의 살균·소독제" 허가 제품을 표시된 농도로 사용합니다.',
+ ref:'제2장 2. 복장관리 (p.34)', tags:['방문객','출입','학부모','소독조','신발']},
+
+{cat:'개인위생·건강진단', q:'고무장갑은 어떻게 구분하고 관리하나요?',
+ a:'고무장갑·앞치마·식품취급 용기는 <b>전처리용과 조리용으로 구분</b> 사용합니다(식재료 상태 기준). 바로 섭취하는 식품 취급 시 소독·보관된 조리용 고무장갑이나 일회용 니트릴·천연고무 라텍스 위생장갑을 사용하며, <b>일회용 비닐 위생장갑은 조리 시 사용 금지</b>입니다. 낀 상태로 의도치 않은 접촉이 생기면 교체하고, 수량이 부족하면 낀 채로 손씻기 방법과 같게 씻습니다. 세척은 작업 전환 시마다: 흐르는 물로 이물질 제거 → 세척제로 팔목까지 안팎 → 요철 부분 전용솔 → 헹굼 → 살균·소독제 침지 → 완전 건조(자외선 소독고 가능).',
+ ref:'제2장 2./5. (p.32, 48) / 제4장 CCP1', tags:['고무장갑','비닐장갑','니트릴','라텍스','구분','세척']},
+]);
+
+</script>
+<script>
+// 무.물.위 데이터 2부 — 식재료·검수 / 전처리·해동 / 소독·세척(살균소독제)
+window.MMW_QA = (window.MMW_QA || []).concat([
+
+// ───────── 식재료·검수 ─────────
+{cat:'식재료·검수', q:'검수 시 식품 온도 기준은 얼마인가요?', hot:true,
+ a:'표면온도계로 측정해 <b>냉장식품·전처리 농산물 10℃ 이하</b>, <b>생선 및 육류 5℃ 이하</b>, <b>냉동식품은 냉동상태 유지</b>(측정 온도를 기록, 녹은 흔적이 없을 것)를 확인합니다. 식품공전 보존·유통온도상 식육 중 분쇄육·가금육·훈제연어·알가공품은 5℃ 이하입니다. 탈각패류는 10℃ 이하 냉장, 생패류는 죽은 것·깨진 것이 없어야 하며 온도 측정은 생략할 수 있습니다. 6차 개정에서 냉동식품은 "냉동상태 유지" 표기 대신 <b>측정 온도를 기록</b>하도록 바뀌었습니다.',
+ ref:'제4장 1. 검수 (p.86~87)', tags:['검수','온도','10도','5도','냉동','표면온도계','냉장식품','전처리농산물']},
+
+{cat:'식재료·검수', q:'검수는 누가, 어떻게 해야 하나요?',
+ a:'<b>대면검수</b>: 선 납품·후 검수는 위생·안전에 중대한 영향을 줄 수 있으므로 납품 시 영양(교)사 등 학교 관계자가 입회하여 반드시 대면검수합니다. <b>복수검수</b>: 영양(교)사·교직원·학부모 등 2명 이상이 참여하고 모두 검수서에 서명합니다. 식재료는 검수대(바닥에서 60cm 이상, 조도 540lx) 위에 올려놓고 검수하며 맨바닥에 놓지 않습니다. 원산지·포장상태·식품온도·소비기한·표시사항·품질(등급)을 확인하고, 검수하지 않고 전처리·조리하면 위생점검 부적합입니다.',
+ ref:'제3장 2. 검수 (p.69) / 제6장 점검항목 6', tags:['검수','대면','복수','검수자','서명','검수대']},
+
+{cat:'식재료·검수', q:'식재료 품질관리기준(등급)은 어떻게 되나요?',
+ a:'<b>쌀</b> 수확연도 1년 이내. <b>쇠고기</b> 등급판정 3등급 이상 한우·육우, <b>돼지고기</b> 2등급 이상, <b>닭고기·오리고기</b> 1등급 이상(등급제 전면 시행 전 권장), <b>계란</b> 품질등급 2등급 이상(권장). 축산물은 HACCP 적용 도축장·가공장에서 처리. 농산물은 유기식품·무농약·표준규격 "상" 이상·GAP·이력추적 등. 수산물은 품질인증품·지리적표시품·상품가치 "상" 이상. 김치 완제품은 HACCP 적용 업소 생산품. 원산지·품질등급은 학교운영위원회 심의를 거쳐 학교장이 결정합니다.',
+ ref:'제2장 3. 식재료 위생관리, 표6 (p.35)', tags:['품질관리기준','등급','한우','돼지','닭','계란','쌀','원산지']},
+
+{cat:'식재료·검수', q:'신선식품을 전날 받아도 되나요? (전일검수)',
+ a:'육류·어패류·채소류 등 신선식품은 <b>당일 구입·당일 사용이 원칙</b>입니다. 다만 <b>냉장고(실) 용량이 충분하고 온도 유지가 확인되는 경우(온도기록장치 등)에 한해</b> 전일 오후에 납품받아 검수·전처리 후 냉장·냉동 보관할 수 있습니다. 당일 식재료와 익일 사용 식재료는 철저히 구분하고, <b>전일 검수한 생으로 먹는 채소·과일은 당일 조리시간에 소독</b>해야 합니다.',
+ ref:'제3장 2. 검수 (p.70) / 제4장 1. 검수', tags:['전일검수','당일','신선식품','전날','납품']},
+
+{cat:'식재료·검수', q:'냉동식품이 녹았었는지 어떻게 알 수 있나요?',
+ a:'<b>냉동식품 녹았던 흔적 추정법</b>: ①골판지 포장 식품 — 골판지 상자가 젖은 채 얼어 있는 경우 ②냉동 튀김류·만두류 — 개체들이 붙어서 얼어 있는 경우. 운반 중 온도관리가 부적절했다는 증거입니다. 냉동식품은 -18℃ 이하로 운반되어야 하나 그대로 받으면 당일 사용이 어려울 수 있으므로 <b>해동 상태 배송을 요청</b>할 수 있습니다(이 경우 업체는 "해동 중" 표시, 해동 요청자·시작시간·해동자 등을 표시해야 함 — 식품위생법 시행규칙 별표17, 2026.1.2 개정).',
+ ref:'제3장 2. 검수 (p.70) / 제4장 1. 검수 (p.87)', tags:['냉동','녹은흔적','골판지','해동배송','만두']},
+
+{cat:'식재료·검수', q:'부적합 식재료가 오면 어떻게 처리하나요?',
+ a:'신선도·품질 이상, 규격 기준 미달 식재료는 <b>반품 또는 재납품 지시</b> 등 조치하고 <b>식재료 부적합품 확인서(양식3)를 발급</b>합니다(필요시 사유서·재발방지 확인서 요청). 단, 조리가능 시간 내 반품·교환이 원활히 완료된 경우 검수서 또는 급식일지에 조치내용 기재로 대체할 수 있습니다. <b>월 2회 이상 확인서를 제출한 업체</b>(첫 확인서 후 30일 이내 2회)는 납품 참여 제한 등 제재를 강구합니다(제한 기한 등은 학운위 심의를 거쳐 공고문·계약서에 명시). 원산지·품질이 의심되면 국립농산물품질관리원, 보건환경연구원 등에 품질검사를 의뢰할 수 있습니다.',
+ ref:'제3장 2. 검수 (p.71)', tags:['부적합','반품','확인서','양식3','제재','교환']},
+
+{cat:'식재료·검수', q:'식재료 보관(냉장·냉동·상온) 원칙은?',
+ a:'표시사항의 보관방법(실온·상온·냉장·냉동)에 맞게 보관하고 소비기한과 <b>선입선출</b>을 지킵니다. 냉장·냉동고는 <b>용량의 70% 이하(워크인 냉장실 40% 이하)</b>만 보관해 냉기 순환을 확보하고, 식재료와 조리된 음식은 분리 보관(1대뿐이면 식재료 하부·조리음식 상부), <b>생어·육류는 하부, 생채소는 상부</b>에 보관합니다. 보관 중 덮개·포장, 문은 신속 개폐. 일부 사용한 캔은 소독된 용기에 옮겨 담고 제품명·입고일·소비기한 표시 후 냉장. 냉장고에 급식외품 보관 금지. 상온창고는 식품·비식품 분리, 선반 15cm, 대용량 분할 보관 시 제품명·소비기한 표시, 세척제 등 유해물질과 같이 보관 금지입니다.',
+ ref:'제2장 3. 식재료 보관 (p.37~38)', tags:['보관','선입선출','70%','40%','분리보관','캔','상온']},
+
+{cat:'식재료·검수', q:'납품업체 방문평가는 무엇을 보나요?',
+ a:'납품업체 방문평가표(표7)로 급식소위원회 위원 등 2인이 점검합니다. 주요 항목: ①작업공정·환경위생(원재료·작업식품 보관상태, 작업장 청결·온습도·방충방서, 냉장5℃/냉동-18℃ 유지, 용수 적합성, 연1회 정기소독) ②개인위생(작업복·모·화, <b>정기건강진단 연1회 — 학교 직접 배송자는 6개월 1회</b>, 손세척시설·손소독기, 위생교육) ③수송위생(차량 청결·온도유지, 교차오염 방지 설비) ④기타(배상물 책임보험, 하청 여부) ⑤서류(축산물 등급판정서·도축확인 증명서).',
+ ref:'제2장 3. 식재료 위생관리, 표7 (p.36)', tags:['납품업체','방문평가','평가표','점검']},
+
+{cat:'식재료·검수', q:'온도계는 어떻게 검·교정하나요?',
+ a:'<b>연 2회(상·하반기)</b> 자가 검교정을 실시하고 기록합니다. <b>탐침온도계</b>: ①얼음점법 — 분쇄얼음+물 슬러시에 감지부를 바닥·벽에 닿지 않게 담가 <b>0℃</b> 확인 ②끓는점법 — 끓는 물에서 약 <b>100℃</b> 확인(고도·기압 고려). 기준과 다르면 제조사 지침에 따라 보정하거나, 오차를 기록해 보정값 반영 또는 교체·수리 의뢰합니다. <b>비접촉식 적외선 표면온도계</b>: 얼음물법이 신뢰도가 높으며, 수면과 7cm 이내 거리에서 측정해 탐침온도계 대비 <b>±1℃ 이내</b>(더운물법은 +2℃ 이내)면 정확한 것으로 판단합니다. 공인기관 의뢰 시 한국인정기구(KOLAS)에서 지역별 업체를 검색할 수 있습니다.',
+ ref:'부록 2. 온도계 자가 검교정 요령 (p.179~181)', tags:['온도계','검교정','교정','얼음점','끓는점','탐침','표면온도계','연2회']},
+
+// ───────── 전처리·해동 ─────────
+{cat:'전처리·해동', q:'냉동식품 해동은 어떻게 하나요?', hot:true,
+ a:'허용되는 해동 방법: ①<b>냉장 해동(10℃ 이하)</b> ②<b>흐르는 물 해동(21℃ 이하)</b> ③전자레인지 ④해동기능이 있는 스마트오븐(제품 표시사항에 따른 해동방법 이행). 해동 중에는 <b>"해동 중" 표시</b>를 하고 교차오염에 유의하며, 생식품은 조리된 식품과 분리해 해동합니다. 해동된 식품은 즉시 사용하고 <b>재냉동 금지</b>. 단, 국거리용 고기나 생선은 해동 없이 냉동상태로 가열조리할 수 있습니다. 냉동식품 튀김 시 소량씩 꺼내어 조리하고 상온에 다량 적재하지 않습니다. 실온 방치 해동은 위생점검 부적합입니다.',
+ ref:'제2장 4. 전처리 (p.42) / 제6장 점검항목 10', tags:['해동','21도','흐르는물','재냉동','냉장해동','전자레인지','해동중']},
+
+{cat:'전처리·해동', q:'전처리 작업의 일반 준수사항은?',
+ a:'전처리는 전처리실(전용 구역)에서 실시합니다. ①내포장 제거·다듬기는 일반작업구역에서(단, 가열 없이 제공하는 가공완제품의 내포장은 조리실에서 제거 가능) ②냉장·냉동식품 전처리를 실온에서 장시간 금지 ③식재료를 바닥에 방치하지 말고 작업대·선반에 ④전처리 전/후 식품 분리 취급 ⑤전처리 전용 고무장갑·앞치마 착용 ⑥절단은 소독된 전용 도마·칼 ⑦온도관리 필요한 전처리 식재료는 조리 전까지 냉장 보관 ⑧조·중·석식용 전처리 식자재 구분 보관 ⑨폐기물은 즉시 전용 용기에 처리. 전처리실이 없으면 전처리 종료 후 작업대·세정대를 세척·소독한 다음 조리를 시작합니다.',
+ ref:'제2장 4. 작업 위생관리 (p.39~40)', tags:['전처리','다듬기','내포장','구분','작업']},
+
+{cat:'전처리·해동', q:'세척은 어떻게 하나요? (어육류·조개·채소·달걀)',
+ a:'세척수는 반드시 먹는 물을 사용하고 이물질이 완전히 제거될 때까지(육안검사) 세척합니다. 세척수는 세정대 용량의 2/3 이내로. <b>어·육류</b>: 먹는 물로 충분히 세척, 핏물 제거가 1시간 이상이면 냉장 유지. <b>생조개류</b>: 애벌 세척 후 소금물에 해감. <b>채소·과일</b>: 흐르는 물 세척 후 육안검사, 불량 시 재세척. <b>난류</b>: 세척·코팅 제품(등급판정란 권장) 사용, 일반작업구역에서 파각해 뚜껑 있는 용기에 담아 냉장, 파각 전후 손씻기·손소독, 날달걀 용기·기구는 세척·소독 후 사용(재사용 금지).',
+ ref:'제2장 4. 전처리 (p.40~41)', tags:['세척','달걀','난류','파각','해감','조개','핏물']},
+
+{cat:'전처리·해동', q:'작업은 왜 바닥에서 60cm 이상에서 해야 하나요?',
+ a:'식품취급 등의 작업은 <b>바닥으로부터 60cm 이상</b> 높이에서 실시해 바닥의 오염된 물이 튀어 들어가지 않게 해야 합니다(위생점검 항목 8). 모든 식재료는 60cm 이상에서 관리하되, 식품창고 내에서는 15cm 이상에서 오염되지 않도록 관리합니다. 국통을 잠시 파레트·L형 카트 위에 둔 경우는 제한적으로 인정되며, 오븐 작업 시 팬은 꽂을 때 위에서부터, 뺄 때 아래서부터 작업합니다.',
+ ref:'제2장 4. 교차오염의 방지 (p.39) / 제6장 점검항목 8', tags:['60cm','바닥','높이','작업높이','오염']},
+
+{cat:'전처리·해동', q:'칼·도마는 어떻게 구분 사용하나요?', hot:true,
+ a:'칼·도마는 <b>식재료별(채소·과일류 / 육류 / 어패류)</b>로 구분하고, <b>전처리용과 조리용으로도 구분</b>해 사용합니다(식품위생법 시행규칙 [별표1]). 예외: 조리실에서 가열조리로 미생물이 제거되어 조리가 완료된 음식에 한해 한 종류의 칼·도마 사용 가능. 구분 사용하지 않으면 과태료(50~150만원) 대상이며, 구분되지 않아 오염이 우려되는 조리식품은 75℃(패류 85℃) 1분 이상 재가열하거나 폐기합니다.',
+ ref:'제2장 4. 교차오염의 방지 (p.39) / 제4장 CCP1', tags:['칼','도마','구분','채소','육류','어패류','교차오염']},
+
+// ───────── 소독·살균소독제 ─────────
+{cat:'소독·살균소독제', q:'생으로 먹는 채소·과일 소독 기준은?', hot:true,
+ a:'가열 없이 생으로 제공되는 채소·과일은 전처리실에서 흐르는 물 세척 후 소독합니다. <b>염소계: 유효염소농도 80~130ppm(mg/kg) 용액에 5분간 침지</b> 혹은 동등한 소독 효과를 가진 살균·소독제를 용법에 따라 사용하고, <b>소독제 냄새가 나지 않을 때까지 먹는 물로 헹굽니다.</b> 침지 전 test paper나 농도측정기로 희석농도를 확인하고 CCP1 기록지에 기록합니다. 포기채소(양배추 등)는 잎을 분리한 후 절단→세척→소독→헹굼 순서로, 침지 시 식재료가 떠오르지 않게 누름판을 이용합니다. 소독액을 반복 사용할 땐 다음 식재료를 담그기 전 농도를 다시 확인합니다. ※6차 개정에서 100~130ppm → <b>80~130ppm</b>으로 변경.',
+ ref:'제4장 2. CCP1 (p.89~90) / 제3장', tags:['소독','채소','과일','80','130','ppm','5분','침지','염소','헹굼']},
+
+{cat:'소독·살균소독제', q:'식품용 살균제 종류별 사용 농도는?',
+ a:'식품(과일·채소) 침지용 — <b>차아염소산나트륨</b>: 유효염소 80~130mg/kg 5분 침지 후 음용수 1회 이상 세척. <b>차아염소산수</b>(미산성, pH5.0~6.5): 10~80mg/kg 1~2분 침지. <b>차아염소산칼슘</b>: 50~150mg/kg 5분. <b>과산화수소</b>: 400~1,200mg/kg 침지 후 세척. <b>과산화초산</b>: 50~80mg/kg 침지 후 충분히 털어내거나 흘려내림. <b>오존수</b>: 1~3mg/kg. <b>이산화염소수</b>: 10~20mg/kg. (농도는 예시이며 제품 사용방법 준수, ppm=mg/kg) ※자료: 식품용 살균제 현장 가이드라인(식약처, 2026).',
+ ref:'제2장 4. 소독 (p.41~42)', tags:['살균제','살균소독제','과산화수소','과산화초산','오존수','이산화염소','차아염소산','농도']},
+
+{cat:'소독·살균소독제', q:'락스(소독액) 희석은 어떻게 계산하나요?', hot:true,
+ a:'<b>소독액 제조에 필요한 부피 = (목표농도 × 소독액 양) ÷ 유효염소 농도</b> (1% = 10,000mg/kg). 예시: ①유효염소 4% 차아염소산나트륨으로 100ppm 용액 만들기 → 원액 <b>2.5mL를 물 1L</b>에(물 100L면 250mL) ②과산화수소 35%로 400ppm → 1.14mL/1L(100L면 114mL) ③과산화초산 5%로 80ppm → 1.59mL/1L(100L면 159mL). 소독제가 적정용량 제조되도록 <b>용량 표시된 제조 용기</b>를 구비하고, 사용 전 test paper 등으로 농도를 확인합니다.',
+ ref:'제7장 Q&A (p.156)', tags:['희석','계산','락스','4%','100ppm','2.5ml','제조']},
+
+{cat:'소독·살균소독제', q:'"기구등의 살균·소독제"는 어떤 제품을 쓰나요?',
+ a:'식기·조리기구 소독에는 식품위생법상 <b>"기구등의 살균·소독제"로 인정된 제품</b>을 용법·용량에 맞게 사용합니다(총 13종: 과산화초산제제, 구연산제제, 에탄올제제, 염화-N-데실-N,N-디메틸-1-데칸아미늄제제, 염화알킬(C12-C18)벤질디메틸암모늄제제, 요오드제제, 이산화염소제제, 차아염소산나트륨제제, 젖산제제, 차아염소산수, 이염화이소시아뉼산나트륨제제, 폴리(헥사메틸렌비구아니드)하이드로클로라이드제제). 미리 만들어 놓으면 소독력이 감소하므로 <b>1회 사용량을 희석해 사용 전 농도 확인, 남은 액은 폐기</b>합니다. 기구는 세척한 후에 소독합니다(유기물이 있으면 소독력 저하).',
+ ref:'제2장 5. 살균·소독 (p.46) / 제7장 Q&A (p.163)', tags:['기구등의살균소독제','13종','유효성분','소독제','침지']},
+
+{cat:'소독·살균소독제', q:'열탕소독·건열살균 기준은?',
+ a:'<b>열탕소독</b>: 식기·행주 — <b>100℃에서 30초 이상</b>. <b>건열살균</b>: 식기 — 식기 표면온도 <b>71℃ 이상</b>. <b>화학소독</b>: 칼·도마·조리도구·고무장갑·앞치마 — "기구등의 살균·소독제"를 용법에 맞게(도마·고무장갑은 일정시간 침지). 열탕소독은 화상 위험, 실내 온·습도 상승, 에너지 소모 등 단점이 크므로 살균·소독제 사용을 권장합니다. 노로바이러스 대응은 열 저항성이 강해 <b>85℃ 이상 1분 이상</b>(확실한 예방은 100℃ 끓는 물 1분 이상 권장), 화학 소독은 염소 200ppm(물 1L+락스 5mL, 5분 이상 침지)입니다.',
+ ref:'제2장 5. 표8 (p.46) / 제7장 Q&A (p.155)', tags:['열탕','건열','100도','30초','71도','노로','200ppm','소독방법']},
+
+{cat:'소독·살균소독제', q:'자외선(UV) 소독기로 수저를 소독해도 되나요?',
+ a:'<b>겹쳐 넣으면 안 됩니다.</b> 자외선(UV-C)은 직진하므로 빛이 직접 닿는 표면만 살균되고, 수저처럼 겹쳐지면 그림자 영역은 살균 효과가 0%에 가깝습니다. ①식기가 겹치지 않게 <b>1단으로 넓게 펼쳐 배치</b> ②장갑·행주·앞치마도 살균할 표면이 자외선에 노출되도록 ③램프·반사판의 먼지·유증기를 주 1회 이상 닦아 광량 유지 ④자외선에서 30~60분 처리(기기 권장시간 준수, 세척·건조 후 투입) ⑤포개거나 엎으면 효과 없음 ⑥여분 램프 구비. 노로바이러스 99.9% 사멸에는 19.5mJ/cm² 이상의 광량이 필요합니다.',
+ ref:'제7장 Q&A (p.153~154)', tags:['자외선','UV','소독기','수저','겹침','램프']},
+
+{cat:'소독·살균소독제', q:'세척제는 아무거나 써도 되나요?',
+ a:'세척제는 식약처 고시 「위생용품의 규격 및 기준」에 적합한 제품을 사용합니다. 유형: ①과일·채소용 ②식품용 기구·용기용(자동식기세척기용 포함) ③식품 제조·가공장치용. <b>염소계와 산성계 약품을 함께 사용하거나 혼합하면 유해가스가 발생</b>하므로 절대 혼합 금지, 식품과 분리해 보관합니다. 학교급식 식기 등 세척제는 <b>수산화나트륨(NaOH) 함유량 1% 미만</b> 제품을 사용합니다(6차 개정: 기존 5% 미만 권장 → 1% 미만, 특히 자동식기세척기용).',
+ ref:'제2장 5. 세척 (p.45~47) / 제6장 점검항목 2', tags:['세척제','NaOH','수산화나트륨','1%','혼합금지','위생용품']},
+
+{cat:'소독·살균소독제', q:'도마·고무장갑·앞치마 세척·소독 절차는?',
+ a:'수작업 4단계: ①물로 찌꺼기 제거 ②세척제로 오염 제거 ③흐르는 물에 충분히 헹굼 ④적정농도 소독제 또는 열탕으로 살균·소독 후 건조. <b>도마</b>: 사용 후 중성·약알칼리성 세척제로 씻고 살균·소독제에 일정시간 침지(소독 후 헹굼 불필요), 완전 건조(자외선 소독고 가능). <b>고무장갑</b>: 작업 전환 시마다, 팔목까지 안팎 세척, 요철 부분은 전용솔. <b>앞치마</b>: 사용 후 앞뒷면 세척·침지·건조. 소독 완료 기구는 행주로 닦지 말고 공기 건조 후 청결한 선반·보관고에 보관합니다. 분해 세척이 필요한 도구(분쇄기·믹서기·채소절단기·민서기)와 세척 후 확인이 필요한 도구(캔오프너·뜰채·채칼·절단기 칼날)는 특히 주의합니다.',
+ ref:'제2장 5. 기구 세척·소독 방법 (p.46~49)', tags:['도마','고무장갑','앞치마','세척','소독','절차','4단계','침지']},
+
+{cat:'소독·살균소독제', q:'세척제·소독제 등 유해물질 보관은?',
+ a:'유해물질은 <b>잠금장치가 있는 전용 구역·캐비닛</b>에 보관하고, 교육받은 지정 인원만 취급·처분합니다. 식품을 오염시킬 수 있는 물질은 식품취급지역에서 사용·보관 금지. 화학물질의 성분·취급 주의사항 자료(MSDS 등)는 구입 시 제공받아 주기적으로 갱신하고, 종사자가 쉽게 볼 수 있는 장소에 비치해 교육합니다. 식재료 보관실에 세척제·소독제를 함께 보관하지 않습니다.',
+ ref:'제2장 5. (p.49)', tags:['유해물질','보관','잠금','MSDS','화학물질']},
+]);
+
+</script>
+<script>
+// 무.물.위 데이터 3부 — 식단검토 / CCP1 / CCP2 / CP1 / CP2 / 보존식·검식
+window.MMW_QA = (window.MMW_QA || []).concat([
+
+// ───────── 식단검토 ─────────
+{cat:'식단검토', q:'학교급식으로 제공하면 안 되는 식단은?', hot:true,
+ a:'①<b>가열조리되지 않은 생동물성 식품이 들어간 모든 음식</b>(예: 젓갈류, 굴무생채, 회덮밥 등) ②<b>자연독을 함유한 식재료로 만든 음식</b>(예: 원추리나물 등) ③<b>생산 과정에서 미생물 오염·증식이 많은 식품을 넣은 음식</b>(예: 새싹 비빔밥, 생해조류 무침 등). 단, 가열 등의 공정을 통해 병원성미생물이나 자연독이 제거된 경우는 제공 가능합니다. 식단 작성 후 이러한 부적절한 식단이 없는지 검토해 배제합니다.',
+ ref:'제4장 1. 식단검토 (p.83~84)', tags:['부적절','식단','젓갈','회덮밥','원추리','새싹','금지메뉴']},
+
+{cat:'식단검토', q:'식단검토 기록지는 언제, 어떻게 쓰나요?',
+ a:'월 단위 식단작성 후 한 번에 작성해도 되나 <b>늦어도 발주 전 작성을 권장</b>합니다(작성 주기는 주간 또는 월간 단위로 학교 실정에 따라 선택 — 6차 개정에서 주·월 단위 통합). 작성법: ①식단명 기록 — NEIS에 등록된 하나의 요리명으로 기록 가능하며, 두 개 이상의 요리명으로 분리 등록된 경우 나누어 기록도 가능(예: 탕수육 → "탕수육" 하나로도, "돈육튀김"+"탕수소스"로도 가능) ②<b>소독 대상 여부</b> — 생으로 제공하거나 가열 후 생식재료와 혼합하는 식단은 "소독" 체크(CCP1에서 소독 관리) ③<b>가열 대상 여부</b> — 가열조리 공정 포함 식단은 "가열" 체크(CCP1에서 가열온도 관리).',
+ ref:'제4장 1. 식단검토 (p.84)', tags:['식단검토','기록지','발주','소독','가열','체크','NEIS','탕수육']},
+
+{cat:'식단검토', q:'식단검토에서 빼도 되는 메뉴는?',
+ a:'<b>밥, 국, 완제품 김치, 가공완제품은 작성 제외</b>(예: 김, 떡, 제과제빵류, 음료류, 요거트, 푸딩, 벌크형 제품 등). 단, <b>밥류 중 가열·혼합 등 별도의 조리 공정이 추가되는 메뉴는 포함</b>(예: 볶음밥, 비빔밥, 주먹밥 등)합니다.',
+ ref:'제4장 1. 식단검토 (p.84)', tags:['제외','검토대상','밥','국','김치','완제품']},
+
+{cat:'식단검토', q:'조리공정은 어떻게 분류하나요?',
+ a:'우리나라 학교급식은 당일 조리·제공 원칙이므로 국내 급식체계에 맞게 3가지로 분류합니다. <b>공정1 비가열조리공정</b>: 가열이 전혀 없음(무침, 겉절이, 냉채, 샐러드, 과일 등). <b>공정2 가열 후 처리공정</b>: 가열조리된 식품이 제공 전 혼합 등 후속 공정을 거치거나 냉각과정을 거침(볶음밥, 비빔밥, 잡채, 나물, 닭강정 등). <b>공정3 가열조리공정</b>: 가열 후 바로 배식(찌개, 탕, 찜, 볶음, 튀김, 전 등). 이는 미국 FDA 공정접근법(위험온도대 통과 횟수 기준)을 국내에 맞게 적용한 것입니다.',
+ ref:'제3장 1. 조리공정 분류 (p.62~64)', tags:['조리공정','비가열','가열후처리','가열조리','공정분류']},
+
+// ───────── CCP1 ─────────
+{cat:'CCP1 식품취급·조리', q:'CCP1의 한계기준을 정리해주세요.', hot:true,
+ a:'<b>CCP1(식품취급 및 조리)</b>의 한계기준: ①고무장갑·앞치마·식품취급 용기는 <b>전처리용/조리용 구분</b> 사용 ②도마·칼은 <b>식재료별(채소과일/육류/어패류) + 전처리/조리용 구분</b> ③생으로 먹는 채소·과일류는 <b>유효염소농도 80~130ppm 5분 침지</b>(또는 동등 효과 살균·소독제 용법 준수) ④가열조리식품은 <b>식품 중심온도 75℃(패류 85℃)에서 1분 이상</b> 유지. 장소 구분이 되면 CCP1A, 안 되면 CCP1B(전처리 종료→작업대 세척·소독→조리 시작, 시간대 분리) 기록지를 사용합니다.',
+ ref:'제4장 2. CCP1 (p.89~98)', tags:['CCP1','한계기준','75도','85도','1분','80~130ppm','구분사용']},
+
+{cat:'CCP1 식품취급·조리', q:'가열조리 온도는 어떻게 측정하나요?', hot:true,
+ a:'소독한 <b>탐침온도계</b>로 식품 중심온도가 <b>75℃(패류 85℃) 1분 이상</b>인지 확인합니다. 온도 확인은 음식을 불에서 내리기 전에 실시하고, 적합할 때만 내립니다. <b>국·죽·수프·카레 등 충분히 끓이는 음식과 면은 온도계 사용 불필요</b>. 작거나 얇아 측정이 어려운 음식(멸치볶음, 견과류볶음)은 표면온도계 사용 가능하나, <b>표면만 익을 수 있는 음식(전류, 피자류)은 2~3장을 겹쳐 탐침온도계로 중심온도 측정</b>합니다. 튀김은 가운데 1개+가장자리 2개(큰 것), 오븐은 상·중·하단에서 큰 것을 골라 측정하며 모든 측정값이 기준 이상이어야 합니다. 여러 번 측정 시 <b>가장 낮은 온도 1개만 기록</b>합니다.',
+ ref:'제3장 2. / 제4장 CCP1 (p.74~75, 90)', tags:['중심온도','측정','탐침온도계','전류','튀김','오븐','국','75도']},
+
+{cat:'CCP1 식품취급·조리', q:'튀김 온도와 기름 재사용 기준은?',
+ a:'튀김 기름 온도는 <b>냉동식품 160℃, 채소류 170℃, 어육류 180℃ 이하</b>로 유지되도록 기름 온도 측정용 탐침온도계를 설치해 확인합니다. 튀김 중 찌꺼기를 자주 여과·제거하고 기름이 줄면 보충합니다. <b>재사용 조건</b>: 산가 측정 페이퍼로 <b>산가 2.5 이하</b> 확인 후 사용 가능. 재사용 시 채소류 등 비린내 안 나는 것부터 튀기고 육류·생선 순으로. 재사용할 유지는 신속히 여과해 찌꺼기·부유물·침전물을 제거한 후 방냉 보관합니다.',
+ ref:'제3장 2. 식품취급 및 조리 (p.75)', tags:['튀김','기름','산가','2.5','160','170','180','재사용']},
+
+{cat:'CCP1 식품취급·조리', q:'가공완제품(달걀말이, 족발 등)도 재가열해야 하나요?',
+ a:'네. 집단급식소 전용으로 제조·납품된 <b>가공완제품 형태의 식재료(예: 달걀말이, 족발 등)는 가열조리 식품과 동일한 조건(중심온도 75℃, 패류 85℃, 1분 이상)으로 재가열</b>해야 합니다.',
+ ref:'제4장 2. CCP1 (p.90)', tags:['가공완제품','재가열','달걀말이','족발','완제품']},
+
+{cat:'CCP1 식품취급·조리', q:'CCP1 기록지는 언제, 무엇을 기록하나요?',
+ a:'<b>전처리 및 조리 종료 직후에 각각 기록</b>합니다(6차 개정으로 작성 시기 간소화). 국, 후식용 과일, 김치(직접 제조하는 김치·절임류 포함) 등 조리·취급한 모든 음식을 기록하되, <b>밥은 제외</b>(볶음밥·비빔밥·주먹밥처럼 추가 공정이 있으면 기록). 직접 제조하는 김치·절임류는 CCP1을 제조일에 기록. 여러 음식에 공통으로 들어가는 양념류(마늘·파·생강)는 작업공정이 같으면 한 번만 기록 가능. 가열·비가열 혼합 시 조리공정이 같은 식재료끼리 묶어 기록 가능(가열공정군, 소독공정군). 도구 구분 사용은 <b>V 표시 한 번만 체크</b>. 한계기준 이탈 시 개선조치 후 [양식2]에 기록합니다. <b>작성 제외</b>: 조리공정 없는 가공완제품(김·떡·제과제빵·음료 등, 절단하면 기록), 단순 담기만 하는 음식(깍두기 등), 공산품 양념류(간장·고추장·깨·가루류·기름류).',
+ ref:'제4장 2. CCP1 (p.91)', tags:['CCP1','기록지','작성','제외','양념류','김치','밥']},
+
+{cat:'CCP1 식품취급·조리', q:'닭튀김·전류 등 생재료 반죽 시 고무장갑은 어떤 것을 쓰나요?',
+ a:'<b>전처리용 고무장갑·앞치마를 착용합니다.</b> 고무장갑·앞치마는 식재료 상태 기준으로 구분하는 것이 원칙입니다. 닭튀김·탕수육·계란말이·전류 등은 교차오염 가능성이 높아 <b>2명 이상 작업을 권장</b>: 1명은 전처리용을 착용하고 생재료를 양념·반죽, 1명은 조리용을 착용하고 가열조리합니다. 부득이하게 1명이 작업할 때는 전처리용을 착용하고 생재료 취급·가열조리를 하되 가열 중 생재료가 닿지 않게 주의합니다. <b>가열이 완료된 음식(달걀말이, 전류 등)을 썰 때는 조리용</b>을 착용합니다.',
+ ref:'제7장 Q&A (p.157~158)', tags:['고무장갑','반죽','닭튀김','전','앞치마','전처리용','조리용']},
+
+{cat:'CCP1 식품취급·조리', q:'3식교에서 다음 날 아침 샐러드 채소를 전날 소독해도 되나요?',
+ a:'<b>안 됩니다.</b> 소독 후에도 신선 농산물 표면의 작은 틈새(소수성 주머니, 기공 등)에 식중독균이 살아남아 보관 중 증식할 수 있으므로, <b>제공하는 아침에 소독</b>해야 합니다. 염소계 소독은 처리 순간의 감소효과가 중심이며, 잔류 유효염소는 3분 후 약 42.9%, 10분 후 약 92.9% 감소한다는 연구가 있습니다. 여름철 상온 보관 시 물세척 식재료는 약 0.5~1시간, 살균 처리 식재료는 약 1.2~2시간까지만 안전합니다. 5분 침지 소독 시 중간에 잔류염소 농도를 측정해 차아염소산나트륨 추가를 권고합니다.',
+ ref:'제7장 Q&A (p.157)', tags:['샐러드','전날','소독','3식','조식','아침']},
+
+{cat:'CCP1 식품취급·조리', q:'청경채 데침처럼 75℃를 지키기 어려운 조리는?',
+ a:'동파육에 곁들이는 청경채같이 짧은 시간 데치는 조리 특성상 가열온도 기준(중심온도 75℃ 1분 이상)을 적용하기 어려운 경우에는, <b>데치기 전에 충분한 세척·소독 과정을 실시해 위해요소를 제거한 후 조리</b>하는 것이 바람직합니다.',
+ ref:'제7장 Q&A (p.158)', tags:['청경채','데침','데치기','곁들임','동파육']},
+
+{cat:'CCP1 식품취급·조리', q:'오징어·꼬막은 가열하면 질겨지는데 온도 기준을 지켜야 하나요?',
+ a:'<b>네, 기준 중심온도를 지키는 것이 원칙입니다.</b> 연체류(오징어 등)는 75℃ 이상, 조개류(꼬막 등 패류)는 85℃ 이상에서 1분 이상. 식중독 예방을 위한 미생물의 안전한 처리를 위해서는 음식이 질겨지더라도 기준을 준수해야 합니다.',
+ ref:'제7장 Q&A (p.161)', tags:['오징어','꼬막','패류','연체류','질김','85도']},
+
+{cat:'CCP1 식품취급·조리', q:'끓이는 소스류도 중심온도를 재야 하나요?',
+ a:'<b>네, 측정해야 합니다.</b> 소스류는 음식에 따라 종류가 다양하고, 국이나 카레처럼 장시간 가열하는 조리공정과 다르기 때문에 식품 중심온도 확인이 중요합니다.',
+ ref:'제7장 Q&A (p.161)', tags:['소스','중심온도','탕수소스']},
+
+{cat:'CCP1 식품취급·조리', q:'믹서기·채소절단기가 전처리실에만 있으면 취급장소는 어디로 적나요?',
+ a:'<b>전처리실에서 작업했으면 전처리실 작업 기록으로 작성</b>합니다. 단, 대용량 믹서기·채소절단기가 교차오염되지 않도록 철저히 관리하고, <b>소독을 완료한 식재료를 먼저</b> 절단·분쇄 작업하도록 합니다.',
+ ref:'제7장 Q&A (p.161)', tags:['믹서기','절단기','취급장소','전처리실']},
+
+{cat:'CCP1 식품취급·조리', q:'파·마늘·생강을 생식·가열용으로 나눠 소독해야 하나요?',
+ a:'"생으로 제공하는 식단"에 들어가는 식재료는 소독하는 것이 원칙입니다. 다만 <b>학교 여건상 작업 편의를 위해 일괄적으로 전부 소독하여 사용할 수도 있습니다.</b> 양파, 당근 등 자주 사용하는 식재료도 동일하게 적용할 수 있습니다.',
+ ref:'제7장 Q&A (p.161)', tags:['파','마늘','생강','일괄소독','양파','당근']},
+
+{cat:'CCP1 식품취급·조리', q:'전처리실이 좁아 조리실에서 썰기를 해야 하면?',
+ a:'전처리실에서 절단하는 것이 원칙입니다. 다만 공간이 협소해 부득이하게 조리실에서 썰기작업을 해야 하는 경우, 교차오염이 일어나지 않도록 <b>이동식조리대 등을 이용하고 칼·도마·고무장갑·앞치마·용기 등을 전처리용으로 구분 사용</b>하며 <b>CCP1 기록지의 비고(특이사항)란에 기록하고 확인</b>합니다.',
+ ref:'제7장 Q&A (p.158)', tags:['협소','조리실','썰기','이동식조리대','비고']},
+
+{cat:'CCP1 식품취급·조리', q:'김치·절임류를 직접 담글 때는 어떻게 관리하나요?',
+ a:'"생으로 제공하는 식단" 기준으로 <b>안전하게 소독 과정을 거치고 절인 후 제조하는 것을 권장</b>합니다. 장시간 숙성한 김치류는 pH 4.3 범위에서 대체로 위해균이 사멸되어 안전하나 신맛이 강해지므로, 적정 산도로 제공하려면 소독공정을 거치도록 합니다. 직접 제조하는 김치·절임류는 CCP1을 제조일에 기록하고 비고란에 제공일(기간)을 기록합니다. 참고로 HACCP 인증업체 침지형 절임배추 소독: 차아염소산나트륨 100ppm 5분(생강 10분) 또는 150ppm 3~5분(절임배추만), 미산성 차아염소산수 20~30ppm 5분, 소독수량은 원료의 10배 이상, 1회 소독 후 소독수 재제조.',
+ ref:'제7장 Q&A (p.159~160)', tags:['김치','절임','장아찌','피클','겉절이','직접제조','산도']},
+
+{cat:'CCP1 식품취급·조리', q:'도토리묵무침 — 묵도 가열(재가열)해야 하나요?', hot:true,
+ a:'묵무침은 <b>가열 후 처리공정(공정2)</b>으로 관리하는 것이 지침서 원칙에 맞습니다. ①<b>도토리묵(가공완제품)</b> — 지침서는 가공완제품 형태로 제조·납품된 식재료(예: 달걀말이, 족발 등)를 <b>가열조리 식품과 동일한 조건(중심온도 75℃ 1분 이상)으로 재가열</b>하도록 규정합니다. 묵류도 이에 따라 재가열 후, 낮은 팬에서 신속히 냉각합니다(냉장고에 뜨거운 채로 넣지 않기) ②<b>함께 무치는 생채소(오이·부추 등)</b> — 생으로 혼합되므로 80~130ppm 5분 소독 후 헹굼(오징어미나리초무침의 생채소와 같은 원리) ③<b>혼합은 배식 직전</b>에 하고 CCP2 기록지에 혼합 시작 시간 기록 ④조리완료 후 <b>2시간 이내 배식</b>. CCP1에는 묵(재가열·썰기)과 채소(세척·소독) 공정을 각각 기록합니다.',
+ ref:'제4장 CCP1·CCP2 / 제3장 2. (p.76, 90, 99) — 지침서 원칙 적용', tags:['도토리묵','묵','묵무침','청포묵','혼합','재가열','가공완제품','무침']},
+
+{cat:'CCP1 식품취급·조리', q:'혼합 음식 재료별 판정법 — 뭘 소독하고 뭘 가열하나요?',
+ a:'한 음식에 여러 재료가 섞일 때는 <b>재료별 상태 기준</b>으로 판정합니다. ①<b>생으로 들어가는 재료</b>(생채소·과일: 오이, 미나리, 양파채 등) → 세척 후 소독(80~130ppm 5분)·헹굼, CCP1에 소독 기록 ②<b>가열해서 들어가는 재료</b>(고기, 어패류, 데치는 채소) → 중심온도 75℃(패류 85℃) 1분 확인·기록 ③<b>가공완제품</b>(묵, 어묵, 맛살, 달걀말이, 족발 등) → 가열조리 식품과 동일 조건으로 재가열 ④<b>숙채류(데친 나물)</b> → 데친 후 낮은 팬에서 신속 냉각, 뚜껑 덮어 냉장 ⑤<b>혼합</b> → 반드시 배식 직전, 혼합 시작 시간 기록(CCP2), 2시간 이내 배식. 예: 오징어미나리초무침 = 오징어(데침 85℃)+미나리·채소(소독)+배식 직전 혼합.',
+ ref:'제3장 2. / 제4장 CCP1·CCP2 (p.73~76, 89~100)', tags:['혼합','판정','재료별','공정','무침','샐러드','겉절이','어묵','맛살']},
+
+{cat:'CCP1 식품취급·조리', q:'나물(숙채)류는 어떻게 관리하나요?',
+ a:'나물류는 <b>가열 후 처리공정(공정2)</b>입니다. ①데치기·볶기는 가열조리이므로 중심온도 확인 대상이나, 시금치 데치기처럼 작거나 얇아 탐침이 어려우면 <b>표면온도계</b> 사용 가능 ②데친 후에는 <b>낮은 팬에 담아 빨리 온도를 낮춘 뒤</b> 뚜껑을 덮어 배식 전까지 냉장 보관 ③무칠 때 들어가는 <b>생마늘·파 등 양념 채소는 소독</b>(생으로 혼합되므로) ④<b>무침(혼합)은 배식 직전</b>, 혼합 시작 시간 기록 ⑤여러 번 나눠 무치면 회차별로 각각 기록 ⑥익힌 식물성 식품(숙채류)은 시간·온도 관리가 필요한 식품이므로 2시간 이내 배식을 지킵니다.',
+ ref:'제3장 2. / 제7장 Q&A (p.74~76, 162)', tags:['나물','숙채','시금치','콩나물','데침','무침','냉각']},
+
+// ───────── CCP2 ─────────
+{cat:'CCP2 조리완료·배식', q:'조리완료 후 배식까지 시간·온도 기준은?', hot:true,
+ a:'<b>열장 음식(밥·국 포함)은 배식 완료까지 57℃ 이상 유지</b>하거나, 열장 온도를 유지할 수 없으면 <b>가열조리 완료 시점부터 배식 완료까지 2시간 이내</b>로 관리합니다(조리완료 시간은 처음 조리완료된 음식 기준). 찬 음식은 냉장온도(5℃) 이하로 제공하고, 유지가 어려우면 역시 2시간 이내 배식 완료. <b>가열조리와 비가열조리 혼합음식은 배식 직전에 혼합</b>하고 혼합 시작 시간을 기록합니다. 2시간 초과 시 오븐 등 대량 조리기기로 시차 조리(1차, 2차)해 조리시간을 단축하고 온장고(보온·보냉 배식대)를 구비해 온도관리합니다.',
+ ref:'제4장 2. CCP2 (p.99~100)', tags:['CCP2','57도','2시간','배식','열장','혼합','시차조리']},
+
+{cat:'CCP2 조리완료·배식', q:'배식 시 위생 수칙은?',
+ a:'①배식대는 배식 전후 세척·소독, 배식기구는 세척·소독·건조된 전용 기구 사용 ②식기·수저·컵은 소독 후 보관함에 보관, 외부 비치 시 덮개로 보호 ③배식 담당자는 위생복·위생모·마스크 착용 ④보온·보냉 배식대로 적정 온도 유지 ⑤<b>맨손배식 금지</b> — 집게·국자 등 청결한 도구 사용, 부득이 일회용 위생장갑만 착용할 때는 찢어지지 않게 수시 확인 ⑥<b>배식하던 통(vat)에 남은 음식을 새 배식통 음식에 혼합 금지</b> ⑦식당 배식 시 미리 상차림해 식판을 쌓아두는 행위 금지 ⑧2·3식교는 남은 음식을 다음 급식에 사용 금지. 교실 배식은 안전 보장이 어려우므로 공간이 확보되면 식생활교육관(식당) 배식으로 전환합니다.',
+ ref:'제3장 2. 배식 (p.77)', tags:['배식','맨손','vat','상차림','재사용','수칙']},
+
+{cat:'CCP2 조리완료·배식', q:'교실배식(CCP2B)은 어떻게 관리하나요?',
+ a:'교실 배식은 열장 음식의 57℃ 유지가 어려우므로 <b>조리완료 시점부터 배식완료까지 2시간 이내</b>로 관리합니다(공정관리로 조리완료 시간을 조정). 배식도우미(학생 등)는 깨끗한 앞치마·위생모·마스크·위생장갑을 착용하고, 배식차·승강기 등 운반기구는 사용 후 바로 세척·소독합니다. 기록지에는 혼합 시작/조리완료/배식완료 시간, 2시간 이내 여부, 배식도구 청결도, 배식도우미 위생복장, 확인 장소(학년/반)를 기록합니다. 식당 배식과 교실 배식을 병행하면 CCP2A와 CCP2B를 각각 작성합니다.',
+ ref:'제4장 2. CCP2B (p.102~104)', tags:['교실배식','CCP2B','배식도우미','2시간','병행']},
+
+{cat:'CCP2 조리완료·배식', q:'공동조리교(CCP2C) 운반·배식 관리는?',
+ a:'한계기준: 열장 음식 57℃ 이상 유지 또는 2시간 이내 배식 + <b>운반 용기의 밀폐</b>. 조리교에서 상차 시 온도와 차량 내부 청결 상태를 기록하고, 비조리교에서 수령 시 운반용기 밀폐상태, 배식 시 배식도구 청결·배식담당 위생복장, 배식완료 시간·온도를 기록합니다. 57℃ 미만으로 측정되면 조리교에서 더 높은 온도로 담거나 보온성이 더 좋은 운반용기로 교체합니다. 배식완료 시 열장 음식이 57℃ 이상이면 시간 확인은 불필요합니다.',
+ ref:'제4장 2. CCP2C (p.105~107)', tags:['공동조리','비조리교','운반','밀폐','상차']},
+
+{cat:'CCP2 조리완료·배식', q:'절단과일·수박의 조리완료 시간과 배식 기준은?',
+ a:'절단과일의 조리완료 시간은 <b>최종 절단이 완료된 시간</b>으로 기록합니다. 세척·소독 후 절단작업을 하는 후식용 과일류도 <b>조리완료 후 2시간 이내 배식을 준수</b>해야 합니다. 특히 멜론·참외·수박 등을 후식으로 제공하는 경우 절단 후 장시간 경과하면 다른 과일류보다 식중독 위험성이 상대적으로 높아집니다.',
+ ref:'제7장 Q&A (p.158, 162)', tags:['과일','절단','수박','멜론','참외','2시간','후식']},
+
+{cat:'CCP2 조리완료·배식', q:'전·튀김처럼 오래 반복 생산하는 음식의 조리완료 시간 기록은?',
+ a:'장시간 반복 생산하는 음식은 조리완료 시간을 <b>첫 음식 조리완료 시간부터 마지막 음식 조리완료 시간의 범위</b>(예: 닭고기 튀김 9:40~11:55)로 기록합니다. 예시① 9:40~11:55 조리 후 11:00 이전 조리분을 다시 튀겨(중심온도 측정) 12:10까지 완료한 경우 → 11:00 이후 처음 조리완료 시간과 마지막 시간을 기록. 예시② 전체를 오븐에 다시 조리(중심온도 측정)해 12:10에 일괄 완료한 경우 → 조리완료 시간 12:10으로 기록(단, CCP1에 튀김조리와 오븐조리 작업과정 모두 작성).',
+ ref:'제7장 Q&A (p.162) / 제4장 CCP2A', tags:['튀김','전','조리완료시간','범위','반복생산']},
+
+{cat:'CCP2 조리완료·배식', q:'무침을 나눠서 여러 번 무칠 때 시간 기록은?',
+ a:'학교 여건상 2차 이상 나누어 무쳐야 하는 경우 <b>2차 이상 각각 나누어 기록</b>합니다(각 회차의 혼합 시작 시간·조리완료 시간).',
+ ref:'제7장 Q&A (p.162)', tags:['무침','나눔','혼합시작','회차']},
+
+{cat:'CCP2 조리완료·배식', q:'김치도 CCP2를 작성하나요?',
+ a:'<b>김치는 CCP2 작성대상에서 제외</b>됩니다(절단 후 냉장보관 철저). 다만 학교에서 직접 조리(겉절이 등)하는 경우 관리를 철저히 해야 합니다. CCP2는 완제품·김치를 제외한 모든 음식을 기록하며, <b>후식용 가공완제품이라도 절단작업을 해 제공하면 기록</b>해야 합니다.',
+ ref:'제7장 Q&A (p.162) / 제4장 CCP2', tags:['김치','CCP2','제외','겉절이','완제품']},
+
+{cat:'CCP2 조리완료·배식', q:'음식 운반(배식차·승강기) 위생관리는?',
+ a:'배식차 등은 사용 후 바로 세척·소독해 건조하고, 식품운반용 승강기는 <b>매일 1회 이상 내부 청소</b>. 승강기 하부에 물이 고이거나 식판·음식물이 떨어지지 않게 시설을 정비합니다. 운반 중 덮개 등으로 보호하고 보온·보냉 용기로 적정 온도를 유지합니다. 공동조리교 운반 용기는 밀폐 용기 사용. 엘리베이터(부득이하면 덤웨이터)로 배식차 운반 시 분무소독 등 공간살균 후 탑재 권장, 배식시간 동안 급식관계자 외 탑승 제한, <b>화물용 덤웨이터에 사람 탑승 금지</b>. 복도배식은 위생상 문제가 있어 교실배식으로 전환 지도 대상입니다.',
+ ref:'제3장 2. 운반 (p.77) / 제6장 점검항목 14', tags:['운반','배식차','승강기','덤웨이터','엘리베이터']},
+
+// ───────── CP1 ─────────
+{cat:'CP1 냉장·냉동', q:'냉장·냉동고 온도 기준과 확인 횟수는?', hot:true,
+ a:'<b>냉장고(실) 내부온도 5℃ 이하, 냉동고(실) -18℃ 이하.</b> 조리장 내 모든 냉장·냉동고(실)의 온도를 확인·기록하며 <b>보존식 냉동고도 포함</b>합니다. 확인·기록 시기: <b>중식만 제공 시 하루 2회</b>(출근 직후, 배식 후 청소 직전 또는 퇴근 전), <b>2식 이상 제공 시 하루 3회</b>(출근 직후, 중식 후, 석식 배식 후 청소 직전 또는 퇴근 전). 문을 장시간 열지 않았을 때 외부 부착 온도계로 확인하고, 온도 확인 후에는 문을 열고 청결도·덮개·분리보관 여부를 확인하고 서명합니다.',
+ ref:'제4장 3. CP1 (p.108~110)', tags:['CP1','냉장고','냉동고','5도','-18도','하루2회','3회','온도확인']},
+
+{cat:'CP1 냉장·냉동', q:'냉장고 온도는 정수로 기록해도 되나요?',
+ a:'<b>아니요.</b> 냉장·냉동고(실)의 온도는 식중독 미생물 증식과 품질 변화에 민감하므로 <b>소수 한 자리까지 온도계의 숫자를 그대로 기록</b>합니다. 온도계는 검교정이 가능한 <b>외부 부착용 디지털온도계(0.1℃ 단위)</b>를 사용하고, 감지 부위는 내부에서 온도가 가장 높은 곳에 고정합니다.',
+ ref:'제7장 Q&A (p.163) / 제4장 CP1', tags:['정수','소수점','기록','0.1도','디지털온도계']},
+
+{cat:'CP1 냉장·냉동', q:'냉장·냉동고가 고장 나면 보관 식품은 어떻게 하나요?', hot:true,
+ a:'①냉장식품이 <b>10℃ 이하</b>이거나 냉동식품이 <b>냉동상태 유지</b> 시 → 다른 냉장·냉동고(실)에 옮겨 보관 ②냉동식품이 녹았으나 <b>10℃ 이하</b>면 → 재냉동하지 않고 <b>즉시 사용</b> ③냉장·냉동식품이 <b>10℃를 초과</b>하면 → <b>전량 폐기</b> ④기기에 "고장" 표식을 부착하고 즉시 수리 의뢰. 온도가 기준을 이탈하면 먼저 고장인지 제상(성에 제거) 중인지 확인하고 온도 조절기로 조정합니다.',
+ ref:'제4장 3. CP1 (p.109) / 제2장 3.', tags:['냉장고','냉동고','고장','폐기','10도','즉시사용','제상','조치']},
+
+// ───────── CP2 ─────────
+{cat:'CP2 식품접촉표면', q:'식판 소독 기준(71℃)과 확인 방법은?', hot:true,
+ a:'관리기준: <b>식판 표면 71℃ 이상</b>, 수작업 소독 시 소독제 용법·용량 준수, <b>식판·기구 표면에 잔류세제 불검출</b>. 세척기 사용 학교는 최종헹굼수 온도가 설정값으로 유지되고 식판이 살균되는지 <b>71℃ Thermo label</b>을 부착해 변색으로 확인(세척이 끝날 무렵 부착)합니다. 식기소독고 사용 시 설정 온도·시간을 함께 관리하고, Thermo label은 <b>식판이 가장 많이 포개져 들어가는 곳의 가운데, 식판 중앙(열전달이 가장 늦은 부위)</b>에 부착합니다. <b>월 1회</b> Thermo label 확인 + <b>월 1회</b> 잔류세제 검사(test paper·페놀프탈레인 지시약)를 실시해 기록지 하단에 기록합니다. 시약이 묻은 식기는 다시 세척·소독하며, 세제를 쓰지 않는 스마트세척기는 잔류세제 검사가 면제됩니다.',
+ ref:'제4장 3. CP2 (p.111~116)', tags:['CP2','식판','71도','thermolabel','서모라벨','잔류세제','월1회','세척기','소독고']},
+
+{cat:'CP2 식품접촉표면', q:'소독제 희석 시 온수를 쓰면 안 되나요?',
+ a:'<b>안 됩니다. 소독제 희석 시 물로만 희석해야 하며 온수 또는 열수 희석은 금지</b>입니다(6차 개정 명시). 뜨거운 물에 락스를 섞으면 살균 성분이 파괴되어 살균력이 감소하고 유독가스가 발생할 수 있습니다. 소독제는 <b>하루 1회 이상 희석 제조하고 농도를 확인해 사용하며 제조 시간을 기록</b>합니다(살균수 제조장치 사용 시 제조 시간 기록 불필요, 단 미리 제조해 사용하지 않아야 함).',
+ ref:'제4장 3. CP2 (p.111~112) / 제7장 Q&A', tags:['온수','열수','희석','금지','제조시간','살균수제조장치']},
+
+{cat:'CP2 식품접촉표면', q:'소독제 유효성분명은 뭐라고 기록하나요?',
+ a:'기록지의 소독제 희석농도 확인란 ( )에는 사용 중인 살균·소독제 제품에 표시된 <b>(유효)성분명</b>을 기록합니다(예: 차아염소산나트륨, 요오드 등). <b>소금을 전기분해하는 살균수 제조장치</b>를 사용하는 경우 제품에 따라 "차아염소산나트륨 또는 차아염소산수"가 유효성분명입니다. ( )ppm에는 사용 농도를 기록해 두고 확인합니다.',
+ ref:'제7장 Q&A (p.163)', tags:['유효성분명','기록','차아염소산','살균수']},
+
+{cat:'CP2 식품접촉표면', q:'기구·기물류 세척·소독은 어디서 하나요?',
+ a:'급식기구·기물류 세척과 소독은 <b>세척실의 세정대</b>에서 실시하거나, 전처리실에 식재료가 없을 때 전처리실 세정대(가급적 3조 세정대)에서 실시합니다. 전처리실·세척실이 분리되어 있지 않으면 <b>조리실에 조리 중인 음식이나 노출된 음식이 없을 때</b> 시행합니다. 도마·고무장갑 등 표면이 매끈하지 않은 기물은 희석 소독제에 담가 둡니다. 식품접촉표면이 내부에 있는 기물류(채소절단기·분쇄기·믹서)는 분해해 세척·소독·건조 후 사용하고, 관리가 어려운 기물(캔오프너, 채칼, 뜰채 망·테두리·자루, 거품기 자루, 절단기 칼날)은 세심하게 관리합니다.',
+ ref:'제4장 3. CP2 (p.113)', tags:['기물','세척장소','세정대','분해','믹서','캔오프너']},
+
+// ───────── 보존식·검식 ─────────
+{cat:'보존식·검식', q:'보존식은 얼마나, 어떻게 보관하나요?', hot:true,
+ a:'배식 직전, 소독된 보존식 전용용기 또는 멸균봉투(<b>일반 지퍼백 허용</b>)에 조리·제공된 <b>모든 음식을 종류별로 1인분씩</b> 담아 <b>-18℃ 이하에서 144시간(6일) 이상</b> 냉동 보관합니다(식품위생법 제88조·시행규칙 제95조). 가볍거나 소량 제공하는 음식은 미생물 분석 시료량을 채우기 어려우므로 가급적 용기에 채워 보관(<b>150g 이상 바람직</b> — 식약처 지침 "반찬별 150g 이상 채취"는 다양한 원인균 조사 목적). 포장 그대로 제공하는 가공완제품은 <b>개봉하지 않은 원상태로</b> 보관(개봉 시 오염원 추적 곤란). 보존식 기록지에 날짜·시간·채취자 성명과 투입 시 냉동고 온도를 기록합니다. 위반 시 과태료 400만~800만원.',
+ ref:'제2장 4. 검식 및 보존식 (p.43~44)', tags:['보존식','144시간','6일','150g','지퍼백','1인분','-18도']},
+
+{cat:'보존식·검식', q:'보존식을 안 남겨도 되는 식품이 있나요?',
+ a:'「집단급식소 급식안전관리 기준」 제6조에 따라 식품제조·가공업, 축산물가공업, 건강기능식품제조업에서 제조·가공되어 <b>완제품 그대로 급식에 제공하는</b> ①빵류·떡류·기타 코코아가공품·식육가공품·알가공품류·유가공품류·조미건어포·생식류·즉석섭취편의식품류를 <b>제외한 실온제품</b> ②빙과류 중 빙과는 보존식으로 보관하지 않아도 됩니다.',
+ ref:'제2장 4. 보존식 (p.44)', tags:['보존식','제외','완제품','빙과','실온제품']},
+
+{cat:'보존식·검식', q:'검식은 어떻게 하고 어디에 기록하나요?',
+ a:'영양(교)사는 조리된 음식에 대해 <b>배식 전까지</b> 검식을 실시합니다. 음식의 <b>맛, 조화(영양적인 균형, 재료의 균형), 이물, 이취(불쾌한 냄새), 조리상태</b> 등을 확인하고 기록합니다. 한 번 사용한 검식용기·검식기구는 재사용 금지(검식용 식기구는 음식별로 마련). 위생점검에서는 <b>NEIS 급식일지에 검식기록</b> 여부를 확인하며, 검식일지 별도 사용은 지양합니다.',
+ ref:'제2장 4. 검식 (p.43) / 제6장 점검항목 15', tags:['검식','기록','NEIS','급식일지','맛','이물']},
+]);
+
+</script>
+<script>
+// 무.물.위 데이터 4부 — HACCP 운영·기록 / 위생교육 / 위생점검 / 미생물 검사
+window.MMW_QA = (window.MMW_QA || []).concat([
+
+// ───────── HACCP 운영·기록 ─────────
+{cat:'HACCP 운영·기록', q:'학교급식 HACCP은 몇 개의 CCP·CP로 관리하나요?', hot:true,
+ a:'6차 개정 기준 <b>CCP 2개 + CP 2개</b>입니다. <b>CCP1 식품취급 및 조리</b>(장소·도구 구분, 채소·과일 소독 80~130ppm 5분, 가열 75℃/패류 85℃ 1분), <b>CCP2 조리완료 및 배식</b>(열장 57℃ 이상 또는 2시간 이내 배식), <b>CP1 냉장·냉동고(실) 온도관리</b>(5℃/-18℃), <b>CP2 식품 접촉표면 세척·소독</b>(식판 71℃, 잔류세제 불검출). 5차의 CCP2→CCP1, CCP3→CCP2로 번호가 바뀌었고, 식단검토·검수는 CCP 번호 없이 기록·관리합니다.',
+ ref:'제3장 1. CCP와 한계기준 설정 (p.65)', tags:['CCP','CP','개수','체계','번호','한계기준']},
+
+{cat:'HACCP 운영·기록', q:'HACCP팀은 어떻게 구성하나요?',
+ a:'<b>팀장은 학교장</b>(HACCP 업무 총괄·책임), <b>실무책임자는 영양교사·영양사</b>(HACCP계획 수립, 위생 총괄, 교육·훈련, 기록유지·외부점검 대응), <b>시설설비지원은 행정실장</b>(행·재정 지원, 시설 유지보수), <b>교육·홍보는 영양교사·영양사</b>, <b>현장작업은 조리사/조리실무사</b>(선행요건 수행, CCP·CP 기록, 위생 개선 제안). 조직은 학교 실정에 맞게 조정 가능합니다. 실무책임자 부재 시 조리사가, 조리사도 부재 시 지정된 조리실무사가 대행하며, 인수인계 시 담당직무·CCP 기록·미결업무를 명확히 전달합니다.',
+ ref:'제3장 1. HACCP팀 구성 (p.59~60)', tags:['HACCP팀','팀장','학교장','실무책임자','구성','대행']},
+
+{cat:'HACCP 운영·기록', q:'학교급식 HACCP 9절차가 뭔가요?',
+ a:'팀 구성 후 9절차로 수립·운영합니다: <b>절차1</b> 선행요건 개발 → <b>절차2</b> 조리공정 분류 → <b>절차3</b> 위해요소 분석 → <b>절차4</b> CCP 및 한계기준 설정 → <b>절차5</b> 감시(모니터링) 절차 수립 → <b>절차6</b> 개선조치 방법 설정 → <b>절차7</b> 검증 수행 → <b>절차8</b> 기록 유지 → <b>절차9</b> 주기적인 감사 실시. 이는 미국 FDA 『급식업소 운영자를 위한 HACCP 원칙의 자율적 사용 지침서』의 9절차 체계를 따른 것으로, 일반모델은 교육부가 개발했으므로 학교 현장에서는 ①학교 단위 HACCP팀 구성·회의 ②선행요건 관리 ③CCP·CP 기록 유지 ④검증 수행(양식2 작성, 간이 미생물 검사)을 실행하면 됩니다.',
+ ref:'제3장 1. (p.57~68)', tags:['9절차','HACCP','절차','수립','운영']},
+
+{cat:'HACCP 운영·기록', q:'HACCP팀 회의와 양식2(CCP·CP 점검결과)는 어떻게 하나요?',
+ a:'HACCP팀 회의는 정기적으로 개최해 행정적·재정적 지원을 하고, 운영단계에서는 자체 내부점검·교육청 위생점검 결과를 보고하고 CCP 기록지의 문제점을 분석·검토합니다. 영양(교)사는 <b>급식 운영 중 학기별 1회 이상 "CCP별 점검결과 및 조치기록표(양식2)"를 작성</b>하고, 이를 <b>HACCP팀 회의록으로 갈음</b>할 수 있습니다. 양식2에는 식단검토·검수·CCP1·CCP2·CP1·CP2별 점검결과와 개선조치를 기록하고 영양(교)사·학교장이 결재합니다. 위생점검 항목 33(HACCP 자체분석·개선조치)에서 학기별 1회 작성 여부를 확인합니다.',
+ ref:'제3장 1. (p.61, 67) / 제6장 점검항목 33', tags:['양식2','팀회의','학기별','점검결과','회의록','자체검증']},
+
+{cat:'HACCP 운영·기록', q:'HACCP 기록은 얼마나 보관하나요?',
+ a:'문서화할 내용: 일반적 위생관리기준·관리사항, 종사자 위생교육 계획·실적, HACCP 관리기준서(지침서로 갈음), <b>CCP 모니터링 기록(1년간 CCP별 보관)</b>, HACCP팀 회의록(양식2로 대체 가능). 기록은 HACCP 계획을 적절히 실시한다는 증거이자 외부 점검 자료, 식중독 발생 시 원인 추적 근거가 됩니다. 참고: 건강진단 기록 2년, 수질검사 결과 3년 보관.',
+ ref:'제3장 1. 기록유지 (p.68)', tags:['기록','보관','1년','문서화','보존기간']},
+
+{cat:'HACCP 운영·기록', q:'검증(자체점검)은 누가, 무엇을 하나요?',
+ a:'<b>자체점검: 팀장 및 실무책임자</b>, <b>외부점검: 교육청이나 외부 전문가의 위생·안전 지도점검 시 병행</b> 실시합니다. 검증내용: HACCP 계획·운영의 적절성, 모니터링 방법의 적절성·이행성(CCP 기록 확인, 기구 정확도), 한계기준의 적합성, 개선조치 절차의 효과성, 급식품 미생물 검사, 기록 유지의 적절성. 방법: 현장서류·기록 확인, 현장 교차점검, 담당자 대화, 측정기기 정확도 확인, 미생물 검사. 부적합 사항은 시정조치하거나 HACCP 계획을 수정하고 교육청 전문가와 협의해 조정합니다. 교육청 주관 연 2회 위생점검 시 감사가 이루어집니다.',
+ ref:'제3장 1. 검증 수행 (p.66)', tags:['검증','자체점검','외부점검','감사','수행']},
+
+{cat:'HACCP 운영·기록', q:'선행요건이란 무엇인가요?',
+ a:'선행요건은 HACCP 적용의 기본이 되는 위생관리 사항으로, 문서화하고 지속 준수·관리해야 합니다. ①<b>식품오염 방지</b>: 기구·도구의 구분/소독 사용, 조리완료 식품 덮개, 방충·방서·방역 실시·기록, 독성물질 분리 보관, 조리장 청결, 조리용수 관리, 화장실 관리 ②<b>개인위생관리</b>: 유증상자 배제(건강검진·문진표·일일확인), 올바른 손 세척, 조리장 내 음식섭취·흡연 금지 ③<b>설비·기구관리</b>: 식품 접촉 기구 소독, 주기적인 온도계 검교정, 세척기 유지관리. 선행요건이 잘 수행되는지 모니터링해야 합니다.',
+ ref:'제3장 1. 선행요건 개발 (p.61)', tags:['선행요건','기본','문서화','프로그램']},
+
+{cat:'HACCP 운영·기록', q:'학교급식의 주요 위해요소는 무엇인가요?',
+ a:'발생 빈도가 높고 관리 가능한 <b>생물학적 위해요소</b> 중심으로 분석합니다. ①<b>미생물 생존</b>: 낮은 조리 온도, 부적절한 소독제 희석 농도 ②<b>교차오염</b>: 생식품 취급 후 오염된 손으로 조리식품 취급, 청결/일반작업구역 구분 미비, 칼·도마 구분 미사용, 부적절한 손세척 ③<b>미생물 증식</b>: 저온저장 온도 부적합, 조리 후 부적절한 냉각, 부적절한 해동(위험온도 장시간 노출), 부적절한 열장·재가열, 냉장식품 상온 방치.',
+ ref:'제3장 1. 위해요소분석 (p.64~65)', tags:['위해요소','분석','생물학적','교차오염','증식']},
+
+{cat:'HACCP 운영·기록', q:'조리 후 음식은 어떻게 냉각하나요?',
+ a:'냉장고에서 뜨거운 음식을 식히면 내부온도가 올라가 다른 식품 온도가 높아지므로 금지. <b>얼음물에 용기를 넣어 냉각</b>하거나 아이스 패들·급속 냉각기를 이용합니다. 나물류는 데치거나 볶은 후 <b>낮은 팬에 담아 빨리 온도를 낮춘 후</b> 뚜껑을 덮어 배식 전까지 냉장 보관합니다. 감자샐러드·훈제오리샐러드 등 가열 재료+비가열 재료를 차게 제공하는 음식은 가열 재료를 낮은 팬에서 신속히 냉각→뚜껑 덮어 냉장→충분히 낮춘 다음 다른 재료와 혼합합니다.',
+ ref:'제3장 2. (p.76)', tags:['냉각','급속','샐러드','나물','얼음물']},
+
+{cat:'HACCP 운영·기록', q:'조리 완제품 보관 온도는?',
+ a:'조리 완료 식품은 <b>찬 음식 10℃ 이하, 더운 음식 57℃ 이상</b>의 적정 온도를 유지하고, 세척·소독된 용기에 덮개를 덮어 2차 오염을 방지합니다. 조리된 식품 취급 시 맨손 금지(소독된 조리용 장갑·일회용 니트릴·라텍스 장갑·소독된 기물 사용). 조리 완료된 음식은 <b>2시간 이내 배식 완료</b>가 원칙입니다.',
+ ref:'제2장 4. 조리 완제품 관리 (p.42)', tags:['완제품','보관온도','10도','57도','덮개']},
+
+{cat:'HACCP 운영·기록', q:'안전을 위해 시간·온도 관리가 특히 필요한 식품은?',
+ a:'①생 혹은 익힌 동물성 식품 ②익힌 식물성 식품(숙채류) ③병원성 미생물 증식·독소 형성이 억제되도록 조절되지 않은 <b>새싹채소, 자른 멜론(산도 낮은 과일류), 자른 엽채류, 자른 토마토(혼합 채소 포함), 채친 채소(오이채·양배추채 등), 개봉한 상업적 멸균제품(통조림·레토르트)</b>. 가열 후 처리공정 식품과 비가열 식품을 혼합할 경우(예: 오리훈제채소무침) 배식 직전에 혼합하고 혼합 시작 시간을 기록합니다.',
+ ref:'제3장 2. (p.76)', tags:['시간온도관리','TCS','새싹','멜론','통조림']},
+
+// ───────── 위생교육 ─────────
+{cat:'위생교육', q:'위생교육은 누구에게 얼마나 자주 하나요?', hot:true,
+ a:'<b>학교 단위(예시)</b>: 학교급식종사자 <b>월 1회 이상</b>(대면·온라인), 학생 <b>월 1회 이상</b>(대면·온라인·가정통신문·디지털 게시판), 교직원 연수 <b>연 1회 이상</b>, 학부모 일반 월 1회 이상(총회·설명회·급식의 날 등), 급식활동 학부모(학운위·급식소위·모니터링) 연 1회 이상. <b>교육청 단위(예시)</b>: 영양(교)사 연 1~2회, 종사자 연 1~2회(개학 전), 교직원(학교장 등) 필요시, 학부모(모니터요원·급식소위원) 연 2회 이상, 납품업체 대표자 연 1회 이상(청렴교육 포함), 급식점검단 공무원 연 1회·학부모 연 2회. 위생점검 항목 30에서 <b>조리종사자 월 1회 위생(HACCP 교육 포함) 실시</b>를 확인합니다.',
+ ref:'제5장 식품위생교육, 표11~12 (p.119~124)', tags:['위생교육','월1회','횟수','교육계획','종사자','학생','학부모']},
+
+{cat:'위생교육', q:'종사자 연간 위생교육은 어떤 주제로 짜나요?',
+ a:'지침서 연간 계획(안) 예시 — <b>1·2월</b> 개학 전 위생관리(개인위생)/학교급식 HACCP 시스템의 이해, <b>3월</b> 식중독의 이해·예방/CCP기록지 작성요령, <b>4월</b> 검수/검수, <b>5월</b> 식재료 보관/CCP1-1, <b>6월</b> 작업위생관리1/CCP1-2, <b>7월</b> 작업위생관리2/CCP2, <b>8월</b> 개학 전 위생관리/CP1 냉장·냉동고 관리, <b>9월</b> 올바른 세척·소독관리/CP2, <b>10월</b> 배식·보존식 관리/개인위생 선행요건, <b>11월</b> 노로바이러스 예방관리/설비·기구관리 선행요건, <b>12월</b> 환경·시설관리(음식물쓰레기 포함)/식품오염 방지 선행요건. 실습(손씻기, 복장, 소독제 제조, CCP 기록지 작성 연습) 병행이 효과적입니다.',
+ ref:'제5장, 표13 (p.124)', tags:['연간계획','교육주제','월별','조리종사자교육']},
+
+{cat:'위생교육', q:'신규 종사자에게는 무엇을 교육하나요?',
+ a:'신규 채용자에게는 <b>기본적인 개인위생관리, 작업관리 수칙, 급식설비·기기 및 기구의 사용방법, 위생적인 식품취급 및 작업방법, 안전사고 예방</b> 등을 중점 교육합니다. 올바른 손씻는 방법, 소독제 및 희석방법 등은 연습을 병행해 현장에서 즉시 적용 가능하게 합니다. 교육의 전문성·일관성을 위해 학교급식 통합플랫폼(www.sfic.go.kr)의 자료 활용이 바람직합니다.',
+ ref:'제5장 1. 학교 단위 위생교육 (p.119)', tags:['신규','채용','교육내용','통합플랫폼']},
+
+// ───────── 위생점검 ─────────
+{cat:'위생점검', q:'교육청 위생점검은 언제, 어떻게 이루어지나요?', hot:true,
+ a:'학교 내 급식시설은 <b>교육청 주관, 연 2회(학기별 1회)</b> 사전예고제로 실시합니다(학교 밖 식재료업체·도시락업소는 지방식약청·지자체 주관). 1학기에는 위생점검에 중점을 두어 검수·전처리·조리·배식·세척 등 작업 전 과정을 관찰하면서 점검하고, 직전 학기 지적사항의 시정조치 이행 여부를 확인합니다. 점검자는 위생복장을 착용하고 온도계·조도계·test paper 등을 준비하며, 점검 후 결과를 설명하고 소명 기회를 부여한 뒤 확인자(학교장 등) 서명을 받습니다.',
+ ref:'제6장 학교급식 위생점검 (p.127~135)', tags:['위생점검','연2회','교육청','학기별','사전예고']},
+
+{cat:'위생점검', q:'위생점검 배점과 등급은 어떻게 되나요?', hot:true,
+ a:'총 <b>34개 항목 100점</b>: ①<b>학교급식 위생관리기준 준수사항 16개 항목</b> — all or none 척도(적합 3점/부적합 0점), 48점 ②<b>지도 및 권장사항 18개 항목</b> — 3단계 척도(우수 3점(2점)/보통 1.5점(1점)/미흡 0점), 52점. <b>감점</b>: 직전 법령준수 지적 미이행 -10점/건, 지도·권장 지적 미이행 -5점/건, 식품위생 관계법령 위반 행정처분 -10점, 식중독 발생(역학조사 결과 학교 원인) -10점. <b>등급</b>: A 90점 이상, B 80~89, C 70~79, D 60~69, E 60점 미만. D·E등급은 2개월 이내 재점검, C등급은 단계적 개선목표 설정. 연간 운영평가와 위생점검(2회) 모두 A등급이면 우수학교입니다.',
+ ref:'제6장 (p.128~129)', tags:['배점','등급','34항목','100점','감점','A등급','재점검']},
+
+{cat:'위생점검', q:'6차 개정에서 위생점검 항목은 어떻게 바뀌었나요?',
+ a:'총 36개→<b>34개 항목</b>으로 조정: ①구 17번 "감염병예방법 시행령 제24조에 따른 급식시설 방역·소독증명서 비치"(학교 전체 방역으로 실시되어 삭제) ②구 35번 "CCP 확인표 이해·현장기록"(점검문항 중복으로 삭제). 주요 보강: 2번에 CP2 잔류세제 확인(월 1회)·세척제 NaOH 1% 미만, 4번에 유효기간 만료일 전후 30일 이내 검사·배식도우미 제외, 7번 소독 염소농도 80~130ppm, 10번 해동방법 구체화, 17번 작업구역 구분 "우수" 기준(벽·문 차단 또는 1m 이상 구분), 30번 조리종사자 월 1회 위생(HACCP 포함) 교육, 33번 학기별 1회 CCP별 점검결과 및 조치 기록표 작성 확인.',
+ ref:'제6장 / 부록 8. 주요 개정사항', tags:['점검항목','변경','삭제','34개','36개']},
+
+{cat:'위생점검', q:'위생점검 시 감점되는 다른 법령 위반 사례는?',
+ a:'주요 과태료 사례: 소비기한 경과 원료·완제품 보관·사용 300~500만원, 보존식 미보관(-18℃ 144시간) 400~800만원, 식중독 시 보존식·현장 훼손 500~1,000만원, 건강진단 미실시 10~30만원(미검진자 종사 20~150만원), 칼·도마 구분 미사용 50~150만원, 주방용구 소독 미실시 50~150만원, 부패·변질 우려 식품 냉장·냉동 보관 위반 30~90만원, 보존·보관기준 위반 100~300만원, 위생모·마스크 미착용 20~60만원, 수질검사 미실시 50~150만원, 시설 개수명령 미이행 200~400만원, 조리실 청결관리 위반 50~150만원 등(1차~3차 기준).',
+ ref:'제6장 점검항목별 다른 법령 관련 규정 (p.138~148)', tags:['과태료','법령위반','행정처분','벌칙']},
+
+{cat:'위생점검', q:'학교 자체 일일 위생점검도 해야 하나요?',
+ a:'네. 위생점검 항목 34에서 <b>학교 자체 일일 위생점검 실시와 기록 유지</b>를 확인합니다(미리 작성하거나 미작성 시 감점). 근거는 「집단급식소 급식안전관리 기준」 제4조(위생관리 사항)·제5조(위생점검 등)입니다. 주(일)별 세척·청소 점검표(표10)와 함께 관리하면 좋습니다.',
+ ref:'제6장 점검항목 34 / 제2장 표10', tags:['일일점검','자체점검','일일위생점검','기록']},
+
+// ───────── 미생물 검사 ─────────
+{cat:'미생물 검사', q:'급식품 미생물 검사 기준(권장규격)은?',
+ a:'식품공전 "식품접객업소(집단급식소 포함)의 조리식품 등에 대한 기준 및 규격" 기준 — <b>조리식품</b>: 대장균 1g당 10 이하(직접 조리 식품), 식중독균(살모넬라·황색포도상구균·리스테리아·EHEC·캠필로박터·여시니아) 음성, 장염비브리오·클로스트리디움 퍼프린젠스 g당 100 이하, 바실러스 세레우스 g당 10,000 이하(가열처리 안 하거나 가열 후 조리한 식품의 황색포도상구균은 g당 100 이하). <b>접객용 음용수</b>: 대장균·살모넬라·여시니아 음성/250mL. <b>행주</b>(사용 중 제외): 대장균 음성. <b>칼·도마·식기</b>: 살모넬라·대장균 음성. <b>얼음</b>: 세균수 1mL당 1,000 이하.',
+ ref:'부록 3. 미생물 검사 (p.182~183)', tags:['미생물','검사기준','대장균','규격','권장규격']},
+
+{cat:'미생물 검사', q:'자체 간이 미생물 검사는 어떻게 하나요?',
+ a:'고가 장비 없이 <b>건조필름배지(또는 Rodac plate)</b>로 실시할 수 있습니다. 조리음식: 시료 10g+멸균 희석액 90mL 균질화 → 대장균·대장균군용 배지에 1mL 접종 → 35℃ 배양 → 균락수×10=1g당 균수, <b>대장균 검출 시 부적합</b>(시료 우선순위: ①가열 없는 음식 ②열장 아닌 가열 후 처리 음식 ③열장 아닌 가열 음식 ④열장 가열 음식). 물: 1mL 접종, 100 이하 양호. 표면: Rodac 직접 접촉 또는 면봉 100cm² 도말, 대장균 음성이어야 함. 손·장갑: 손바닥 모양 배지 등 — 교육 목적 활용. 정기검사(연 1회 이상)는 교육청 공무원·검사기관이 검체를 채취해야 하며(자체검증용 예외), 검체는 무균 채취해 냉장(5℃ 이하) 상태로 <b>4시간 이내</b> 검사기관에 운반합니다.',
+ ref:'부록 3. 미생물 검사 (p.182~185)', tags:['간이검사','건조필름','배지','자체검사','검체']},
+]);
+
+</script>
+<script>
+// 무.물.위 데이터 — 위생점검 34항목 체크리스트 + 5차→6차 개정 변경점 + 숫자 빠른참조
+window.MMW_CHECK = {
+  mandatory: [ // 학교급식 위생관리기준 준수사항 16개 (적합 3점 / 부적합 0점)
+    {no:1, area:'시설관리', t:'급식시설·설비, 기구 등에 대한 청소 및 소독 계획을 수립·시행하여 항상 청결하게 관리', fail:'청소·소독계획 미수립 및 청결상태 불량', tip:'주기별 청소·소독계획 수립 여부, 청소 점검표 작성 여부 확인. 주된 지적: 후드, 냉난방기, 에어커튼, 환풍기, 출입구, 세척기 내부·필터, 배수로·그리스트랩, 천정, 바닥, 타일벽, 덤웨이터, 오븐, 부침기, 냉장고 손잡이 등. 덕트는 전문업체 용역 권장, 배관 테이핑·도색도 관리.'},
+    {no:2, area:'시설관리', t:'냉장·냉동고의 온도, 식기세척기의 최종 헹굼수 온도 또는 식기소독보관고의 온도를 기록·관리', fail:'CP1·CP2 온도를 지속적으로 기록관리하지 않는 경우', tip:'CP1: 출근 직후·배식 후 청소 직전(퇴근 전) 당일 현장 온도 기록, 모든 냉장·냉동고 관리(2식 이상은 중식 후 추가). CP2: 헹굼수 71℃ 이상 또는 식기소독고 정상 작동 확인·기록, Thermo label 월 1회 이상, 잔류세제 확인 월 1회 이상, 자동식기세척기 세척제는 NaOH 함량 1% 미만 제품.'},
+    {no:3, area:'시설관리', t:'조리용수로 수돗물이 아닌 지하수를 사용하는 경우 소독 또는 살균하여 사용', fail:'지하수 소독·살균 미실시, 상수도가 있음에도 지하수 사용', tip:'분기별 지하수 수질검사결과 적합 여부, 소독장치 설치·사용 확인. 상수도 사용은 적합(3점).'},
+    {no:4, area:'개인위생', t:'식품취급 및 조리종사자는 6개월에 1회 건강진단을 실시하고 기록을 2년간 보관 (폐결핵검사는 연 1회 가능)', fail:'기한 내 건강진단 미실시, 2년간 기록 미보관', tip:'영양(교)사·종사자·납품업체 배송직원·대체인력 6개월 1회. 유효기간 만료일 전·후 30일 이내 검사(부득이 시 1개월 연장 가능). 단순 배식도우미는 건강진단 대상 아님(식약처 유권해석).'},
+    {no:5, area:'개인위생', t:'조리종사자들의 올바른 손씻기, 손소독으로 손에 의한 오염이 일어나지 않도록 함', fail:'손을 씻지 않거나 소독하지 않은 상태로 조리작업', tip:'고무장갑 착용 전, 작업변경 시 손씻기(캔·공산품 포장 취급 시 주의). 손톱솔·물비누 사용, 고무장갑도 손에 준하여 관리.'},
+    {no:6, area:'식재료관리', t:'식재료 검수 시 「학교급식 식재료의 품질관리기준」에 적합한 품질·신선도·수량·위생상태 등을 확인하여 기록', fail:'품질관리기준 부적합 품질·수량, 원산지, 제조일·소비기한, 납품온도 등 검수서 기록관리 미흡', tip:'품질등급·원산지·생산연도 기록, 쌀(1년 이내)·축산물(등급) 확인, 저울로 중량 확인, 대면·복수검수(2명 이상 서명). 식품온도: 냉장·전처리농산물 10℃ 이하, 분쇄육·가금육·훈제연어·알가공품 5℃ 이하, 냉동식품 냉동상태(녹은 흔적 없음). 검수 없이 전처리·조리 시 부적합.'},
+    {no:7, area:'작업위생', t:'교차오염 방지를 위해 칼·도마·고무장갑 등 조리기구·용기를 용도별 및 조리 전·후로 구분 사용하고 적절히 세척·소독', fail:'CCP1 용도별 및 조리 전·후 구분 사용하지 않고 세척·소독 미실시', tip:'칼·도마는 용도별(채소/육류/어류) 구분, 소독용액 농도 준수(염소 80~130ppm 5분 침지 또는 동등 효과 살균·소독제), 가열(75℃ 이상) 전·후 구분, 플라스틱 소쿠리 사용 금지(전처리용 제한적), 면장갑·행주 화장실 보관 금지, 검식용 용기 구분.'},
+    {no:8, area:'작업위생', t:'식품취급 등의 작업은 바닥으로부터 60cm 이상의 높이에서 실시', fail:'60cm 이하에서 식품 취급(운반·오염방지 시설 설치 시 제외)', tip:'모든 식재료 60cm 이상 관리(식품창고 내 15cm 이상). 국통을 잠시 파레트·L형 카트에 둔 경우 제한적 인정. 오븐 작업: 꽂을 때 위에서부터, 뺄 때 아래서부터.'},
+    {no:9, area:'작업위생', t:'조리 완료 식품과 세척·소독된 배식기구·용기 등은 교차오염 우려가 있는 기구·용기·식재료와 접촉에 의해 오염되지 않도록 관리', fail:'조리완료 식품·배식기구 등의 위생적 보관관리 미흡', tip:'조리완료 식품은 조리 전 식품과 구분 관리, 소독된 배식기구(수저·식판)는 미소독 기구와 혼용 금지.'},
+    {no:10, area:'작업위생', t:'해동방법이 적절하고, 재냉동하여 사용하지 않는지', fail:'냉동식품을 부적절한 방법(실온방치 등)으로 해동', tip:'해동은 냉장(10℃ 이하)·전자레인지·해동기능 스마트오븐·흐르는 물(21℃ 이하)로(제품 표시사항 이행). "해동 중" 표식 부착, 냉동식품 튀김 시 소량씩 꺼내 조리, 녹았다 언 흔적 있는 식품 재냉동·재사용 확인.'},
+    {no:11, area:'작업위생', t:'생으로 먹는 채소류·과일류를 충분히 세척·소독하고 농도를 확인', fail:'CCP1 충분한 세척·소독 미실시', tip:'Test paper(농도측정기) 사용, 소독 전후 세척·헹굼 철저. 순서: 다듬기→세척→소독(80~130ppm 5분)→헹굼(소독제 냄새 없어질 때까지). 타이머 사용 권장.'},
+    {no:12, area:'작업위생', t:'가열조리 식품의 중심부가 75℃(패류 85℃) 이상에서 1분 이상 가열되는지 온도계로 확인하고 기록·유지', fail:'CCP1 중심온도 미측정 및 지속적 기록 미실시', tip:'밥·국(오래 끓이기) 제외 모든 가열식품 중심온도 체크. 온도계·타이머 구비, 온도계·보관함·탐침 위생관리 철저.'},
+    {no:13, area:'작업위생', t:'조리 완료 식품의 온도와 시간관리를 통하여 미생물 증식을 억제', fail:'CCP2 조리완료 음식의 온도 또는 시간관리 미흡', tip:'밥·국 포함 열장식품 57℃ 이상 유지 또는 조리완료~배식완료 2시간 이내 관리.'},
+    {no:14, area:'배식·검식', t:'운반 및 배식기구 등을 청결히 관리하고, 배식 중 운반·배식기구 등으로 인한 오염이 일어나지 않도록 조치', fail:'운반·배식기구가 청결하지 않으며 교차오염 우려에 조치하지 않음', tip:'배식차·엘리베이터 세척·소독, 운반 시 공간살균 후 탑재 권장, 배식시간 급식관계자 외 탑승 제한, 화물용 덤웨이터 사람 탑승 금지, 복도배식은 교실배식으로 전환 지도.'},
+    {no:15, area:'배식·검식', t:'조리완료 시 음식의 맛·온도·조화(영양·재료의 균형)·이물·불쾌한 냄새·조리상태 등을 확인하는 검식 실시', fail:'검식을 지속적으로 실시하지 않거나 기록하지 않음', tip:'NEIS 급식일지에 검식기록(별도 검식일지 지양). 기재: 맛, 온도, 조화, 이물, 불쾌한 냄새, 조리상태.'},
+    {no:16, area:'세척·소독', t:'식기구를 세척·소독 후 배식 전까지 위생적으로 보관·관리', fail:'식기구의 세척·소독 및 위생적 보관관리 미흡', tip:'식판·수저 보관·운반 시 덮개 사용(교실배식은 밀폐용기 또는 운반차 내부), 소독·건조된 식기구 이물질·청결 확인. 점검자 잔류세제 검사에서 검출 시 감점.'},
+  ],
+  guide: [ // 지도 및 권장사항 18개 (우수/보통/미흡)
+    {no:17, area:'시설관리', t:'일반작업구역과 청결작업구역으로 구분되어 식품취급작업의 흐름이 교차되지 않는지', pts:'우수3/보통1.5/미흡0', tip:'우수: 각 실별 벽·문으로 차단, 또는 바닥에서 약 1m 이상 높이로 구역 구분(천장부 개방이어도 구분 명확). 보통: 구역 미구분이나 작업대·세정대를 시간·공간적으로 분리 사용. 미흡: 미구분+분리사용 안 함.'},
+    {no:18, area:'시설관리', t:'조리장의 시설(바닥·벽·천장 등) 파손 및 고장난 설비·기구의 관리', pts:'우수3/보통1.5/미흡0', tip:'파손·고장 없음=우수. 고장 기구는 "고장수리 의뢰 중" 표시. 타일 파손, 배관 구멍, 천장 텍스 탈락, 누수 등은 파손으로 간주. 오븐·소독고·형광등·자외선등·스팀배관·바퀴·릴호스 밸브·에어커튼·손소독기·식기세척기 확인.'},
+    {no:19, area:'시설관리', t:'검수장소 및 조리작업장소(작업대·가스대·국솥 등)의 조도 기준 준수', pts:'우수2/보통1/미흡0', tip:'검수장소 540lx, 조리장 220lx 이상(식재료 창고·워크인냉장고 포함). 한 곳이라도 미달이면 보통. 조도계로 허리 높이에서 측정(날씨 무관), 형광등 고장으로 인한 미달 확인.'},
+    {no:20, area:'시설관리', t:'조리장의 후드는 열·증기 발생 시 즉시 배출되고, 응축수가 식품에 직접 떨어지지 않는 구조인지', pts:'우수3/보통1.5/미흡0', tip:'응축수 낙하 구조 또는 기름입자 제거용 필터(튀김솥·볶음솥·부침기·오븐기) 미설치 시 미흡. 후드 응축수 밸브 미설치, 조리 중 밸브 열고 작업 시 감점.'},
+    {no:21, area:'시설관리', t:'조리장 내 온도 및 습도를 적정하게 관리', pts:'우수3/보통1.5/미흡0', tip:'각 실별 냉·난방기(충분한 용량) 설치, 온·습도계 비치. 실내온도 18℃ 이하가 이상적(에어컨 등으로 가능한 낮게), 습도 50~70%. 공조시스템 설치·관리 양호 시 우수.'},
+    {no:22, area:'시설관리', t:'식품보관실은 적정하게 설치되고 소모품보관실과 분리', pts:'우수3/보통1.5/미흡0', tip:'환풍기·환기창 설치, 소모품보관실 별도 설치 또는 공간구획(경량칸막이·자바라 인정, 자바라는 개선 노력), 온·습도계 비치, 나무 깔판 금지, 선반 15cm 이상, 쌀은 바닥·벽에서 15cm 이격, 시멘트바닥은 방수페인트·타일 안내.'},
+    {no:23, area:'시설관리', t:'종사자 전용 화장실이 있고 청소·관리상태 양호, 출입문이 조리실에 바로 면하지 않고 환풍기·환기창 설치', pts:'우수2/보통1/미흡0', tip:'급식실 밖 화장실을 종사자 외 사용 금지하면서 관리 양호하면 보통 인정. 출입문이 조리실에 면하나 폐쇄해 사용 안 하면 인정(자바라 설치는 불인정). 화장실용 신발·종이타월·휴지통 덮개 확인.'},
+    {no:24, area:'시설관리', t:'조리장 내 수세시설과 신발소독시설이 적정하게 설치되고 올바르게 사용', pts:'우수3/보통1.5/미흡0', tip:'구획된 실별 설치(세척실 권장), 온수(40℃ 이상), 손잡이는 페달식·원터치식, 손소독시설·물비누·손톱솔·종이타월(화장실 포함). 신발소독시설: 조리실 외부 출입구·화장실 출입구·일반/청결 경계(벽·문 구분 시), 소독제 상시 적정 농도. 핸드드라이기는 종이타월로 교체 지도.'},
+    {no:25, area:'시설관리', t:'조리장 내 싱크대 등은 배수관이 배수로와 직접 연결되어 바닥을 오염시키지 않도록 조치', pts:'우수3/보통1.5/미흡0', tip:'세미기·손세척대·세척기·담금세정대·세탁기 등 배수관 연결 확인. 이동식 세정대·소쿠리 운반카트는 트렌치 위에서 배수하되 바닥 오염 방지.'},
+    {no:26, area:'시설관리', t:'조리장·식품보관실·식생활교육관(식당) 등의 방충·방서설비 및 관리상태 적정', pts:'우수3/보통1.5/미흡0', tip:'외부로 통하는 곳 에어커튼+방충망(문 개폐 시 자동 작동 등 완벽하면 한 개만도 인정), 바닥·외부 구멍 확인, 보일러실·휴게실·급식관리실 방충방서, 개폐시설 없는 환풍기 방충망, 살충등 사용·관리 확인, 에어커튼 방향 바깥쪽.'},
+    {no:27, area:'시설관리', t:'급수설비의 적정성 및 위생적 관리(수도전 위치·수량 등)', pts:'우수3/보통1.5/미흡0', tip:'수도전 충분하여 호스 미사용 또는 호스를 짧게 설치해 적정 사용=우수. 호스가 바닥에 닿게 사용, 국솥·세정대 호스가 식재료에 닿거나 물에 잠기면 감점. 릴호스 청소·소독 안내.'},
+    {no:28, area:'시설관리', t:'냉동·냉장시설의 적정용량 확보 및 온도유지, 급식품 외 보관 없는지', pts:'우수3/보통1.5/미흡0', tip:'냉장·냉동고 용량 70% 이하(워크인 40% 이하), 외부 온도계 설치(실제 현재온도 측정만 인정), 개인물품·식재료 샘플은 별도 냉장고, 보존식냉동고에 보존식 외 보관 금지, 부식된 선반 교체.'},
+    {no:29, area:'개인위생', t:'종사자의 개인위생 준수여부 및 건강상태 확인 후 적절히 조치', pts:'우수3/미흡0', tip:'당일 작업 전 손 상처·설사 여부 체크·조치, 마스크 착용, 신규 종사자(학부모 모니터요원 포함) 건강문진 작성, 머리카락·매니큐어·장신구 확인, 위생모에 머리카락 안 보이게(캡모자·주방장모자 금지), 긴팔 위생복(밝은 색상 권장).'},
+    {no:30, area:'개인위생', t:'종사자를 대상으로 위생 교육을 정기적으로 실시', pts:'우수3/미흡0', tip:'학교급식종사자 월 1회 위생교육(HACCP 교육 포함) 실시 확인. 집단급식소 설치·운영자와 영양사·조리사는 식품위생법령에 따른 교육 별도(식품위생법 제41조·제56조).'},
+    {no:31, area:'배식', t:'배식 시 위생복장을 적정하게 착용', pts:'우수3/보통1.5/미흡0', tip:'앞치마·위생모·마스크 착용 및 청결상태. 위생장갑 또는 집게·국자 등 도구 사용, 맨손배식 금지(부득이 시 1회용 위생장갑), 마스크는 코와 입을 가리는 형태 권장.'},
+    {no:32, area:'환경위생', t:'조리실 내·외부의 쓰레기는 적정 처리하고 주변을 청결하게 관리', pts:'우수3/보통1.5/미흡0', tip:'페달식 덮개 있는 전용 쓰레기통(전처리 쓰레기통 포함), 통 내외부·주변 청결, 잔반 매일 수거, 수거업체 적정(폐기물관리법 허가·신고) 확인.'},
+    {no:33, area:'HACCP', t:'HACCP 적용에 대한 자체분석 후 협의를 거쳐 적절한 개선조치', pts:'우수3/보통1.5/미흡0', tip:'HACCP 적용 일상검증: 학기별 1회 CCP별 점검결과 및 조치 기록표(양식2) 작성 확인(HACCP팀 회의로 갈음 가능). 온도계 자가 검교정 기록지 참조.'},
+    {no:34, area:'위생관리', t:'학교 자체에서 일일 위생점검을 실시', pts:'우수3/미흡0', tip:'점검표 기록 유지·관리, 작성 시기 적정(미리 작성하거나 미작성 시 감점). 근거: 집단급식소 급식안전관리 기준 제4·5조.'},
+  ],
+  deduct: [
+    {t:'직전 점검 법령준수사항 지적 미이행', pts:'-10점/항목', note:'시정명령 후 정당한 사유 없이 미이행'},
+    {t:'직전 점검 지도·권장사항 지적 미이행', pts:'-5점/항목', note:'시설개선 등 예산 과다 소요로 교육청과 개선계획 수립 시 제외'},
+    {t:'식품위생 관계법령 위반 행정처분', pts:'-10점', note:'지난 점검 이후 과태료 등 행정처분'},
+    {t:'학교급식 식중독 발생', pts:'-10점', note:'역학조사 결과 발생원인이 학교인 경우'},
+  ]
+};
+
+window.MMW_CHANGES = [
+ {area:'체계', b5:'제1장 선행요건관리 ~ 제7장 학교급식 운영 평가', a6:'제1장 학교급식 위생관리 → 제2장 선행요건관리 → 제3장 HACCP 시스템 → 제4장 위생관리 매뉴얼 및 기록지 → 제5장 식품위생교육 → 제6장 학교급식 위생점검 → 제7장 Q&A', why:'지침서 체계 재정립, 학교급식 운영평가는 분리 운영. 법적 근거-HACCP 제도-식중독 관리를 제1장으로 통합'},
+ {area:'용어', b5:'조리종사자', a6:'학교급식 종사자 (업무상 구분 필요 시 조리사/조리실무사)', why:'용어 정비'},
+ {area:'용어', b5:'식당', a6:'식생활교육관(식당)', why:'용어 정비'},
+ {area:'CCP 번호', b5:'CCP2(식품취급·조리), CCP3(조리완료·배식)', a6:'CCP1(식품취급 및 조리), CCP2(조리완료 및 배식) — 식단검토는 CCP 번호 없이 기록·관리', why:'CCP 관리번호 체계 정비'},
+ {area:'소독 농도', b5:'유효염소농도 100~130ppm', a6:'80~130ppm(mg/kg) 병기', why:'식약처 변경 기준 반영, ppm 표시 방식 변경'},
+ {area:'세척제', b5:'수산화나트륨(NaOH) 함유량 5% 미만 권장', a6:'NaOH 함유량 1% 미만 제품 사용 (자동식기세척기용 포함)', why:'시도 학교급식 기본방향과 통일'},
+ {area:'설비', b5:'—', a6:'전처리실 설비·기구에 살균소독고 추가 (칼·도마·앞치마·고무장갑 세척·소독 후 위생적 건조)', why:'학교급식 현장 기구 현황 반영'},
+ {area:'건강진단', b5:'6개월 1회', a6:'6개월 1회 + 유효기간 만료일 전·후 30일 이내 검사, 부득이 시 1개월 연장 명시. 단순 배식도우미는 건강진단 대상 아님(식약처 유권해석 23.7.17)', why:'식품위생 분야 종사자의 건강진단 규칙(2024.1.8 시행) 반영'},
+ {area:'납품업체', b5:'방문평가표 정기건강진단(연 1회)', a6:'연 1회 + 학교에 식재료를 직접 배송하는 자는 6개월에 1회 실시 명시, 제조업자 제외', why:'배송직원 관리 명확화'},
+ {area:'식단검토', b5:'한 음식을 두 가지 이상으로 나누어 기록(비빔밥→생채·숙채, 탕수육→돈육튀김·탕수소스)', a6:'NEIS 식단명 그대로 기록 가능(탕수육 하나로도, 분리 기록도 가능). 기록 주기 주·월 단위 통합', why:'통합 기록 허용으로 업무 효율성 제고'},
+ {area:'식단검토', b5:'작성 제외: 밥·국·김치·후식용 가공완제품', a6:'작성 제외: 밥·국·완제품 김치·가공완제품(벌크형 포함). 밥류 중 가열·혼합 등 추가 공정 메뉴(볶음밥·비빔밥·주먹밥)는 포함', why:'작성대상 메뉴 명확화'},
+ {area:'검수', b5:'냉동식품: 냉동상태 유지', a6:'냉동식품: 측정 온도 기록(냉동상태 유지 확인)', why:'식재료 온도 관리의 객관성·정밀도 강화'},
+ {area:'CCP1 기록', b5:'밥·국 포함 모든 음식 기록, 식재료마다 도구 구분 ○× 반복 기록', a6:'추가공정 없는 밥 제외, 도구 구분 사용은 상단에 V 표시 한 번만, 양념류(마늘·파·생강) 공정 같으면 1회만, 가열공정군·소독공정군 묶음 기록 가능, 단순 담기 음식(깍두기)·공산품 양념류 제외', why:'반복 기록 간소화'},
+ {area:'CCP1 기록', b5:'개선조치를 기록지 내+양식 2가지에 중복 기록', a6:'기록지의 개선조치란을 "비고"란으로 수정, [양식2] CCP 및 CP 점검결과 및 조치로 통합', why:'중복 기록 제거'},
+ {area:'CCP1 온도', b5:'밥·국같이 끓이는 음식 온도계 불필요 / 작거나 얇은 식품(멸치)은 표면온도계', a6:'국·죽·수프·카레·면 온도계 불필요 / 표면만 익을 수 있는 음식(전류·피자류)은 2~3장 겹쳐 탐침온도계로 중심온도 측정 추가', why:'온도 측정 불필요 음식 확대 + 식중독 위험 음식 측정법 제시'},
+ {area:'CCP1 작성시기', b5:'공정별(구분사용 여부/소독 후/조리 종료 후) 각각 기록', a6:'전처리 및 조리 종료 직후에 각각 기록', why:'과도한 작업공정 중 기록 방법 개선'},
+ {area:'CCP2', b5:'완제품 제외 모든 음식 기록 / 혼합 시점 배식 직전 공정관리', a6:'완제품+김치 제외 / "가열조리와 비가열조리 혼합음식은 배식 직전에 혼합" 한계기준 명확화, 온도 또는 시간 측정으로 모니터링 명확화', why:'제외 대상 명시, 관리 기준 명확화'},
+ {area:'CP2', b5:'식기세척기 온수 온도 / 소독제 이름 기록', a6:'"최종헹굼수 온도"로 명칭 명확화 / (유효)성분명 기록, 소독제 희석은 물로만(온수·열수 금지), 살균수 제조장치 사용 시 제조시간 기록 불필요', why:'단어 명확화, 현장 반영'},
+ {area:'양식', b5:'양식4 HACCP 자체검증 결과표', a6:'삭제 — CCP 및 CP 점검결과 및 조치(양식2)로 HACCP팀 회의 갈음', why:'중복 서식 정리'},
+ {area:'위생점검', b5:'준수사항 17개 + 지도권장 18개 = 35~36항목', a6:'준수사항 16개 + 지도권장 18개 = 34항목. 구17번(급식시설 방역·소독증명서)·구35번(CCP확인표 이해) 삭제', why:'학교 전체 방역 실시, 점검문항 중복 제거'},
+ {area:'위생점검', b5:'해동방법 적절 여부', a6:'해동은 냉장(10℃ 이하)·전자레인지·해동기능 스마트오븐·흐르는 물(21℃ 이하) 명시(제품 표시사항 이행)', why:'해동방법 구체화'},
+ {area:'위생점검', b5:'작업구역 구분 여부', a6:'"우수" 기준 명시: 각 실별 벽·문 차단, 또는 바닥에서 약 1m 이상 구분(천장부 개방이어도 명확하면 인정)', why:'평가 기준 구체화'},
+ {area:'위생점검', b5:'위생교육 정기 실시', a6:'조리종사자 월 1회 위생(HACCP 교육 포함) 실시 확인 명시', why:'교육 주기 명확화'},
+ {area:'위생점검', b5:'점검표 부본 보관', a6:'서명만 받음(나이스에서 결과 열람 가능)', why:'나이스 연계'},
+ {area:'HACCP', b5:'일반 HACCP과 학교급식 HACCP 팀구성·9절차 각각 설명', a6:'학교급식 HACCP 팀 구성과 9절차로 설명 일원화', why:'설명 일원화'},
+];
+
+window.MMW_NUMBERS = [
+ {k:'가열조리 중심온도', v:'75℃(패류 85℃) 1분 이상'},
+ {k:'채소·과일 소독(염소계)', v:'유효염소 80~130ppm, 5분 침지 후 헹굼'},
+ {k:'열장 음식', v:'57℃ 이상 유지 또는 조리완료 후 2시간 이내 배식'},
+ {k:'찬 음식 제공', v:'10℃ 이하(조리 완제품) / 냉장온도 5℃ 이하 제공'},
+ {k:'냉장고(실) / 냉동고(실)', v:'5℃ 이하 / -18℃ 이하'},
+ {k:'검수 온도', v:'냉장·전처리농산물 10℃↓, 생선·육류 5℃↓, 냉동식품 냉동상태'},
+ {k:'식판 소독', v:'표면 71℃ 이상 (Thermo label 월 1회 확인)'},
+ {k:'열탕/건열 소독', v:'100℃ 30초 이상 / 식기 표면 71℃ 이상'},
+ {k:'노로바이러스 소독', v:'85℃ 1분 이상(권장 100℃), 염소 200ppm(물1L+락스5mL)'},
+ {k:'해동', v:'냉장 10℃ 이하 · 흐르는 물 21℃ 이하 · 전자레인지'},
+ {k:'보존식', v:'-18℃ 이하 144시간(6일) 이상, 1인분(150g 이상 권장)'},
+ {k:'건강진단', v:'6개월 1회(만료일 전후 30일 이내), 기록 2년 보관'},
+ {k:'냉장·냉동고 온도 확인', v:'중식만 하루 2회 / 2식 이상 하루 3회'},
+ {k:'튀김유 온도', v:'냉동식품 160℃ · 채소 170℃ · 어육류 180℃ 이하, 산가 2.5 이하 재사용'},
+ {k:'냉장·냉동고 적재율', v:'70% 이하 (워크인 냉장실 40% 이하)'},
+ {k:'조도', v:'검수대 540lx · 작업대 220lx 이상'},
+ {k:'작업 높이', v:'바닥에서 60cm 이상 (창고 내 15cm 이상)'},
+ {k:'조리장 온·습도', v:'18℃ 이하 이상적 · 습도 50~70%'},
+ {k:'위생교육', v:'종사자 월1회(HACCP 포함) · 학생 월1회 · 교직원 연1회'},
+ {k:'위생점검', v:'연 2회(학기별 1회), 34항목 100점, A등급 90점 이상'},
+ {k:'온도계 검교정', v:'연 2회(얼음점 0℃/끓는점 100℃)'},
+ {k:'CCP 기록 보관', v:'1년 (건강진단 2년, 수질검사 3년)'},
+];
+
+</script>
+<script>
+/* ══════════ 검색 엔진 ══════════ */
+const SYN = { // 동의어·현장용어 → 데이터 용어
+  '보건증':'건강진단','건강진단서':'건강진단','건강진단결과서':'건강진단',
+  '락스':'차아염소산나트륨 희석 소독','희석':'희석 계산','살균제':'살균소독제',
+  '소독약':'소독제','뜨거운물':'온수','일지':'기록지','서류':'기록지 기록',
+  '온도체크':'온도 확인','언제까지':'시간','냉장':'냉장고','냉동':'냉동고',
+  '세척기':'식기세척기','서모라벨':'thermolabel','썰기':'절단','자르기':'절단',
+  '데치기':'데침','샐러드':'샐러드 채소 소독','과일소독':'과일 소독',
+  '유통기한':'소비기한','알바':'배식도우미','도우미':'배식도우미',
+  '위생모':'위생모 복장','설사':'설사 배제','상처':'상처 밴드',
+  '노로':'노로바이러스','식판':'식판 71','수저':'수저 자외선',
+  '점검':'위생점검','평가':'위생점검 배점','등급':'등급 배점',
+  '학운위':'학교운영위원회','급식소위원회':'급식소위원회',
+  '레시피':'조리','메뉴':'식단','반찬':'음식','국':'국 온도계',
+  '온도계':'온도계 검교정 측정','교정':'검교정','uv':'자외선','유브이':'자외선',
+  '앞치마':'앞치마 구분','장갑':'고무장갑','비닐장갑':'비닐 위생장갑',
+  '해썹':'HACCP','haccp':'HACCP','씨씨피':'CCP','ccp':'CCP','cp':'CP',
+  '납품':'납품업체 검수','업체':'납품업체','발주':'발주 식단검토',
+  '몇도':'온도','며칠':'기간 일','언제':'시기 시간','몇번':'횟수','몇 회':'횟수',
+  '얼마나':'기준','쓰레기':'폐기물 쓰레기','잔반':'잔반','청소':'청소',
+  '물':'조리용수 물','정수기':'급수 물','우물':'지하수',
+};
+const norm = s => (s||'').toLowerCase().replace(/[\s·ㆍ,.\-()\[\]?!'"~]/g,'');
+function expand(qs){
+  let out = qs;
+  for(const k in SYN){ if(qs.includes(k)) out += ' ' + SYN[k]; }
+  return out;
+}
+function tokenize(s){
+  return s.toLowerCase().split(/[\s·ㆍ,.\-()\[\]?!'"~/]+/).filter(t=>t.length>=1 && !['은','는','이','가','을','를','좀','요','에','의','와','과','로','으로','에서','하나요','인가요','있나요','해야','어떻게','뭔가요','무엇','어떤'].includes(t));
+}
+function score(item, tokens, rawNorm){
+  const qn = norm(item.q), an = norm(item.a.replace(/<[^>]+>/g,'')), tg = norm((item.tags||[]).join(' ')), cn = norm(item.cat);
+  let sc = 0, hits = 0;
+  for(const t of tokens){
+    const tn = norm(t); if(!tn) continue;
+    let h = 0;
+    if(qn.includes(tn)) h += 30;
+    if(tg.includes(tn)) h += 22;
+    if(cn.includes(tn)) h += 12;
+    if(an.includes(tn)) h += 8;
+    if(h>0) hits++;
+    sc += h;
+  }
+  if(tokens.length && hits === 0) return 0;
+  if(rawNorm.length >= 4 && qn.includes(rawNorm)) sc += 40; // 질문 전체 구문 일치
+  sc += hits * 12; // 여러 토큰 매칭 가중
+  if(item.hot) sc += 3;
+  return sc;
+}
+function search(qs){
+  const tokens = tokenize(expand(qs));
+  const rawNorm = norm(qs);
+  if(!tokens.length && rawNorm.length<1) return [];
+  return MMW_QA.map(it=>({it, s:score(it, tokens, rawNorm)}))
+    .filter(x=>x.s>0).sort((a,b)=>b.s-a.s).map(x=>x.it);
+}
+
+/* ══════════ 렌더링 ══════════ */
+const $ = id => document.getElementById(id);
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;')}
+function hi(text, qs){ // 질문 텍스트 하이라이트(플레인 텍스트만)
+  if(!qs) return esc(text);
+  let out = esc(text);
+  const toks=[...new Set(tokenize(qs))].filter(t=>t.length>=2).sort((a,b)=>b.length-a.length);
+  for(const t of toks){
+    try{ out = out.replace(new RegExp('('+t.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','gi'),'<mark>$1</mark>'); }catch(e){}
+  }
+  return out;
+}
+function fmtA(html){ // 항목 기호를 줄 단위로 분리해 가독성 확보
+  var M = '\u0007';
+  var s = M + 'P' + html;
+  s = s.replace(/\s*([\u2460-\u2473])\s*/g, M + 'L$1 ');
+  s = s.replace(/\s*\u203B\s*/g, M + 'N\u203B ');
+  return s.split(M).filter(Boolean).map(function(seg){
+    var kind = seg[0], body = seg.slice(1).trim();
+    if(!body) return '';
+    if(kind==='L') return '<div class="li">'+body+'</div>';
+    if(kind==='N') return '<div class="nt">'+body+'</div>';
+    return '<div>'+body+'</div>';
+  }).join('');
+}
+function cardHTML(item, qs, open, hideCat){
+  return `<div class="card${open?' open':''}">
+    <div class="qrow" onclick="this.parentNode.classList.toggle('open')">
+      <span class="qmark">Q</span>
+      <span class="qtxt">${hi(item.q, qs)}</span>
+      ${hideCat?'':`<span class="cat">${item.cat}</span>`}
+      <span class="arrow">▶</span>
+    </div>
+    <div class="abox">${fmtA(item.a)}<div class="ref">📖 ${esc(item.ref)}</div></div>
+  </div>`;
+}
+function doSearch(fromInput){
+  const qs = $('q').value.trim();
+  switchTab('search');
+  $('ai-area').innerHTML = '';
+  const res = search(qs);
+  if(!qs){ $('s-count').textContent = '궁금한 것을 검색해 보세요.'; $('s-results').innerHTML=''; return; }
+  if(!res.length){
+    $('s-count').textContent = `"${qs}" 검색 결과가 없어요.`;
+    $('s-results').innerHTML = `<div class="noresult">🧐 <b>지침서에서 바로 찾지 못했어요.</b><br>
+      단어를 짧게 줄여 보세요. 예) "냉동식품이 녹았을 때" → <b>녹은</b>, "채소 소독약 농도" → <b>소독 농도</b>
+      <div class="syn">자주 찾는 검색어: <a href="#" onclick="quick('보건증');return false">보건증</a> ·
+      <a href="#" onclick="quick('락스 희석');return false">락스 희석</a> ·
+      <a href="#" onclick="quick('중심온도');return false">중심온도</a> ·
+      <a href="#" onclick="quick('보존식');return false">보존식</a> ·
+      <a href="#" onclick="quick('2시간');return false">2시간</a></div></div>`;
+    return;
+  }
+  const top = res.slice(0, 12);
+  $('s-count').textContent = `"${qs}" 관련 답변 ${res.length}건 중 상위 ${top.length}건`;
+  $('s-results').innerHTML = top.map((it,i)=>cardHTML(it, qs, i===0)).join('');
+}
+function quick(t){ $('q').value = t; doSearch(); }
+
+/* 탭 */
+function switchTab(t){
+  document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.toggle('on', b.dataset.t===t));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('on', p.id==='panel-'+t));
+}
+$('tabs').addEventListener('click', e=>{ if(e.target.dataset.t) switchTab(e.target.dataset.t); });
+$('q').addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); doSearch(); }});
+let deb; $('q').addEventListener('input', ()=>{ clearTimeout(deb); deb=setTimeout(()=>{ if($('q').value.trim().length>=2) doSearch(); }, 250); });
+
+/* 인기 질문 칩 */
+(function(){
+  const hots = MMW_QA.filter(x=>x.hot).slice(0,6);
+  $('hotchips').innerHTML = hots.map(h=>`<button onclick="chatAsk('${h.q.replace(/'/g,"\\'")}')">${h.q.length>22?h.q.slice(0,22)+'…':h.q}</button>`).join('');
+})();
+function showOne(q){
+  const it = MMW_QA.find(x=>x.q===q); if(!it) return;
+  switchTab('search');
+  $('q').value='';
+  $('s-count').textContent = '자주 묻는 질문';
+  $('s-results').innerHTML = cardHTML(it, '', true);
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+/* 분류별 보기 — 업무 흐름 그룹 */
+const CATMETA = {
+ '식단검토':      {i:'📅', d:'제공 금지 식단 · 소독/가열 체크 · 조리공정 분류'},
+ '식재료·검수':   {i:'🥬', d:'검수 온도(10℃/5℃) · 품질기준 · 보관 · 온도계 검교정'},
+ '전처리·해동':   {i:'🔪', d:'세척 · 해동(21℃) · 60cm · 칼도마 구분'},
+ '소독·살균소독제':{i:'🧴', d:'80~130ppm · 희석 계산 · 열탕/UV · 세척제'},
+ 'CCP1 식품취급·조리':{i:'🍳', d:'중심온도 75℃(패류 85℃) · 소독 · 기록지 작성'},
+ 'CCP2 조리완료·배식':{i:'🍚', d:'57℃ 또는 2시간 · 배식 위생 · 교실/공동조리'},
+ 'CP1 냉장·냉동': {i:'❄️', d:'5℃/-18℃ · 하루 2~3회 확인 · 고장 대응'},
+ 'CP2 식품접촉표면':{i:'🍽️', d:'식판 71℃ · Thermo label · 잔류세제 월 1회'},
+ '보존식·검식':   {i:'🥡', d:'-18℃ 144시간 · 150g · 검식은 NEIS 기록'},
+ '개인위생·건강진단':{i:'🧤', d:'건강진단 6개월 · 손씻기 · 복장 · 배식도우미'},
+ '시설·설비':     {i:'🏗️', d:'작업구역 구분 · 조도 · 후드 · 청소계획 · 방충방서'},
+ 'HACCP 운영·기록':{i:'📋', d:'팀 구성 · 9절차 · 양식2 · 기록 보관기간'},
+ '위생교육':      {i:'🎓', d:'종사자 월1회 · 대상별 횟수 · 연간 계획'},
+ '위생점검':      {i:'✅', d:'연 2회 · 34항목 배점 · 등급 · 과태료'},
+ '미생물 검사':   {i:'🔬', d:'권장규격 · 자체 간이검사 방법'},
+ '식중독 대응':   {i:'🚨', d:'2인 이상 즉시 신고 · 보존식 보존 · 대책반 · 급식 재개'},
+};
+const CATGROUPS = [
+ {g:'🛒 급식 준비', d:'식단 짜고 · 장 보고 · 다듬기까지', cats:['식단검토','식재료·검수','전처리·해동']},
+ {g:'🔥 조리와 배식 — CCP', d:'소독하고 · 익히고 · 제때 배식', cats:['소독·살균소독제','CCP1 식품취급·조리','CCP2 조리완료·배식']},
+ {g:'🌡️ 매일 온도·세척 기록 — CP', d:'냉장냉동 · 식판 소독 · 보존식', cats:['CP1 냉장·냉동','CP2 식품접촉표면','보존식·검식']},
+ {g:'🧑‍🍳 사람과 시설', d:'종사자 위생 · 급식실 환경', cats:['개인위생·건강진단','시설·설비']},
+ {g:'🗂️ 운영·교육·점검', d:'HACCP 서류 · 교육 · 교육청 점검 대비', cats:['HACCP 운영·기록','위생교육','위생점검','미생물 검사']},
+ {g:'🚨 식중독 비상 대응', d:'의심환자 발생 시 이 순서대로', cats:['식중독 대응'], danger:true},
+];
+function browseHome(){
+  $('b-home').style.display='';
+  $('b-detail').style.display='none';
+  if($('b-home').innerHTML) return;
+  $('b-home').innerHTML = CATGROUPS.map(grp=>`
+   <div class="grp${grp.danger?' danger':''}">
+     <div class="gh"><h3>${grp.g}</h3><span class="gd">${grp.d}</span></div>
+     <div class="catgrid">${grp.cats.map(c=>{
+        const m = CATMETA[c]||{i:'📁',d:''};
+        const n = MMW_QA.filter(x=>x.cat===c).length;
+        return `<div class="catcard" onclick="openCat('${c.replace(/'/g,"\\'")}')">
+          <div class="ci">${m.i}</div>
+          <div class="cn">${c}<span class="cc">${n}</span></div>
+          <div class="cd">${m.d}</div></div>`;
+     }).join('')}</div>
+   </div>`).join('');
+}
+const CATORDER = CATGROUPS.flatMap(g=>g.cats);
+function openCat(c){
+  $('b-home').style.display='none';
+  $('b-detail').style.display='';
+  const list = MMW_QA.filter(x=>x.cat===c);
+  const m = CATMETA[c]||{i:'📁'};
+  $('b-title').textContent = m.i+' '+c;
+  $('b-count').textContent = `${list.length}개 질문 — 카드를 누르면 답이 펼쳐집니다`;
+  $('b-results').innerHTML = list.map(it=>cardHTML(it,'',false,true)).join('');
+  const idx = CATORDER.indexOf(c);
+  const prev = idx>0 ? CATORDER[idx-1] : null;
+  const next = idx<CATORDER.length-1 ? CATORDER[idx+1] : null;
+  $('b-nav').innerHTML =
+    (prev?`<button onclick="openCat('${prev.replace(/'/g,"\\'")}');window.scrollTo(0,0)">← ${(CATMETA[prev]||{}).i||''} ${prev}</button>`:'') +
+    (next?`<button onclick="openCat('${next.replace(/'/g,"\\'")}');window.scrollTo(0,0)">${(CATMETA[next]||{}).i||''} ${next} →</button>`:'');
+  window.scrollTo({top:0});
+}
+browseHome();
+
+/* 숫자 빠른참조 */
+$('numgrid').innerHTML = MMW_NUMBERS.map(n=>
+  `<div class="numcard" style="cursor:pointer" onclick="quick('${n.k.replace(/'/g,"\\'")}')"><div class="k">${n.k}</div><div class="v">${n.v}</div></div>`).join('');
+
+/* 개정 변경점 */
+$('chglist').innerHTML = MMW_CHANGES.map(c=>
+  `<div class="chg"><span class="area">${c.area}</span>
+   <div class="b5"><span class="lbl">5차</span>${c.b5}</div>
+   <div class="a6"><span class="lbl">6차</span>${c.a6}</div>
+   <div class="why">💡 ${c.why}</div></div>`).join('');
+
+/* ══════════ 체크리스트 ══════════ */
+const CK_KEY = 'mmw_check_v1';
+let ckState = {};
+try{ ckState = JSON.parse(localStorage.getItem(CK_KEY)||'{}'); }catch(e){ ckState={}; }
+function ckSave(){ try{ localStorage.setItem(CK_KEEP_KEY(), JSON.stringify(ckState)); }catch(e){} }
+function CK_KEEP_KEY(){ return CK_KEY; }
+function ckItemHTML(it, kind){
+  const key = kind+it.no, v = ckState[key];
+  const btns = kind==='m'
+    ? `<button class="ok${v==='ok'?' sel':''}" onclick="ckSet('${key}','ok')">적합 +3</button>
+       <button class="bad${v==='bad'?' sel':''}" onclick="ckSet('${key}','bad')">부적합 0</button>`
+    : `<button class="ok${v==='ok'?' sel':''}" onclick="ckSet('${key}','ok')">우수</button>
+       ${[29,30,34].includes(it.no)?'':`<button class="mid${v==='mid'?' sel':''}" onclick="ckSet('${key}','mid')">보통</button>`}
+       <button class="bad${v==='bad'?' sel':''}" onclick="ckSet('${key}','bad')">미흡</button>`;
+  return `<div class="ck" id="ck-${key}">
+    <div class="top"><span class="no">${it.no}</span><span class="tt">${it.t}</span><span class="ar">${it.area}</span></div>
+    ${kind==='m'&&it.fail?`<div class="fail">✗ 부적합 기준: ${it.fail}</div>`:''}
+    <div class="btns">${btns}<button class="tipbtn" onclick="this.closest('.ck').classList.toggle('tipopen')">점검기준 보기</button></div>
+    <div class="tip">${fmtA(it.tip)}${kind==='g'?`<div style="margin-top:5px"><b>배점:</b> ${it.pts}</div>`:''}</div>
+  </div>`;
+}
+function ckRender(){
+  $('ck-mand').innerHTML = MMW_CHECK.mandatory.map(it=>ckItemHTML(it,'m')).join('');
+  $('ck-guide').innerHTML = MMW_CHECK.guide.map(it=>ckItemHTML(it,'g')).join('');
+  ckScore();
+}
+function ckSet(key, v){
+  ckState[key] = (ckState[key]===v) ? undefined : v;
+  ckSave(); ckRender();
+}
+function guidePts(no, v){
+  // 항목 19·23은 우수2/보통1, 29·30·34는 우수/미흡 2단계(우수3)
+  const two = {19:[2,1],23:[2,1]};
+  const max = two[no] ? two[no][0] : 3;
+  const mid = two[no] ? two[no][1] : 1.5;
+  if(v==='ok') return max;
+  if(v==='mid') return mid;
+  return 0;
+}
+function ckScore(){
+  let got=0, answered=0, total=0;
+  MMW_CHECK.mandatory.forEach(it=>{ total+=3; const v=ckState['m'+it.no]; if(v){answered++; if(v==='ok')got+=3;} });
+  MMW_CHECK.guide.forEach(it=>{ const two={19:2,23:2}; total+= two[it.no]||3; const v=ckState['g'+it.no]; if(v){answered++; got+=guidePts(it.no,v);} });
+  const all = MMW_CHECK.mandatory.length + MMW_CHECK.guide.length;
+  if(answered===0){ $('ck-score').textContent='–'; $('ck-grade').textContent='체크 전'; $('ck-detail').textContent=`준수사항 16항목(48점) + 지도·권장 18항목(52점) = ${total}점 만점`; return; }
+  const pct = Math.round(got*10)/10;
+  $('ck-score').textContent = `${pct}점`;
+  let g='E'; if(pct>=90)g='A'; else if(pct>=80)g='B'; else if(pct>=70)g='C'; else if(pct>=60)g='D';
+  $('ck-grade').textContent = answered<all ? `${g}등급(진행중)` : `${g}등급`;
+  $('ck-detail').textContent = `${answered}/${all}개 항목 체크 · 만점 ${total}점 기준 (감점 항목 별도)`;
+}
+function ckReset(){ if(confirm('체크 내용을 모두 지울까요?')){ ckState={}; ckSave(); ckRender(); } }
+function ckPrint(){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('print-target'));
+  $('panel-check').classList.add('print-target');
+  window.print();
+}
+ckRender();
+
+/* ══════════ 챗봇 (지침서 기반 · Gemini) ══════════ */
+let CHAT = [], chatBusy = false;
+function aiFmt(t){
+  let x = esc(t);
+  x = x.replace(/\*\*([^*\n]+)\*\*/g,'<b>$1</b>');
+  const lines = x.split(/\n/); let out=[], refs=[];
+  for(const ln of lines){
+    if(/^\s*(근거|출처)\s*[:：]/.test(ln)) refs.push(ln.trim());
+    else out.push(ln);
+  }
+  let html = out.join('\n').replace(/\n{2,}/g,'\n').split('\n').map(l=>{
+    const b=l.trim(); if(!b) return '';
+    if(/^[•\-\*]/.test(b)) return '<div class="li">• '+b.replace(/^[•\-\*]\s*/,'')+'</div>';
+    return '<div>'+b+'</div>';
+  }).join('');
+  html = fmtLike(html);
+  if(refs.length) html += '<div class="aref">📖 '+refs.map(esc0=>esc0).join('<br>')+'</div>';
+  return html;
+}
+function fmtLike(html){ // ①②③·※ 줄 분리 (fmtA와 동일 규칙, 이미 div 구조인 경우 대비)
+  return html.replace(/([\u2460-\u2473])\s*/g,'<br>$1 ').replace(/(<div[^>]*>)<br>/g,'$1');
+}
+function chatPush(m){ CHAT.push(m); renderChat(); }
+function renderChat(typing){
+  const el = $('chat-list');
+  el.innerHTML = CHAT.map(m=>{
+    if(m.role==='user') return `<div class="msg user"><div class="bb">${esc(m.text)}</div></div>`;
+    const cls = m.ai ? 'msg bot ai' : 'msg bot';
+    let inner = '';
+    if(m.ai) inner += '<span class="aibadge">🤖 AI · 지침서 기반</span><br>';
+    if(m.off) inner += '<span class="offbadge">📖 지침서 검색 답변</span><br>';
+    inner += m.html !== undefined ? m.html : aiFmt(m.text);
+    if(m.rel && m.rel.length) inner += '<div class="relchips">'+m.rel.map(q=>`<button onclick="chatAsk('${q.replace(/'/g,"\\'")}')">${q.length>26?q.slice(0,26)+'…':q}</button>`).join('')+'</div>';
+    if(m.ai) inner += '<div class="disc">⚠️ AI 답변 — 수치·기준은 「지침서 검색」 탭 원문 요약과 교차 확인하고, 판단이 필요한 사안은 교육(지원)청에 확인하세요.</div>';
+    return `<div class="${cls}"><div class="avatar">${m.ai?'🤖':'🌱'}</div><div class="bb">${inner}</div></div>`;
+  }).join('') + (typing ? `<div class="msg bot ai"><div class="avatar">🤖</div><div class="bb"><span class="aispin"></span>지침서를 뒤져 답을 정리하고 있어요…</div></div>` : '');
+  el.lastElementChild && el.lastElementChild.scrollIntoView({block:'end', behavior:'smooth'});
+}
+function chatAsk(q){
+  switchTab('chat');
+  $('chat-in').value = q;
+  sendChat();
+}
+function histForServer(){
+  return CHAT.filter(m=>!m.greet).slice(-8).map(m=>({
+    role: m.role,
+    text: m.role==='user' ? m.text : (m.html!==undefined ? m.html.replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim() : m.text)
+  }));
+}
+async function sendChat(){
+  if(chatBusy) return;
+  const t = $('chat-in').value.trim();
+  if(!t) return;
+  $('chat-in').value = '';
+  chatPush({role:'user', text:t});
+  chatBusy = true; $('chat-send').disabled = true;
+  renderChat(true);
+  const top = search(t).slice(0,4);
+  try{
+    const r = await fetch('/api/ask', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ messages: histForServer() })
+    });
+    let j=null; try{ j = await r.json(); }catch(e){}
+    if(!r.ok || !j || !j.answer) throw new Error((j&&j.error) || 'AI 서버에 연결하지 못했어요.');
+    chatPush({role:'model', text:j.answer, ai:true, rel: top.slice(0,2).map(x=>x.q)});
+  }catch(e){
+    if(top.length){
+      const it = top[0];
+      chatPush({role:'model', off:true,
+        html:'<b>'+esc(it.q)+'</b><br>'+fmtA(it.a)+'<div class="aref">📖 '+esc(it.ref)+'</div>',
+        rel: top.slice(1,4).map(x=>x.q)});
+    }else{
+      chatPush({role:'model', off:true,
+        html:'음… 지침서에서 바로 찾지 못했어요. 🥲 단어를 짧게 바꿔 다시 물어봐 주세요. (예: "묵 가열", "소독 농도")<div class="nt">'+esc(e.message||'')+' — 배포 후에는 AI가 이런 질문도 지침서 기반으로 답해드려요.</div>'});
+    }
+  }finally{
+    chatBusy = false; $('chat-send').disabled = false;
+    renderChat();
+  }
+}
+$('chat-in').addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); sendChat(); }});
+chatPush({role:'model', greet:true,
+  html:'안녕하세요! <b>무.물.위</b>예요 🌱 「학교급식 위생관리 지침서」 <b>제6차 개정판을 기반으로만</b> 답해드려요.<div class="li">• "도토리묵무침에서 묵도 가열해야 해?"</div><div class="li">• "락스 100ppm은 어떻게 희석해?"</div><div class="li">• "냉장고가 고장 났는데 식재료 어떡해?"</div>처럼 편하게 물어보세요. 답변 끝에는 항상 <b>지침서 근거(장·쪽)</b>가 붙어요.'});
+
+/* 글자 크게 모드 */
+function toggleBig(){
+  document.body.classList.toggle('big');
+  var on = document.body.classList.contains('big');
+  document.getElementById('bigbtn').textContent = on ? '가⁻ 글자 작게' : '가⁺ 글자 크게';
+  try{ localStorage.setItem('mmw_big', on?'1':''); }catch(e){}
+}
+try{ if(localStorage.getItem('mmw_big')){ document.body.classList.add('big'); document.getElementById('bigbtn').textContent='가⁻ 글자 작게'; } }catch(e){}
+
+/* ══════════ 급식소리함 로그인 게이트 + 관리자 잠금(tier 3) ══════════ */
+const MMW_ADMIN = ['thfl4811@gmail.com']; // 공개 전까지 관리자 전용
+window.addEventListener('sori-ready', function(){
+  try{
+    const email = ((window.SORI && window.SORI.user && window.SORI.user.email) || '').toLowerCase();
+    if(!MMW_ADMIN.includes(email)){
+      document.body.innerHTML = '<div class="lockscreen"><div class="in"><div class="emoji">🌱</div>'+
+        '<h2>무.물.위는 아직 준비 중이에요</h2>'+
+        '<p>한창 만드는 중이에요. 개발이 끝나는 대로 급식소리함에서 바로 열립니다!</p>'+
+        '<p style="margin-top:14px"><a href="https://geupsik-soriham.vercel.app/" style="color:#15803d;font-weight:700">← 급식소리함으로 돌아가기</a></p></div></div>';
+    }
+  }catch(e){}
+});
+(function loadGate(){
+  var s=document.createElement('script'); s.src='sori-gate.js';
+  s.onerror=function(){ var s2=document.createElement('script'); s2.src='https://geupsik-soriham.vercel.app/sori-gate.js'; document.head.appendChild(s2); };
+  document.head.appendChild(s);
+})();
+</script>
+</body>
+</html>
