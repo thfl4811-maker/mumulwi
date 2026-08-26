@@ -1250,23 +1250,72 @@ function toggleBig(){
 }
 try{ if(localStorage.getItem('mmw_big')){ document.body.classList.add('big'); document.getElementById('bigbtn').textContent='가⁻ 글자 작게'; } }catch(e){}
 
-/* ══════════ 급식소리함 로그인 게이트 + 관리자 잠금(tier 3) ══════════ */
+/* ══════════ 접근 관리: 학교 코드(조리원용) 또는 교직원 로그인(관리자) ══════════ */
 const MMW_ADMIN = ['thfl4811@gmail.com']; // 공개 전까지 관리자 전용
+const MMW_CODE  = '동탄중앙';             // 우리 학교 입장 코드 (바꾸면 저장된 휴대폰도 다시 입력해야 함)
+function mmwNorm(s){ return (s||'').replace(/\s+/g,'').toLowerCase(); }
+var mmwCodeOK = false;
+try{ mmwCodeOK = mmwNorm(localStorage.getItem('mmw_code')) === mmwNorm(MMW_CODE) && MMW_CODE; }catch(e){}
+
+function mmwLoadGate(){
+  if(window.__mmwGateLoaded) return; window.__mmwGateLoaded = true;
+  var s=document.createElement('script'); s.src='sori-gate.js';
+  s.onerror=function(){ var s2=document.createElement('script'); s2.src='https://geupsik-soriham.vercel.app/sori-gate.js'; document.head.appendChild(s2); };
+  document.head.appendChild(s);
+}
+
 window.addEventListener('sori-ready', function(){
   try{
     const email = ((window.SORI && window.SORI.user && window.SORI.user.email) || '').toLowerCase();
-    if(!MMW_ADMIN.includes(email)){
+    if(MMW_ADMIN.includes(email)){
+      try{ localStorage.setItem('mmw_admin','1'); }catch(e){}
+      var ov = document.getElementById('mmw-codegate'); if(ov) ov.remove();
+    } else if(!mmwCodeOK){
       document.body.innerHTML = '<div class="lockscreen"><div class="in"><div class="emoji">🌱</div>'+
         '<h2>무.물.위는 아직 준비 중이에요</h2>'+
-        '<p>한창 만드는 중이에요. 개발이 끝나는 대로 급식소리함에서 바로 열립니다!</p>'+
+        '<p>지금은 동탄중앙고 급식실 가족만 먼저 쓰고 있어요. 우리 학교시라면 학교 코드로 들어오세요!</p>'+
         '<p style="margin-top:14px"><a href="https://geupsik-soriham.vercel.app/" style="color:#15803d;font-weight:700">← 급식소리함으로 돌아가기</a></p></div></div>';
     }
   }catch(e){}
 });
-(function loadGate(){
-  var s=document.createElement('script'); s.src='sori-gate.js';
-  s.onerror=function(){ var s2=document.createElement('script'); s2.src='https://geupsik-soriham.vercel.app/sori-gate.js'; document.head.appendChild(s2); };
-  document.head.appendChild(s);
+
+(function mmwAccess(){
+  if(mmwCodeOK) return; // 코드 저장된 휴대폰: 바로 사용
+  var isAdminDevice=false; try{ isAdminDevice = localStorage.getItem('mmw_admin')==='1'; }catch(e){}
+  if(isAdminDevice){ mmwLoadGate(); return; } // 관리자 기기: 예전처럼 로그인 게이트로
+  // 처음 온 기기: 코드 입력 화면
+  var ov = document.createElement('div');
+  ov.id='mmw-codegate'; ov.className='lockscreen';
+  ov.innerHTML = '<div class="in"><div class="emoji">🥗</div>'+
+    '<h2>무.물.위</h2>'+
+    '<p>무엇이든 물어보세요, 위생지침서!<br>학교에서 안내받은 <b>학교 코드</b>를 입력해 주세요.</p>'+
+    '<div style="margin:16px 0 6px;display:flex;gap:8px;justify-content:center">'+
+      '<input id="mmw-code-in" type="text" inputmode="text" autocomplete="off" placeholder="학교 코드" '+
+        'style="flex:1;max-width:200px;padding:12px 14px;font-size:17px;border:1.5px solid #d1d5db;border-radius:12px;text-align:center">'+
+      '<button id="mmw-code-btn" style="padding:12px 18px;font-size:16px;font-weight:700;border:0;border-radius:12px;background:#15803d;color:#fff">입장</button>'+
+    '</div>'+
+    '<p id="mmw-code-msg" style="min-height:18px;color:#b91c1c;font-weight:600"></p>'+
+    '<p style="margin-top:18px;font-size:13px"><a href="#" id="mmw-admin-link" style="color:#6b7280">교직원(관리자) 로그인으로 들어가기</a></p>'+
+    '</div>';
+  document.body.appendChild(ov);
+  function tryCode(){
+    var v = document.getElementById('mmw-code-in').value;
+    if(mmwNorm(v) === mmwNorm(MMW_CODE)){
+      try{ localStorage.setItem('mmw_code', MMW_CODE); }catch(e){}
+      mmwCodeOK = true; ov.remove();
+    } else {
+      document.getElementById('mmw-code-msg').textContent = '코드가 맞지 않아요. 안내문의 코드를 다시 확인해 주세요.';
+      document.getElementById('mmw-code-in').select();
+    }
+  }
+  ov.querySelector('#mmw-code-btn').addEventListener('click', tryCode);
+  ov.querySelector('#mmw-code-in').addEventListener('keydown', function(e){ if(e.key==='Enter') tryCode(); });
+  ov.querySelector('#mmw-admin-link').addEventListener('click', function(e){
+    e.preventDefault();
+    this.textContent = '로그인 화면을 여는 중…';
+    mmwLoadGate();
+    setTimeout(function(){ ov.remove(); }, 900); // 게이트(로그인 화면)가 이어받음
+  });
 })();
 </script>
 </body>
