@@ -85,11 +85,11 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'POST 요청만 받아요.' });
 
   try {
-    // 레이트리밋: IP당 1분 8회
+    // 레이트리밋: IP당 1분 20회 (학교 공용 와이파이에서 여러 명이 함께 쓰는 상황 고려)
     const ip = ((req.headers['x-forwarded-for'] || '') + '').split(',')[0].trim() || 'unknown';
     const now = Date.now();
     const hits = (RL.get(ip) || []).filter(t => now - t < 60_000);
-    if (hits.length >= 8) return res.status(429).json({ error: '질문이 너무 잦아요. 잠시 후 다시 물어봐 주세요.' });
+    if (hits.length >= 20) return res.status(429).json({ error: '질문이 너무 잦아요. 잠시 후 다시 물어봐 주세요.' });
     hits.push(now); RL.set(ip, hits);
     if (RL.size > 5000) RL.clear();
 
